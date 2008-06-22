@@ -1,6 +1,6 @@
 ﻿using rod.Commons.System.Reflection;
 
-namespace rod.Commons.System.Extensions.Reflections
+namespace rod.Commons.System.Extensions.Reflection
 {
     public static class ReflectionHelperExtension
     {

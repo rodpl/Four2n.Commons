@@ -77,6 +77,11 @@ namespace rod.Commons.System.Reflection
             return null;
         }
 
+        public T Return<T>()
+        {
+            return (T)_target;
+        }
+
         /// <summary>
         /// Finds the field recursive.
         /// </summary>

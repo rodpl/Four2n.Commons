@@ -1,9 +1,9 @@
 using MbUnit.Framework;
-using rod.Commons.System.Extensions.Reflections;
+using rod.Commons.System.Extensions.Reflection;
 using rod.Commons.System.Reflection;
 using rod.Commons.System.Tests.Reflection;
 
-namespace rod.Commons.System.Extensions.Tests.Reflections
+namespace rod.Commons.System.Extensions.Tests.Reflection
 {
     [TestFixture]
     public class ReflectionHelperExtensionTest
