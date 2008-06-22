@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Reflection\ReflectionHelperExtensionTest.cs" />
+    <Compile Include="Reflection\ReflectionHelperExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\rod.Commons.System.Extensions\rod.Commons.System.Extensions.csproj">

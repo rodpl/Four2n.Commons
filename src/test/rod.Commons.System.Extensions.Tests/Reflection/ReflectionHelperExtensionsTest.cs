@@ -6,7 +6,7 @@ using rod.Commons.System.Tests.Reflection;
 namespace rod.Commons.System.Extensions.Tests.Reflection
 {
     [TestFixture]
-    public class ReflectionHelperExtensionTest
+    public class ReflectionHelperExtensionsTest
     {
         private const string TEXT = "Some string";
 

@@ -2,7 +2,7 @@
 
 namespace rod.Commons.System.Extensions.Reflection
 {
-    public static class ReflectionHelperExtension
+    public static class ReflectionHelperExtensions
     {
         /// <summary>
         /// Reflects the specified target.
