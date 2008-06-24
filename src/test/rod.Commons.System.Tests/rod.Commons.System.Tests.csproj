@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\CollectionToolsTests.cs" />
+    <Compile Include="Collections\SimplifiedKeyDictionaryMother.cs" />
+    <Compile Include="Collections\SimplifiedKeyDictionaryTest.cs" />
+    <Compile Include="Collections\SimplifiedKeyIdentifiableMother.cs" />
+    <Compile Include="Collections\SimplifiedKeyMother.cs" />
+    <Compile Include="Collections\SimplifiedKeyTests.cs" />
     <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
     <Compile Include="Reflection\ReflectionHelperTests.cs" />
   </ItemGroup>

@@ -36,6 +36,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\CollectionTools.cs" />
+    <Compile Include="Collections\SimplifiedKey.cs" />
+    <Compile Include="Collections\SimplifiedKeyDictionary.cs" />
+    <Compile Include="Collections\SimplifiedKeyIdentifiable.cs" />
     <Compile Include="Diagnostics\HiPerfTimer.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
   </ItemGroup>
