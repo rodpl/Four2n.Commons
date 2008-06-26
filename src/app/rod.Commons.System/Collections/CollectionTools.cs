@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace rod.Commons.System.Collections
@@ -78,6 +79,31 @@ namespace rod.Commons.System.Collections
             IDictionary<K, T> dict = new Dictionary<K, T>();
             AddToDictionaryFromCollection(dict, source, nonUnique, keyExtractor);
             return dict;
+        }
+
+        /// <summary>
+        /// Joins the enumerators.
+        /// </summary>
+        /// <param name="enums">The enums.</param>
+        /// <returns></returns>
+        public static IEnumerable JoinEnumerators(params IEnumerable[] enums)
+        {
+            foreach (var e in enums)
+                foreach (var item in e)
+                    yield return item;
+        }
+
+        /// <summary>
+        /// Joins the enumerators.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enums">The enums.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> JoinEnumerators<T>(params IEnumerable<T>[] enums)
+        {
+            foreach (var e in enums)
+                foreach (var item in e)
+                    yield return item;
         }
     }
 }
