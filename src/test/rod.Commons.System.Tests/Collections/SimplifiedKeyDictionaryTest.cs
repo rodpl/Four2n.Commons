@@ -189,7 +189,7 @@ namespace rod.Commons.System.Tests.Collections
         [Test]
         public void ContainsKey_ExistsKeyWithTheSameSimplifiedValueAndDifferentBussinessValue_ReturnsFalse()
         {
-            var list =
+            var list = 
                 SimplifiedKeyIdentifiableMother.Implementation.CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
 
             _model.Add(list[0]);
