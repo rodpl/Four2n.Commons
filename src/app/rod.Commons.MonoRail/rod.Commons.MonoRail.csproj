@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</ProjectGuid>
+    <ProjectGuid>{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rod.Commons.System.Tests</RootNamespace>
-    <AssemblyName>rod.Commons.System.Tests</AssemblyName>
+    <RootNamespace>rod.Commons.MonoRail</RootNamespace>
+    <AssemblyName>rod.Commons.MonoRail</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,35 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MbUnit.Framework, Version=2.4.2.130, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net\2.0\MbUnit\MbUnit.Framework.dll</HintPath>
+      <HintPath>..\..\..\lib\net\2.0\Castle\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework.2.0, Version=2.4.2.130, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5, processorArchitecture=MSIL">
+    <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net\2.0\MbUnit\MbUnit.Framework.2.0.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph, Version=2.4.2.130, Culture=neutral, PublicKeyToken=975e84d0c8d6464d">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net\2.0\MbUnit\QuickGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickGraph.Algorithms, Version=2.4.2.130, Culture=neutral, PublicKeyToken=975e84d0c8d6464d">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net\2.0\MbUnit\QuickGraph.Algorithms.dll</HintPath>
+      <HintPath>..\..\..\lib\net\2.0\Castle\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\CollectionToolsTests.cs" />
-    <Compile Include="Collections\SimplifiedKeyDictionaryMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyDictionaryTest.cs" />
-    <Compile Include="Collections\SimplifiedKeyIdentifiableMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyTests.cs" />
-    <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
-    <Compile Include="Reflection\ReflectionHelperTests.cs" />
+    <Compile Include="Helpers\FckEditorHelper.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

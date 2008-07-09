@@ -8,7 +8,7 @@ namespace rod.Commons.System.Extensions.Reflection
         /// Reflects the specified target.
         /// </summary>
         /// <param name="target">The target.</param>
-        /// <returns>ReflectionHelper instance</returns>
+        /// <returns><see cref="ReflectionHelper"/> instance</returns>
         public static ReflectionHelper Reflect(this object target)
         {
             return ReflectionHelper.For(target);
