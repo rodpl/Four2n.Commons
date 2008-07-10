@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ==================================================
+        Common file for VS and external build files
+    ==================================================
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+    
+    <!-- Root Path definition relative for actual build file -->
+    <PropertyGroup>
+        <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
+    </PropertyGroup>
+        
+    <!-- Helper Files -->
+    <PropertyGroup>
+        <IterationNumberFile>$(RootPath)\IterationNumber.txt</IterationNumberFile>
+    </PropertyGroup>
+
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+
+    <!-- 
+        ============================================================
+        General purpose targets used by other targets in the build
+        ============================================================
+    -->
+
+    <Target Name="CalculateAssemblyVersion" DependsOnTargets="GetIterationNumber;GetSvnRevision">
+        <CreateProperty Value="$(AssemblyVersion).$(IterationNumber).$(SvnRevision)">
+            <Output TaskParameter="Value" PropertyName="AssemblyVersion"/>
+        </CreateProperty>
+        <Message Text="Calculated Assemby Version: $(AssemblyVersion)" Importance="normal"/>
+    </Target>
+
+    <Target Name="DeployWebProject" DependsOnTargets="Build" Condition="$(DeploymentFolder) != ''">
+        <CreateProperty Value="$(DeploymentFolder)\$(Configuration)\$(MSBuildProjectName)">
+            <Output PropertyName="WebProjectOutputDir" TaskParameter="Value"/>
+        </CreateProperty>
+        <!-- Log tasks -->
+        <Message Text="Copying Web Application Project Files for $(MSBuildProjectName)" />
+
+        <!-- Create the _PublishedWebsites\app\bin folder -->
+        <MakeDir Directories="$(WebProjectOutputDir)\bin" />
+
+        <!-- Copy build outputs to _PublishedWebsites\app\bin folder -->
+        <Copy SourceFiles="@(IntermediateAssembly)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(AddModules)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(IntermediateOutputPath)$(_SGenDllName)" DestinationFolder="$(WebProjectOutputDir)\%(Content.SubFolder)%(Content.RecursiveDir)" SkipUnchangedFiles="true" Condition="'$(_SGenDllCreated)'=='true'" />
+        <Copy SourceFiles="$(IntermediateOutputPath)$(TargetName).pdb" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" Condition="'$(_DebugSymbolsProduced)'=='true'" />
+        <Copy SourceFiles="@(DocFileItem)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" Condition="'$(_DocumentationFileProduced)'=='true'" />
+        <Copy SourceFiles="@(IntermediateSatelliteAssembliesWithTargetPath)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(ReferenceComWrappersToCopyLocal); @(ResolvedIsolatedComModules); @(_DeploymentLooseManifestFile); @(NativeReferenceFile)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+
+        <!-- copy any referenced assemblies to _PublishedWebsites\app\bin folder -->
+        <Copy SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+
+        <!-- Copy content files recursively to _PublishedWebsites\app\ folder -->
+        <Copy SourceFiles="@(Content)" DestinationFolder="$(WebProjectOutputDir)\%(Content.RelativeDir)" />
+    </Target>
+    
+    <Target Name="GetIterationNumber">
+        <!-- Read the the iteration number file contents -->
+        <ReadLinesFromFile File="$(IterationNumberFile)">
+            <Output TaskParameter="Lines" ItemName="IterationNumberFileContents"/>
+        </ReadLinesFromFile>
+
+        <!-- Assign file contents to IterationNumber property -->
+        <CreateProperty Value="@(IterationNumberFileContents->'%(Identity)')">
+            <Output TaskParameter="Value" PropertyName="IterationNumber"/>
+        </CreateProperty>
+    </Target>
+
+    <!-- Get the revision number of the local working copy -->
+    <Target Name="GetSvnRevision">
+        <SvnInfo LocalPath="$(MSBuildProjectDirectory)">
+            <Output TaskParameter="LastChangedRevision" PropertyName="SvnRevision"/>
+        </SvnInfo>
+    </Target>
+
+    <Target Name="IncludeGeneratedAssemblyInfo" DependsOnTargets="CalculateAssemblyVersion" >
+
+        <AssemblyInfo CodeLanguage="CS"
+            OutputFile="$(AssemblyInfoFile)"
+            AssemblyTitle="$(AssemblyTitle)"
+            AssemblyDescription="$(AssemblyDescription)"
+            AssemblyCompany="$(AssemblyCompany)"
+            AssemblyCopyright="$(AssemblyCopyright)"
+            AssemblyProduct="$(AssemblyProduct)"
+            AssemblyVersion="$(AssemblyVersion)"
+            AssemblyFileVersion="$(AssemblyVersion)" />
+
+        <Touch Files="$(AssemblyInfoFile)" Time="2000-01-01" />
+
+        <CreateItem Include="$(AssemblyInfoFile)" Condition="Exists('$(AssemblyInfoFile)')">
+            <Output ItemName="Compile" TaskParameter="Include"/>
+        </CreateItem>
+    </Target>
+</Project>

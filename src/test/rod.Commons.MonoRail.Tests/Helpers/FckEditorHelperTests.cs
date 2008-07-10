@@ -3,6 +3,9 @@ using MbUnit.Framework;
 using Rhino.Mocks;
 using rod.Commons.MonoRail.Helpers;
 using rod.Commons.MonoRail.Tests.Controllers;
+using System;
+using Castle.MonoRail.Framework.Test;
+using System.Diagnostics;
 
 namespace rod.Commons.MonoRail.Tests.Helpers
 {
@@ -17,12 +20,9 @@ namespace rod.Commons.MonoRail.Tests.Helpers
             base.SetUp();
             _model = new FckEditorHelper();
 
-            var controller = new HomeController();
-            var controllerContext = new ControllerContext();
-            var context = Mocks.DynamicMock<IEngineContext>();
-
-            _model.SetController(controller, controllerContext);
-            _model.SetContext(context);
+            _model.SetController(new HomeController(), new ControllerContext());
+            _model.SetContext(new StubEngineContext(new UrlInfo("area", "home", "index", "/app", "sdm")));
+            _model.ServerUtility = new StubServerUtility();
         }
 
         #endregion
@@ -30,12 +30,17 @@ namespace rod.Commons.MonoRail.Tests.Helpers
         private FckEditorHelper _model;
 
         [Test]
-        public void InstallScriptsTest()
+        public void InstallScripts_ReturnsLinkToJavaScript()
         {
-            _model.Context.Stub(x => x.ApplicationPath).Return(@"/app");
+            Assert.AreEqual(@"<script type=""text/javascript"" src=""/app/content/helpers/fckeditor/fckeditor.js""></script>", _model.InstallScripts());
+        }
 
-            Assert.AreEqual(@"<script type=""text/javascript"" src=""/app/content/helpers/fckeditor/fckeditor.js""></script>",
-                            _model.InstallScripts());
+        [Test]
+        public void CreateHtmlTest_ReturnsHtmlInDivTags()
+        {
+            var html = _model.CreateHtml("instance");
+            StringAssert.StartsWith(html, "<div>\n");
+            StringAssert.EndsWith(html, "</div>\n");
         }
     }
 }

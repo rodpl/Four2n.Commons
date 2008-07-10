@@ -1,0 +1,110 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <UsingTask TaskName="Microsoft.Build.Tasks.CodeAnalysis" AssemblyFile=".\FxCopTask.dll"/>
+
+    <PropertyGroup>
+        <!-- FxCopDir has to be read in for backwards compatibility with the Visual Studio 2005 task, except for within
+             the context of a Team Build build. -->
+        <CodeAnalysisPath Condition="'$(CodeAnalysisPath)'=='' and '$(FxCopDir)'!='' and '$(TeamBuildConstants)'==''">$(FxCopDir)</CodeAnalysisPath>
+        <CodeAnalysisPath Condition="'$(CodeAnalysisPath)'=='' and '$(VSINSTALLDIR)'!=''">$(VSINSTALLDIR)\Team Tools\Static Analysis Tools\FxCop</CodeAnalysisPath>
+        <CodeAnalysisRuleAssemblies Condition="'$(CodeAnalysisRuleAssemblies)'=='' and '$(CodeAnalysisPath)'!=''">$(CodeAnalysisPath)\Rules</CodeAnalysisRuleAssemblies>
+    </PropertyGroup>
+
+    <!-- Enable CODE_ANALYSIS define -->
+    <PropertyGroup>
+        <DefineConstants Condition="('$(RunCodeAnalysis)'=='true' or '$(RunCodeAnalysisOnce)'=='true') and '$(Language)'=='C#' ">CODE_ANALYSIS;$(DefineConstants)</DefineConstants>
+        <FinalDefineConstants Condition="('$(RunCodeAnalysis)'=='true' or '$(RunCodeAnalysisOnce)'=='true') and '$(Language)'=='VB' ">CODE_ANALYSIS=-1,$(FinalDefineConstants)</FinalDefineConstants>
+    </PropertyGroup>
+
+    <!-- Default Code Analysis Settings -->
+    <PropertyGroup>
+        <CodeAnalysisApplyLogFileXsl Condition="'$(CodeAnalysisApplyLogFileXsl)'==''">false</CodeAnalysisApplyLogFileXsl>
+        <CodeAnalysisForceOutput Condition="'$(CodeAnalysisForceOutput)'==''">true</CodeAnalysisForceOutput>
+        <CodeAnalysisGenerateSuccessFile Condition="'$(CodeAnalysisGenerateSuccessFile)'==''">true</CodeAnalysisGenerateSuccessFile>
+        <CodeAnalysisIgnoreGeneratedCode Condition="'$(CodeAnalysisIgnoreGeneratedCode)'==''">true</CodeAnalysisIgnoreGeneratedCode>
+        <CodeAnalysisIgnoreInvalidTargets Condition="'$(CodeAnalysisIgnoreInvalidTargets)'==''">true</CodeAnalysisIgnoreInvalidTargets>
+        <CodeAnalysisInputAssemblyForTask Condition="'$(CodeAnalysisInputAssembly)'!=''">$(CodeAnalysisInputAssembly)</CodeAnalysisInputAssemblyForTask>
+        <CodeAnalysisInputAssemblyForTask Condition="'$(CodeAnalysisInputAssembly)'==''">$(OutDir)$(TargetName)$(TargetExt)</CodeAnalysisInputAssemblyForTask>
+        <CodeAnalysisLogFileForTask Condition="'$(CodeAnalysisLogFile)'!=''">$(CodeAnalysisLogFile)</CodeAnalysisLogFileForTask>
+        <CodeAnalysisLogFileForTask Condition="'$(CodeAnalysisLogFile)'==''">$(CodeAnalysisInputAssemblyForTask).CodeAnalysisLog.xml</CodeAnalysisLogFileForTask>
+        <CodeAnalysisModuleSuppressionsFile Condition="'$(CodeAnalysisModuleSuppressionsFile)'==''">GlobalSuppressions$(DefaultLanguageSourceExtension)</CodeAnalysisModuleSuppressionsFile>
+        <CodeAnalysisOverrideRuleVisibilities Condition="'$(CodeAnalysisOverrideRuleVisibilities)'==''">false</CodeAnalysisOverrideRuleVisibilities>
+        <CodeAnalysisOutputToConsole Condition="'$(CodeAnalysisOutputToConsole)'==''">false</CodeAnalysisOutputToConsole>
+        <CodeAnalysisQuiet Condition="'$(CodeAnalysisQuiet)'==''">false</CodeAnalysisQuiet>
+        <CodeAnalysisSaveMessagesToReport Condition="'$(CodeAnalysisSaveMessagesToReport)'==''">Active</CodeAnalysisSaveMessagesToReport>
+        <CodeAnalysisSearchGlobalAssemblyCache Condition="'$(CodeAnalysisSearchGlobalAssemblyCache)'==''">true</CodeAnalysisSearchGlobalAssemblyCache>
+        <CodeAnalysisSummary Condition="'$(CodeAnalysisSummary)'==''">false</CodeAnalysisSummary>
+        <CodeAnalysisTimeout Condition="'$(CodeAnalysisTimeout)'==''">120</CodeAnalysisTimeout>
+        <CodeAnalysisTreatWarningsAsErrors Condition="'$(CodeAnalysisTreatWarningsAsErrors)'==''">false</CodeAnalysisTreatWarningsAsErrors>
+        <CodeAnalysisUpdateProject Condition="'$(CodeAnalysisUpdateProject)'==''">false</CodeAnalysisUpdateProject>
+        <CodeAnalysisUseTypeNameInSuppression Condition="'$(CodeAnalysisUseTypeNameInSuppression)'==''">true</CodeAnalysisUseTypeNameInSuppression>        
+    </PropertyGroup>
+
+    <!-- Add CodeAnalysisDictionary to the Build Action drop down in the properties of a file -->
+    <ItemGroup>
+        <AvailableItemName Include="CodeAnalysisDictionary" />
+    </ItemGroup>
+
+    <!-- Run Code Analysis after build, but before run of application-->
+    <PropertyGroup>
+        <PrepareForRunDependsOn>$(PrepareForRunDependsOn);RunCodeAnalysis</PrepareForRunDependsOn>
+    </PropertyGroup>
+
+    <!-- Properties that need to be calculated during execution -->
+    
+    <Target Name="SetCodeAnalysisProperties">
+        <CreateItem Include="$(CodeAnalysisLogFileForTask)">
+            <Output ItemName="CodeAnalysisLogFileItem" TaskParameter="Include"/>
+        </CreateItem>
+        <CreateProperty Value="@(CodeAnalysisLogFileItem->'%(RelativeDir)$(TargetName)$(TargetExt).lastcodeanalysissucceeded')">
+            <Output PropertyName="CodeAnalysisSucceededFile" TaskParameter="Value"/>
+        </CreateProperty>
+    </Target>
+
+    <Target
+        Name="RunCodeAnalysis"
+        Condition="'$(RunCodeAnalysis)'=='true' or '$(RunCodeAnalysisOnce)'=='true'"
+        Inputs="$(CodeAnalysisInputAssemblyForTask)"
+        Outputs="$(CodeAnalysisLogFileForTask);$(CodeAnalysisSucceededFile)"
+        DependsOnTargets="Compile;SetCodeAnalysisProperties"
+        >
+   
+        <CodeAnalysis
+            AlternativeToolName="$(CodeAnalysisAlternativeToolName)"
+            AnalysisTimeout="$(CodeAnalysisTimeout)"
+            ApplyLogFileXsl="$(CodeAnalysisApplyLogFileXsl)"
+            Assemblies="$(CodeAnalysisInputAssemblyForTask)"
+            ConsoleXsl="$(CodeAnalysisConsoleXsl)"
+            Culture="$(CodeAnalysisCulture)"
+            DependentAssemblyPaths="@(CodeAnalysisDependentAssemblyPaths)"
+            Dictionaries="@(CodeAnalysisDictionary)"
+            FilesWritten="$(CodeAnalysisLogFileForTask);$(CodeAnalysisSucceededFile)"
+            ForceOutput="$(CodeAnalysisForceOutput)"
+            GenerateSuccessFile="$(CodeAnalysisGenerateSuccessFile)"
+            IgnoreGeneratedCode="$(CodeAnalysisIgnoreGeneratedCode)"
+            IgnoreInvalidTargets="$(CodeAnalysisIgnoreInvalidTargets)"
+            Imports="@(CodeAnalysisImport)"
+            LogFile="$(CodeAnalysisLogFileForTask)"
+            LogFileXsl="$(CodeAnalysisLogFileXsl)"
+            OutputToConsole="$(CodeAnalysisOutputToConsole)"
+            OverrideRuleVisibilities="$(CodeAnalysisOverrideRuleVisibilities)"
+            PlatformPath="$(CodeAnalysisPlatformPath)"
+            Project="$(CodeAnalysisProject)"
+            Quiet="$(CodeAnalysisQuiet)"
+            References="@(ReferencePath)"
+            RuleAssemblies="$(CodeAnalysisRuleAssemblies)"
+            Rules="$(CodeAnalysisRules)"
+            SaveMessagesToReport="$(CodeAnalysisSaveMessagesToReport)"
+            SearchGlobalAssemblyCache="$(CodeAnalysisSearchGlobalAssemblyCache)"
+            SuccessFile="$(CodeAnalysisSucceededFile)"
+            Summary="$(CodeAnalysisSummary)"            
+            ToolPath="$(CodeAnalysisPath)"
+            TreatWarningsAsErrors="$(CodeAnalysisTreatWarningsAsErrors)"
+            UpdateProject="$(CodeAnalysisUpdateProject)"            
+            >
+            
+            <Output TaskParameter="FilesWritten" ItemName="FileWrites"/>
+        </CodeAnalysis>
+    </Target>
+
+</Project>

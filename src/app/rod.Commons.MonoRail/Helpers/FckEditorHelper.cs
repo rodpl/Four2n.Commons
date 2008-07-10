@@ -20,22 +20,22 @@ namespace rod.Commons.MonoRail.Helpers
             return string.Format("<script type=\"text/javascript\" src=\"{0}fckeditor.js\"></script>", CurrentContext.ApplicationPath + STR_BASE_PATH);
         }
 
-        public string CreateHTML(string instanceName)
+        public string CreateHtml(string instanceName)
         {
-            return CreateHTML(instanceName, null, default_width, default_height, default_toolbar, null);
+            return CreateHtml(instanceName, null, default_width, default_height, default_toolbar, null);
         }
 
-        public string CreateHTML(string instanceName, string value)
+        public string CreateHtml(string instanceName, string value)
         {
-            return CreateHTML(instanceName, value, default_width, default_height, default_toolbar, null);
+            return CreateHtml(instanceName, value, default_width, default_height, default_toolbar, null);
         }
 
-        public string CreateHTML(string instanceName, string value, IDictionary parameters)
+        public string CreateHtml(string instanceName, string value, IDictionary parameters)
         {
-            return CreateHTML(instanceName, value, default_width, default_height, default_toolbar, parameters);
+            return CreateHtml(instanceName, value, default_width, default_height, default_toolbar, parameters);
         }
 
-        public string CreateHTML(string instanceName, string value, string width,
+        public string CreateHtml(string instanceName, string value, string width,
             string height, string toolbarSet, IDictionary parameters)
         {
             string htmlValue = HtmlEncode(value);
