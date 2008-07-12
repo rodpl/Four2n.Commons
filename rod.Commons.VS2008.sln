@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Common.Targets = Common.Targets
 		Common.User.Targets = Common.User.Targets
 		IterationNumber.txt = IterationNumber.txt
-		rod.Commons.Targets = rod.Commons.Targets
+		tools\msbuild\rod.Commons\rod.Commons.Targets = tools\msbuild\rod.Commons\rod.Commons.Targets
 	EndProjectSection
 EndProject
 Global

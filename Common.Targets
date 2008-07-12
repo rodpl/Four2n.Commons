@@ -9,12 +9,12 @@
     <!-- Root Path definition relative for actual build file -->
     <PropertyGroup>
         <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
-        <ToolsPath>$(RootPath)\tools</ToolsPath>
+        <ToolsPath>$(RootPath)tools\</ToolsPath>
     </PropertyGroup>
 
     <!-- 3rd Party Program Paths -->
     <PropertyGroup>
-        <MSBuildExtensionsPath Condition="Exists('$(ToolsPath)\msbuild')" >$(ToolsPath)\msbuild</MSBuildExtensionsPath>
+        <MSBuildExtensionsPath Condition="Exists('$(ToolsPath)msbuild\')" >$(ToolsPath)msbuild\</MSBuildExtensionsPath>
     </PropertyGroup>
     
     <!-- AssemblyInfo Properties -->
@@ -24,7 +24,7 @@
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
         <AssemblyCompany>rod</AssemblyCompany>
         <AssemblyCopyright>Copyright 2006-2008 rod</AssemblyCopyright>
-        <AssemblyKeyFile>$(RootPath)\nGrape.snk</AssemblyKeyFile>
+        <AssemblyKeyFile>$(RootPath)nGrape.snk</AssemblyKeyFile>
         <AssemblyProduct>rod.Commons</AssemblyProduct>
         <AssemblyVersion>0.1</AssemblyVersion>
     </PropertyGroup>
@@ -39,10 +39,10 @@
 
     <!-- Helper Files -->
     <PropertyGroup>
-        <IterationNumberFile>$(RootPath)\IterationNumber.txt</IterationNumberFile>
+        <IterationNumberFile>$(RootPath)IterationNumber.txt</IterationNumberFile>
     </PropertyGroup>
     
-    <Import Project="$(RootPath)\rod.Commons.Targets" />
-    <Import Condition="Exists('$(RootPath)\Common.User.Targets')" Project="$(RootPath)\Common.User.Targets" />
+    <Import Project="$(MSBuildExtensionsPath)rod.Commons\rod.Commons.Targets" />
+    <Import Condition="Exists('$(RootPath)Common.User.Targets')" Project="$(RootPath)Common.User.Targets" />
     
 </Project>
