@@ -1,6 +1,6 @@
 using rod.Commons.System.Collections;
 
-namespace rod.Commons.System.Tests.Collections
+namespace rod.Commons.System.Collections
 {
     public class SimplifiedKeyDictionaryMother
     {

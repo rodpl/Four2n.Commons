@@ -1,7 +1,7 @@
-﻿using MbUnit.Framework;
+﻿using NUnit.Framework;
 using rod.Commons.System.Reflection;
 
-namespace rod.Commons.System.Tests.Reflection
+namespace rod.Commons.System.Reflection
 {
     [TestFixture]
     public class ReflectionHelperTests
@@ -31,6 +31,9 @@ namespace rod.Commons.System.Tests.Reflection
 
         #region Nested type: A
 
+        ///<summary>
+        ///
+        ///</summary>
         public class A
         {
             protected string _protectedString;

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using NUnit.Framework;
 
-namespace rod.Commons.System.Tests.Collections
+namespace rod.Commons.System.Collections
 {
     [TestFixture]
     public class SimplifiedKeyDictionaryTest

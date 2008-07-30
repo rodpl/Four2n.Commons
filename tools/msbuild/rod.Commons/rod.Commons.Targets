@@ -1,22 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
-    ==================================================
-        Common file for VS and external build files
-    ==================================================
+    ===========================================================
+        Helper targets file for VS and external build files.
+        Newest version can be always found at
+        http://code.google.com/p/rodcommons/
+    ===========================================================
 -->
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <RodCommonsTargetsIsLoaded>1</RodCommonsTargetsIsLoaded>
+    </PropertyGroup>
+
+    <!-- ASCII Constants -->
+    <PropertyGroup>
+        <NEW_LINE>%0D%0A</NEW_LINE>
+        <TAB>%09</TAB>
+        <DOUBLE_QUOTES>%22</DOUBLE_QUOTES>
+        <SPACE>%20</SPACE>
+    </PropertyGroup>
+
     <!-- Root Path definition relative for actual build file -->
     <PropertyGroup>
         <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
     </PropertyGroup>
-        
+
     <!-- Helper Files -->
     <PropertyGroup>
-        <IterationNumberFile>$(RootPath)\IterationNumber.txt</IterationNumberFile>
+        <IterationNumberFile Condition=" '$(IterationNumberFile)' == '' ">$(RootPath)\IterationNumber.txt</IterationNumberFile>
     </PropertyGroup>
 
-    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''"/>
 
     <!-- 
         ============================================================
@@ -28,7 +42,7 @@
         <CreateProperty Value="$(AssemblyVersion).$(IterationNumber).$(SvnRevision)">
             <Output TaskParameter="Value" PropertyName="AssemblyVersion"/>
         </CreateProperty>
-        <Message Text="Calculated Assemby Version: $(AssemblyVersion)" Importance="normal"/>
+        <Message Text="Calculated Assembly Version: $(AssemblyVersion)" Importance="normal"/>
     </Target>
 
     <Target Name="DeployWebProject" DependsOnTargets="Build" Condition="$(DeploymentFolder) != ''">
@@ -56,7 +70,8 @@
         <!-- Copy content files recursively to _PublishedWebsites\app\ folder -->
         <Copy SourceFiles="@(Content)" DestinationFolder="$(WebProjectOutputDir)\%(Content.RelativeDir)" />
     </Target>
-    
+
+    <!-- Gets the iteration number from file -->
     <Target Name="GetIterationNumber">
         <!-- Read the the iteration number file contents -->
         <ReadLinesFromFile File="$(IterationNumberFile)">
@@ -67,17 +82,39 @@
         <CreateProperty Value="@(IterationNumberFileContents->'%(Identity)')">
             <Output TaskParameter="Value" PropertyName="IterationNumber"/>
         </CreateProperty>
+
+        <!-- If tehere is no IterationNumber, set zero -->
+        <CreateProperty Value="0" Condition="$(IterationNumber) == ''">
+            <Output TaskParameter="Value" PropertyName="IterationNumber"/>
+        </CreateProperty>
     </Target>
 
     <!-- Get the revision number of the local working copy -->
     <Target Name="GetSvnRevision">
-        <SvnInfo LocalPath="$(MSBuildProjectDirectory)">
-            <Output TaskParameter="LastChangedRevision" PropertyName="SvnRevision"/>
-        </SvnInfo>
+        <SvnVersion LocalPath="$(MSBuildProjectDirectory)" ContinueOnError="true">
+            <Output TaskParameter="Modifications" PropertyName="SvnModified" />
+        </SvnVersion>
+
+        <SvnVersion
+            LocalPath="$(MSBuildProjectDirectory)"
+            UseLastCommittedRevision="!$(SvnModified)"
+            ContinueOnError="true">
+            <Output TaskParameter="Revision" PropertyName="SvnRevision"/>
+        </SvnVersion>
+
+        <PropertyGroup>
+            <SvnRevision Condition="$(SvnRevision) == ''">0</SvnRevision>
+        </PropertyGroup>
     </Target>
 
-    <Target Name="IncludeGeneratedAssemblyInfo" DependsOnTargets="CalculateAssemblyVersion" >
+    <Target Name="IncludeGeneratedAssemblyInfo" DependsOnTargets="GenerateAssemblyInfo">
+        <CreateItem Include="$(AssemblyInfoFile)">
+            <Output ItemName="Compile" TaskParameter="Include"/>
+        </CreateItem>
+        <Touch Files="$(AssemblyInfoFile)" Time="2000-01-01" Condition="$(IsCompileUpToDate) == ''" />
+    </Target>
 
+    <Target Name="GenerateAssemblyInfo" DependsOnTargets="CalculateAssemblyVersion" >
         <AssemblyInfo CodeLanguage="CS"
             OutputFile="$(AssemblyInfoFile)"
             AssemblyTitle="$(AssemblyTitle)"
@@ -86,12 +123,39 @@
             AssemblyCopyright="$(AssemblyCopyright)"
             AssemblyProduct="$(AssemblyProduct)"
             AssemblyVersion="$(AssemblyVersion)"
-            AssemblyFileVersion="$(AssemblyVersion)" />
+            AssemblyFileVersion="$(AssemblyVersion)"
+            Guid="$(AssemblyGuid)" />
+    </Target>
 
-        <Touch Files="$(AssemblyInfoFile)" Time="2000-01-01" />
+    <Target Name="SetIsCompileUpToDate" DependsOnTargets="_InitializeIsCompileUpToDate;_CheckIsCompileUpToDate" />
+            
+    <Target Name="_CheckIsCompileUpToDate"
+            Inputs="$(MSBuildAllProjects);
+                    @(Compile);
+                    @(_CoreCompileResourceInputs);
+                    $(ApplicationIcon);
+                    $(AssemblyOriginatorKeyFile);
+                    @(ReferencePath);
+                    @(CompiledLicenseFile);
+                    @(EmbeddedDocumentation);
+                    $(Win32Resource);
+                    $(Win32Manifest);
+                    @(CustomAdditionalCompileInputs)"
+            Outputs="@(DocFileItem);
+                    @(IntermediateAssembly);
+                    @(_DebugSymbolsIntermediatePath);
+                    $(NonExistentFile);
+                    @(CustomAdditionalCompileOutputs)">
+        <CreateProperty Value="false">
+            <Output PropertyName="IsCompileUpToDate" TaskParameter="ValueSetByTask"/>
+        </CreateProperty>
+        <Message Text="_CheckIsCompileUpToDate $(IsCompileUpToDate)" />
+    </Target>
 
-        <CreateItem Include="$(AssemblyInfoFile)" Condition="Exists('$(AssemblyInfoFile)')">
-            <Output ItemName="Compile" TaskParameter="Include"/>
-        </CreateItem>
+    <Target Name="_InitializeIsCompileUpToDate">
+        <CreateProperty Value="true" >
+            <Output PropertyName="IsCompileUpToDate" TaskParameter="ValueSetByTask" />
+        </CreateProperty>
+        <Message Text="_InitializeIsCompileUpToDate $(IsCompileUpToDate)" />
     </Target>
 </Project>

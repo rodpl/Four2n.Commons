@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
+using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using Castle.MonoRail.Framework.Helpers;
 
 namespace rod.Commons.MonoRail.Helpers
@@ -15,7 +18,7 @@ namespace rod.Commons.MonoRail.Helpers
         private static readonly string default_height = "400";
         private static readonly string default_toolbar = "Default";
 
-        public string InstallScripts()
+        public virtual string InstallScripts()
         {
             return string.Format("<script type=\"text/javascript\" src=\"{0}fckeditor.js\"></script>", CurrentContext.ApplicationPath + STR_BASE_PATH);
         }
@@ -42,7 +45,18 @@ namespace rod.Commons.MonoRail.Helpers
             StringBuilder html = new StringBuilder();
 
             html.Append("<div>\n");
-            if (IsCompatibleBrowser())
+
+            bool isCompatibleBrowser;
+            try
+            {
+                isCompatibleBrowser = IsCompatibleBrowser();
+            }
+            catch
+            {
+                isCompatibleBrowser = false;
+            }
+
+            if (isCompatibleBrowser)
             {
                 string File = ("true" == CurrentContext.Request.QueryString["fcksource"]) ?
                     "fckeditor.original.html" : "fckeditor.html";
@@ -83,29 +97,51 @@ namespace rod.Commons.MonoRail.Helpers
             return html.ToString();
         }
 
-        public bool IsCompatibleBrowser()
+        public virtual bool IsCompatibleBrowser()
         {
-            //            string Agent = Controller.Params["HTTP_USER_AGENT"];
-            //
-            //            if((Agent.IndexOf("MSIE") >= 0) && (Agent.IndexOf("mac") < 0)
-            //                && (Agent.IndexOf("Opera") < 0))
-            //            {
-            //                int p = Agent.IndexOf("MSIE");
-            //                double v = Convert.ToDouble(Agent.Substring(p + 5, 3));
-            //                return v >= 5.5;
-            //            }
-            //            else if (Agent.IndexOf("Gecko/") >= 0)
-            //            {
-            //                int p = Agent.IndexOf("Gecko/");
-            //                int v = Convert.ToInt32(Agent.Substring(p + 6, 8));
-            //                return v >= 20030210;
-            //            }
-            //            else
-            //            {
-            //                return false;
-            //            }
+            string agent = Context.Request.Params["HTTP_USER_AGENT"];
 
-            return true;
+            // IE
+            if (agent.IndexOf("MSIE") >= 0 && agent.IndexOf("Windows") >= 0 && agent.IndexOf("Opera") < 0)
+            {
+                var match = Regex.Match(agent, @"(?<=MSIE )[\d\.]+");
+                return (match.Success && float.Parse(match.Value, CultureInfo.InvariantCulture) >= 5.5);
+            }
+            // Gecko based
+            if (agent.IndexOf("Gecko/") >= 0 && agent.IndexOf("Opera") < 0)
+            {
+                var match = Regex.Match(agent, @"(?<=Gecko/)\d{8}");
+                if (!match.Success)
+                    return false;
+
+                var geckoNumber = int.Parse(match.Value, CultureInfo.InvariantCulture);
+
+                if(agent.IndexOf("Firefox/") >= 0)
+                {
+                    var fireMatch = Regex.Match(agent, @"(?<=Firefox/)[\d]+[.][\d]+");
+                    return (fireMatch.Success && float.Parse(fireMatch.Value, CultureInfo.InvariantCulture) >= 1.5);
+                }
+
+                if ((agent.IndexOf("Netscape") >= 0 || agent.IndexOf("Navigator") >= 0) && geckoNumber >= 20030210)
+                    return true;
+
+                if (agent.IndexOf("Camino") >= 0 && geckoNumber >= 20060214)
+                    return true;
+            }
+
+            if (agent.IndexOf("Opera") >= 0)
+            {
+                var match = Regex.Match(agent, @"(?<=Opera[ ,/])[\d\.]+");
+                return (match.Success && float.Parse(match.Value, CultureInfo.InvariantCulture) >= 9.5);
+            }
+
+            if (agent.IndexOf("AppleWebKit/") >= 0)
+            {
+                var match = Regex.Match(agent, @"(?<=Version/)[\d]+[.][\d]+");
+                return (match.Success && float.Parse(match.Value, CultureInfo.InvariantCulture) >= 3.0);
+            }
+
+            return false;
         }
-    } 
+    }
 }

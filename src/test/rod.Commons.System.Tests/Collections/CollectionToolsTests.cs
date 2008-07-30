@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using NUnit.Framework;
 using rod.Commons.System.Collections;
 
-namespace rod.Commons.System.Tests.Collections
+namespace rod.Commons.System.Collections
 {
     [TestFixture]
     public class CollectionToolsTests
@@ -23,7 +23,7 @@ namespace rod.Commons.System.Tests.Collections
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException), "nonUnique must be empty")]
+        [ExpectedException(typeof(ArgumentException))]
         public void AddToDictionaryFromCollection_InvalidCollectionNonEmpty_ThrowsException()
         {
             var dict = new Dictionary<int, ObjectWithKey>();

@@ -5,44 +5,44 @@
     ==================================================
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    
-    <!-- Root Path definition relative for actual build file -->
-    <PropertyGroup>
-        <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
-        <ToolsPath>$(RootPath)tools\</ToolsPath>
-    </PropertyGroup>
+    <!-- This file must be imported first -->
+    <Import Project="Settings.proj" Condition="$(ToolsPath) == ''"/>
 
-    <!-- 3rd Party Program Paths -->
-    <PropertyGroup>
-        <MSBuildExtensionsPath Condition="Exists('$(ToolsPath)msbuild\')" >$(ToolsPath)msbuild\</MSBuildExtensionsPath>
-    </PropertyGroup>
-    
-    <!-- AssemblyInfo Properties -->
-    <PropertyGroup>
-        <AssemblyInfoFile>AssemblyInfo.cs</AssemblyInfoFile>
-        <AssemblyTitle>rod.Commons - $(AssemblyTitle)</AssemblyTitle>
-        <AssemblyDescription>Utility Libraries.</AssemblyDescription>
-        <AssemblyCompany>rod</AssemblyCompany>
-        <AssemblyCopyright>Copyright 2006-2008 rod</AssemblyCopyright>
-        <AssemblyKeyFile>$(RootPath)nGrape.snk</AssemblyKeyFile>
-        <AssemblyProduct>rod.Commons</AssemblyProduct>
-        <AssemblyVersion>0.1</AssemblyVersion>
-    </PropertyGroup>
-    
     <!-- Add additional depends to Build target -->
     <PropertyGroup>
-        <CoreCompileDependsOn>
-            IncludeGeneratedAssemblyInfo;
-            $(CoreCompileDependsOn)
-        </CoreCompileDependsOn>
+        <BuildDependsOn>
+            $(BuildDependsOn)
+        </BuildDependsOn>
     </PropertyGroup>
 
-    <!-- Helper Files -->
-    <PropertyGroup>
-        <IterationNumberFile>$(RootPath)IterationNumber.txt</IterationNumberFile>
-    </PropertyGroup>
-    
-    <Import Project="$(MSBuildExtensionsPath)rod.Commons\rod.Commons.Targets" />
-    <Import Condition="Exists('$(RootPath)Common.User.Targets')" Project="$(RootPath)Common.User.Targets" />
-    
+    <!-- Import 3rd party targets -->
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''" />
+    <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
+
+    <Target Name="BeforeCompile" DependsOnTargets="SetIsCompileUpToDate">
+        <CallTarget Targets="IncludeGeneratedAssemblyInfo" Condition="$(IsCompileUpToDate) == 'false'" />
+    </Target>
+
+
+    <Target Name="SayHi">
+        <Message Text="Project $(ProjectName) says 'HI' to everyone." Importance="High" />
+        <Beep/>
+    </Target>
+
+    <Target Name="Test" DependsOnTargets="Build;GetTestAssemblies" >
+        <CallTarget Targets="InternalNUnit" />
+    </Target>
+
+    <Target Name="GetTestAssemblies" DependsOnTargets="Build">
+        <ItemGroup>
+            <Assemblies Include="$(TargetDir)$(TargetName)*.dll" />
+        </ItemGroup>
+
+        <RegexMatch Input="@(Assemblies)" Expression="$(TestDetectionExpression)[\.]dll$">
+            <Output TaskParameter="Output" ItemName="TestAssemblies"/>
+        </RegexMatch>
+    </Target>
+
+    <!-- User targets can be run as the lastest -->
+    <Import Condition="Exists('$(RootPath)\Common.User.Targets')" Project="$(RootPath)\Common.User.Targets" />
 </Project>

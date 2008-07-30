@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    ==================================================
+        Default file for external builds
+    ==================================================
+-->
+<Project DefaultTargets="BuildAll" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- This file must be imported first -->
+    <Import Project="Settings.proj" />
+
+    <!-- Import 3rd party targets -->
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''" />
+
+    <!--
+        Public targets
+    -->
+    <Target Name="BuildAll" DependsOnTargets="BuildApp;BuildTest"/>
+
+    <Target Name="BuildApp" DependsOnTargets="GetProjectsFromSolution" >
+
+        <MSBuild Projects="@(AppProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="AppAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(AppAssemblies)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="BuildTest" DependsOnTargets="GetProjectsFromSolution" >
+        <MSBuild Projects="@(TestProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(TestAssemblies)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="TestAll" DependsOnTargets="BuildTest;InternalNUnit" />
+
+    <!--
+        Internal targets
+    -->
+    <Target Name="GetProjectsFromSolution" >
+
+        <!-- Get all the projects associated with the solution -->
+        <GetSolutionProjects Solution="$(SolutionPath)">
+            <Output TaskParameter="Output" ItemName="SolutionProjects" />
+        </GetSolutionProjects>
+
+        <!-- Filter out solution folders and non .csproj items -->
+        <RegexMatch Input="@(SolutionProjects)" Expression=".[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="Projects"/>
+        </RegexMatch>
+
+        <!-- Resolve test projects -->
+        <RegexMatch Input="@(Projects)" Expression="$(TestDetectionExpression)[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="TestProjects"/>
+        </RegexMatch>
+
+        <!-- Resolve the libraries code projects -->
+        <ItemGroup>
+            <AppProjects Include="@(Projects)" Exclude="@(TestProjects)"/>
+        </ItemGroup>
+
+        <Message Text="$(NEW_LINE)Resolved the following solution projects:" Importance="high" />
+        <Message Text="AppProjects:$(NEW_LINE)$(TAB)@(AppProjects->'%(RelativeDir)%(FileName)%(Extension)', '$(NEW_LINE)$(TAB)')" Importance="high"/>
+        <Message Text="TestProjects:$(NEW_LINE)$(TAB)@(TestProjects->'%(RelativeDir)%(FileName)%(Extension)', '$(NEW_LINE)$(TAB)')" Importance="high"/>
+    </Target>
+
+</Project>

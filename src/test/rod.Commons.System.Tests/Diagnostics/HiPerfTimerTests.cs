@@ -1,7 +1,7 @@
-﻿using MbUnit.Framework;
+﻿using NUnit.Framework;
 using rod.Commons.System.Diagnostics;
 
-namespace rod.Commons.System.Tests.Diagnostics
+namespace rod.Commons.System.Diagnostics
 {
     [TestFixture]
     public class HiPerfTimerTests
@@ -20,7 +20,7 @@ namespace rod.Commons.System.Tests.Diagnostics
 
             hiPerfTimer.Stop();
             // After stop, Duration is > 0
-            Assert.LowerThan(0, hiPerfTimer.Duration);
+            Assert.Less(0, hiPerfTimer.Duration);
 
             var lastTime = hiPerfTimer.Duration;
             // Duration should be the same as before
@@ -28,7 +28,7 @@ namespace rod.Commons.System.Tests.Diagnostics
 
             hiPerfTimer.Stop();
             // Now it should be updated
-            Assert.LowerThan(lastTime, hiPerfTimer.Duration);
+            Assert.Less(lastTime, hiPerfTimer.Duration);
 
             hiPerfTimer.Start();
             // Should equals to zero

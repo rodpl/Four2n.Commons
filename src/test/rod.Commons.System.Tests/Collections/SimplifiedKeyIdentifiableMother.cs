@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using NUnit.Framework;
 using rod.Commons.System.Collections;
 
-namespace rod.Commons.System.Tests.Collections
+namespace rod.Commons.System.Collections
 {
     public static class SimplifiedKeyIdentifiableMother
     {

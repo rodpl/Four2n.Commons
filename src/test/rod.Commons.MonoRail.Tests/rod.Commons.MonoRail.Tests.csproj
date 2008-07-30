@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <!-- Root Path definition relative for actual build file -->
-    <PropertyGroup>
-        <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..\</RootPath>
-        <AssemblyTitle>rod's Commons MonoRail Tests library</AssemblyTitle>
-    </PropertyGroup>
+  <!-- Root Path definition relative for actual build file -->
+  <PropertyGroup>
+    <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+    <AssemblyTitle>rod's Commons MonoRail Tests library</AssemblyTitle>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,7 +13,7 @@
     <ProjectGuid>{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rod.Commons.MonoRail.Tests</RootNamespace>
+    <RootNamespace>rod.Commons.MonoRail</RootNamespace>
     <AssemblyName>rod.Commons.MonoRail.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,17 +60,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\net\2.0\Castle\Castle.MonoRail.TestSupport.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework, Version=2.4.2.130, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+    <Reference Include="nunit.framework, Version=2.5.0.8189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\net\2.0\MbUnit\MbUnit.Framework.dll</HintPath>
+      <HintPath>..\..\..\tools\nunit\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework.2.0, Version=2.4.2.130, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework.extensions, Version=2.5.0.8189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\net\2.0\MbUnit\MbUnit.Framework.2.0.dll</HintPath>
+      <HintPath>..\..\..\tools\nunit\lib\nunit.framework.extensions.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks, Version=3.5.0.1, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\net\2.0\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
+      <HintPath>..\..\..\tools\rhino.mocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -92,7 +92,7 @@
     <Compile Include="MockedTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(RootPath)\Common.targets" />
+  <Import Project="$(RootPath)\Common.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

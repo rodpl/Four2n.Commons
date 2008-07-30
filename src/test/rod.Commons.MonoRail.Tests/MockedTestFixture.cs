@@ -1,7 +1,7 @@
-using MbUnit.Framework;
+using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace rod.Commons.MonoRail.Tests
+namespace rod.Commons.MonoRail
 {
     /// <summary>
     /// Base class for test fixtures which uses mocks.
@@ -10,7 +10,6 @@ namespace rod.Commons.MonoRail.Tests
     {
         protected MockRepository Mocks { get; set; }
 
-        [SetUp]
         public virtual void SetUp()
         {
             Mocks = new MockRepository();

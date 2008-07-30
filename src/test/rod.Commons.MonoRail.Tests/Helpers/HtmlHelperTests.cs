@@ -1,7 +1,7 @@
-using MbUnit.Framework;
+using NUnit.Framework;
 using rod.Commons.MonoRail.Helpers;
 
-namespace rod.Commons.MonoRail.Tests.Helpers
+namespace rod.Commons.MonoRail.Helpers
 {
     [TestFixture]
     public class HtmlHelperTests
@@ -14,16 +14,15 @@ namespace rod.Commons.MonoRail.Tests.Helpers
             _model = new HtmlHelper();
         }
 
-        [RowTest]
-        [Row(null, HtmlHelper.NBSP)]
-        [Row("", HtmlHelper.NBSP)]
-        [Row(" ", HtmlHelper.NBSP)]
-        [Row("  ", HtmlHelper.NBSP + HtmlHelper.NBSP)]
-        [Row("   ", HtmlHelper.NBSP + HtmlHelper.NBSP + HtmlHelper.NBSP)]
-        [Row(" text", " text")]
-        [Row("text ", "text ")]
-        [Row("text", "text")]
-        [Row(1, "1")]
+        [TestCase(null, HtmlHelper.NBSP)]
+        [TestCase("", HtmlHelper.NBSP)]
+        [TestCase(" ", HtmlHelper.NBSP)]
+        [TestCase("  ", HtmlHelper.NBSP + HtmlHelper.NBSP)]
+        [TestCase("   ", HtmlHelper.NBSP + HtmlHelper.NBSP + HtmlHelper.NBSP)]
+        [TestCase(" text", " text")]
+        [TestCase("text ", "text ")]
+        [TestCase("text", "text")]
+        [TestCase(1, "1")]
         public void ToNbsp_StringInputs_ReturnsInputOrNbsp(object input, string expected)
         {
             Assert.AreEqual(expected, _model.ToNbsp(input));
