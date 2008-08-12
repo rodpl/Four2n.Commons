@@ -9,7 +9,7 @@ namespace rod.Commons.System.Collections
     {
         #region Nested type: Implementation
 
-        public class Implementation : SimplifiedKeyIdentifiable<byte, SimplifiedKeyMother.Implementation>
+        public class Implementation : ISimplifiedKeyIdentifiable<byte, SimplifiedKeyMother.Implementation>
         {
             private readonly SimplifiedKeyMother.Implementation _key;
 
@@ -25,7 +25,7 @@ namespace rod.Commons.System.Collections
             public string SureName { get; set; }
             public DateTime BirthDate { get; set; }
 
-            #region SimplifiedKeyIdentifiable<byte,Implementation> Members
+            #region ISimplifiedKeyIdentifiable<byte,Implementation> Members
 
             public SimplifiedKeyMother.Implementation Key
             {

@@ -15,7 +15,7 @@ namespace rod.Commons.System.Collections
     public abstract class SimplifiedKeyDictionary<V, K, T> : ICollection<T>
         where V : struct
         where K : SimplifiedKey<V>
-        where T : SimplifiedKeyIdentifiable<V, K>
+        where T : ISimplifiedKeyIdentifiable<V, K>
     {
         private readonly IDictionary<K, int> _doubledSimplifiedKeyValues = new Dictionary<K, int>();
         private readonly IDictionary<string, T> _recordsWithUniqueBusinessKey = new Dictionary<string, T>();

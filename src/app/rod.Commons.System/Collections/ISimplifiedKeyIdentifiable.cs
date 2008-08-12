@@ -5,7 +5,7 @@ namespace rod.Commons.System.Collections
     /// </summary>
     /// <typeparam name="V">Value type for simlified key</typeparam>
     /// <typeparam name="K">Simplified key type</typeparam>
-    public interface SimplifiedKeyIdentifiable<V, K>
+    public interface ISimplifiedKeyIdentifiable<V, K>
         where V: struct
         where K: SimplifiedKey<V>
     {

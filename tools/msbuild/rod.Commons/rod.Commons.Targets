@@ -45,30 +45,16 @@
         <Message Text="Calculated Assembly Version: $(AssemblyVersion)" Importance="normal"/>
     </Target>
 
-    <Target Name="DeployWebProject" DependsOnTargets="Build" Condition="$(DeploymentFolder) != ''">
-        <CreateProperty Value="$(DeploymentFolder)\$(Configuration)\$(MSBuildProjectName)">
-            <Output PropertyName="WebProjectOutputDir" TaskParameter="Value"/>
-        </CreateProperty>
-        <!-- Log tasks -->
-        <Message Text="Copying Web Application Project Files for $(MSBuildProjectName)" />
+    <Target Name="DeployWeb" DependsOnTargets="_GetWebProjectOutputDir;ResolveReferences" Condition="$(DeploymentPath) != '' and $(WebProjectOutputDir) != '' ">
+        <RemoveDir Directories="$(WebProjectOutputDir)"/>
+        <CallTarget Targets="_CopyWebApplication" />
+    </Target>
 
-        <!-- Create the _PublishedWebsites\app\bin folder -->
-        <MakeDir Directories="$(WebProjectOutputDir)\bin" />
-
-        <!-- Copy build outputs to _PublishedWebsites\app\bin folder -->
-        <Copy SourceFiles="@(IntermediateAssembly)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(AddModules)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="$(IntermediateOutputPath)$(_SGenDllName)" DestinationFolder="$(WebProjectOutputDir)\%(Content.SubFolder)%(Content.RecursiveDir)" SkipUnchangedFiles="true" Condition="'$(_SGenDllCreated)'=='true'" />
-        <Copy SourceFiles="$(IntermediateOutputPath)$(TargetName).pdb" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" Condition="'$(_DebugSymbolsProduced)'=='true'" />
-        <Copy SourceFiles="@(DocFileItem)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" Condition="'$(_DocumentationFileProduced)'=='true'" />
-        <Copy SourceFiles="@(IntermediateSatelliteAssembliesWithTargetPath)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(ReferenceComWrappersToCopyLocal); @(ResolvedIsolatedComModules); @(_DeploymentLooseManifestFile); @(NativeReferenceFile)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
-
-        <!-- copy any referenced assemblies to _PublishedWebsites\app\bin folder -->
-        <Copy SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
-
-        <!-- Copy content files recursively to _PublishedWebsites\app\ folder -->
-        <Copy SourceFiles="@(Content)" DestinationFolder="$(WebProjectOutputDir)\%(Content.RelativeDir)" />
+    <Target Name="_GetWebProjectOutputDir" Condition="$(DeploymentPath) != ''">
+        <PropertyGroup>
+            <WebProjectOutputDir>$(DeploymentPath)\$(Configuration)\$(MSBuildProjectName)</WebProjectOutputDir>
+            <OutDir>$(WebProjectOutputDir)\bin\</OutDir>
+        </PropertyGroup>
     </Target>
 
     <!-- Gets the iteration number from file -->
@@ -128,7 +114,7 @@
     </Target>
 
     <Target Name="SetIsCompileUpToDate" DependsOnTargets="_InitializeIsCompileUpToDate;_CheckIsCompileUpToDate" />
-            
+
     <Target Name="_CheckIsCompileUpToDate"
             Inputs="$(MSBuildAllProjects);
                     @(Compile);

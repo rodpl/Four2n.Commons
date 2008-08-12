@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <!-- Root Path definition relative for actual build file -->
-    <PropertyGroup>
-        <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
-        <AssemblyTitle>rod's Commons System library</AssemblyTitle>
-        <AssemblyGuid>11EB568D-2C05-402b-97D1-CAF555366DAD</AssemblyGuid>
-    </PropertyGroup>
+  <!-- Root Path definition relative for actual build file -->
+  <PropertyGroup>
+    <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+    <AssemblyTitle>rod's Commons System library</AssemblyTitle>
+    <AssemblyGuid>11EB568D-2C05-402b-97D1-CAF555366DAD</AssemblyGuid>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -45,12 +45,12 @@
     <Compile Include="Collections\CollectionTools.cs" />
     <Compile Include="Collections\SimplifiedKey.cs" />
     <Compile Include="Collections\SimplifiedKeyDictionary.cs" />
-    <Compile Include="Collections\SimplifiedKeyIdentifiable.cs" />
+    <Compile Include="Collections\ISimplifiedKeyIdentifiable.cs" />
     <Compile Include="Diagnostics\HiPerfTimer.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(RootPath)\Common.targets" />
+  <Import Project="$(RootPath)\Common.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

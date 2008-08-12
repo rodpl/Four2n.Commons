@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Globalization;
-using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using Castle.MonoRail.Framework;
 using NUnit.Framework;
 using NUnit.Framework.Syntax.CSharp;
-//using NUnit.Framework.SyntaxHelpers;
 using rod.Commons.MonoRail.Helpers;
 using rod.Commons.MonoRail.Tests.Controllers;
 using Castle.MonoRail.Framework.Test;
@@ -21,30 +17,30 @@ namespace rod.Commons.MonoRail.Helpers
         public override void SetUp()
         {
             base.SetUp();
-            _model = new FckEditorHelper();
+            _sut = new FckEditorHelper();
 
-            _model.SetController(new HomeController(), new ControllerContext());
-            _model.SetContext(new StubEngineContext(new StubRequest(), new StubResponse(), new UrlInfo("area", "home", "index", "/app", "sdm")));
-            _model.ServerUtility = new StubServerUtility();
+            _sut.SetController(new HomeController(), new ControllerContext());
+            _sut.SetContext(new StubEngineContext(new StubRequest(), new StubResponse(), new UrlInfo("area", "home", "index", "/app", "sdm")));
+            _sut.ServerUtility = new StubServerUtility();
 
-            _model.Context.Request.Params["HTTP_USER_AGENT"] = @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1";
-            Assert.That(_model.IsCompatibleBrowser());
+            _sut.Context.Request.Params["HTTP_USER_AGENT"] = @"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1";
+            Assert.That(_sut.IsCompatibleBrowser());
         }
 
         #endregion
 
-        private FckEditorHelper _model;
+        private FckEditorHelper _sut;
 
         [Test]
         public void InstallScripts_ReturnsLinkToJavaScript()
         {
-            Assert.AreEqual(@"<script type=""text/javascript"" src=""/app/content/helpers/fckeditor/fckeditor.js""></script>", _model.InstallScripts());
+            Assert.AreEqual(@"<script type=""text/javascript"" src=""/app/content/helpers/fckeditor/fckeditor.js""></script>", _sut.InstallScripts());
         }
 
         [Test]
         public void CreateHtmlTest_ReturnsHtmlInDivTags()
         {
-            var html = _model.CreateHtml("instance");
+            var html = _sut.CreateHtml("instance");
             Assert.That(html, Text.StartsWith("<div>\n"));
             Assert.That(html, Text.EndsWith("</div>\n"));
         }
@@ -97,8 +93,8 @@ namespace rod.Commons.MonoRail.Helpers
         [TestCase(@"Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C28 Safari/419.3")]
         public void IsCompatibleBrowser_ThisBrowserShouldBeCompatible(string agent)
         {
-            _model.Context.Request.Params["HTTP_USER_AGENT"] = agent;
-            Assert.That(_model.IsCompatibleBrowser());
+            _sut.Context.Request.Params["HTTP_USER_AGENT"] = agent;
+            Assert.That(_sut.IsCompatibleBrowser());
         }
 
         // IE < 5.5 on Windows
@@ -138,9 +134,8 @@ namespace rod.Commons.MonoRail.Helpers
         [TestCase(@"Lynx/2.8.7dev.4 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/0.9.8d")]
         public void IsCompatibleBrowser_ThisBrowserShouldNOTBeCompatible(string agent)
         {
-            _model.Context.Request.Params["HTTP_USER_AGENT"] = agent;
-            Assert.That(!_model.IsCompatibleBrowser());
+            _sut.Context.Request.Params["HTTP_USER_AGENT"] = agent;
+            Assert.That(!_sut.IsCompatibleBrowser());
         }
-
     }
 }
