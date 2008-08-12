@@ -75,9 +75,15 @@
         <Type>Non-Resx</Type>
         <WithCulture>true</WithCulture>
       </EmbeddedResource>
-    </ItemGroup>      
+    </ItemGroup>
   </Target>
 
+  <PropertyGroup>
+    <WorkflowCompilationDependsOn>
+      CreateWorkflowManifestResourceNames
+    </WorkflowCompilationDependsOn>
+  </PropertyGroup>
+  
   <Target Name="WorkflowCompilation" 
       Inputs="$(MSBuildAllProjects);
           @(Compile);
@@ -90,18 +96,30 @@
           @(CompiledLicenseFile)" 
           Outputs="$(DocFile);
           @(IntermediateAssembly); 
-          $(NonExistentFile)">
+          $(NonExistentFile)"
+    DependsOnTargets="$(WorkflowCompilationDependsOn)">
 
     <ItemGroup>      
       <WFCompilationResourcesWithNoCulture Include="@(EmbeddedResource)" 
         Condition="'%(EmbeddedResource.Type)'!='resx' and '%(EmbeddedResource.WithCulture)'=='false'"/>
       <WFCompilationResourcesWithNoCulture Include="$(IntermediateOutputPath)%(EmbeddedResource.ManifestResourceName).resources"
         Condition="'%(EmbeddedResource.Type)'=='resx' and '%(EmbeddedResource.WithCulture)'=='false'"/>
-    </ItemGroup>      
+
+      <WFCompilationResourcesWithUnknownCulture Include="@(EmbeddedResource)"
+        Condition="'%(EmbeddedResource.Type)'!='resx' and '%(EmbeddedResource.WithCulture)'==''"/>
+      <WFCompilationResourcesWithUnknownCulture Include="$(IntermediateOutputPath)%(EmbeddedResource.ManifestResourceName).resources"
+        Condition="'%(EmbeddedResource.Type)'=='resx' and '%(EmbeddedResource.WithCulture)'==''"/>
+      <WFCompilationResourcesWithNoCulture Include="@(WFCompilationResourcesWithUnknownCulture)"
+        Condition="'@(WFCompilationResourcesWithNoCulture)'=='' and '@(WFCompilationResourcesWithUnknownCulture)'!=''"/>
+    </ItemGroup>
 
     <ItemGroup>
        <WFCompilationOptions Include="define" Condition="'$(DefineConstants)' != ''">
           <value>$(DefineConstants)</value>
+          <delimiter>:</delimiter>
+       </WFCompilationOptions>
+       <WFCompilationOptions Include="nowarn" Condition="'$(NoWarn)' != ''">
+          <value>$(NoWarn)</value>
           <delimiter>:</delimiter>
        </WFCompilationOptions>
     </ItemGroup>      

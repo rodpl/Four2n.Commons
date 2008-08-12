@@ -114,6 +114,17 @@
     <!-- Set this property to true to stop Cleaning, Compiling, and/or Testing on the first failure encountered -->
     <StopOnFirstFailure Condition=" '$(StopOnFirstFailure)'=='' ">false</StopOnFirstFailure>
 
+    <!-- Set this property to true to stop on a test failure or false to continue on a test failure -->
+    <StopOnTestFailure Condition=" '$(StopOnTestFailure)'=='' ">false</StopOnTestFailure>
+
+    <!-- Set this property to true to mark builds as Failed when TestStatus is Failed -->
+    <TreatTestFailureAsBuildFailure Condition=" '$(TreatTestFailureAsBuildFailure)'=='' ">false</TreatTestFailureAsBuildFailure>
+
+    <!-- The targets specified in this property will cause ProjectStartedEvents to not be logged. The default values are the P2P reference targets
+         from MSBuild 3.5 - GetTargetPath, GetNativeManifest, and GetCopyToOutputDirectoryItems. 
+     -->
+    <TargetsNotLogged Condition=" '$(TargetsNotLogged)' == '' ">GetTargetPath;GetNativeManifest;GetCopyToOutputDirectoryItems</TargetsNotLogged>
+
     <!-- The default solution root for desktop builds -->
     <SolutionRoot Condition=" '$(SolutionRoot)'=='' and '$(IsDesktopBuild)'=='true' " >$(MSBuildProjectDirectory)\..\..</SolutionRoot>
 
@@ -286,6 +297,7 @@
       <Output TaskParameter="MaxProcesses" PropertyName="MaxProcesses" />
       <Output TaskParameter="Port" PropertyName="Port" />
       <Output TaskParameter="Quality" PropertyName="Quality" />
+      <Output TaskParameter="Reason" PropertyName="Reason" />
       <Output TaskParameter="RequestedBy" PropertyName="RequestedBy" />
       <Output TaskParameter="RequestedFor" PropertyName="RequestedFor" />
       <Output TaskParameter="SourceGetVersion" PropertyName="SourceGetVersion" />
@@ -493,10 +505,11 @@
                          BuildDirectory=$(BuildDirectory);BuildNumber=$(BuildNumber);CompilationStatus=$(CompilationStatus);CompilationSuccess=$(CompilationSuccess);
                          ConfigurationFolderUri=$(ConfigurationFolderUri);DropLocation=$(DropLocation);
                          FullLabelName=$(FullLabelName);LastChangedBy=$(LastChangedBy);LastChangedOn=$(LastChangedOn);LogLocation=$(LogLocation);
-                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
+                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);Reason=$(Reason);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
                          SourceGetVersion=$(SourceGetVersion);StartTime=$(StartTime);Status=$(Status);TeamProject=$(TeamProject);TestStatus=$(TestStatus);
                          TestSuccess=$(TestSuccess);WorkspaceName=$(WorkspaceName);WorkspaceOwner=$(WorkspaceOwner);
-                         SolutionRoot=$(SolutionRoot);BinariesRoot=$(BinariesRoot);TestResultsRoot=$(TestResultsRoot)"
+                         SolutionRoot=$(SolutionRoot);BinariesRoot=$(BinariesRoot);TestResultsRoot=$(TestResultsRoot);
+                         $(CustomPropertiesForClean)"
              Targets="CoreCleanCompilationOutput">
       <Output TaskParameter="TargetOutputs" ItemName="CleanOutputs" />
     </MSBuild>
@@ -600,10 +613,15 @@
     </PropertyGroup>
 
     <!-- Generate the VCOverride file for C++ projects -->
-    <WriteLinesToFile
-          File="$(VsPropsFile)"
-          Lines="$(VCOverridesOpen) OutputDirectory=%22$(OutDir)%22%3E%0D%0A$(AdditionalVCOverrides)$(VCOverridesClose)"
-          Overwrite="true" />
+    <WriteLinesToFile Condition=" '$(CustomizableOutDir)' != 'true' "
+                      File="$(VsPropsFile)"
+                      Lines="$(VCOverridesOpen) OutputDirectory=%22$(OutDir)%22%3E%0D%0A$(AdditionalVCOverrides)$(VCOverridesClose)"
+                      Overwrite="true" />
+
+    <WriteLinesToFile Condition=" '$(CustomizableOutDir)' == 'true' "
+                      File="$(VsPropsFile)"
+                      Lines="$(VCOverridesOpen) %3E%0D%0A$(AdditionalVCOverrides)$(VCOverridesClose)"
+                      Overwrite="true" />
 
     <!-- Call MSBuild /t:Clean for each solution -->
     <MSBuild BuildInParallel="$(BuildSolutionsInParallel)"
@@ -859,10 +877,11 @@
                          BuildDirectory=$(BuildDirectory);BuildNumber=$(BuildNumber);CompilationStatus=$(CompilationStatus);CompilationSuccess=$(CompilationSuccess);
                          ConfigurationFolderUri=$(ConfigurationFolderUri);DropLocation=$(DropLocation);
                          FullLabelName=$(FullLabelName);LastChangedBy=$(LastChangedBy);LastChangedOn=$(LastChangedOn);LogLocation=$(LogLocation);
-                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
+                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);Reason=$(Reason);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
                          SourceGetVersion=$(SourceGetVersion);StartTime=$(StartTime);Status=$(Status);TeamProject=$(TeamProject);TestStatus=$(TestStatus);
                          TestSuccess=$(TestSuccess);WorkspaceName=$(WorkspaceName);WorkspaceOwner=$(WorkspaceOwner);
-                         SolutionRoot=$(SolutionRoot);BinariesRoot=$(BinariesRoot);TestResultsRoot=$(TestResultsRoot)"
+                         SolutionRoot=$(SolutionRoot);BinariesRoot=$(BinariesRoot);TestResultsRoot=$(TestResultsRoot);
+                         $(CustomPropertiesForBuild)"             
              Targets="CoreCompile">
       <Output TaskParameter="TargetOutputs" ItemName="CompilationOutputs" />
     </MSBuild>
@@ -975,17 +994,22 @@
     </PropertyGroup>
 
     <!-- Generate the VCOverride file for C++ projects -->
-    <WriteLinesToFile
-          File="$(VsPropsFile)"
-          Lines="$(VCOverridesOpen) OutputDirectory=%22$(OutDir)%22%3E%0D%0A$(VCOverridesCodeAnalysis)$(AdditionalVCOverrides)$(VCOverridesClose)"
-          Overwrite="true" />
+    <WriteLinesToFile Condition=" '$(CustomizableOutDir)' != 'true' "
+                      File="$(VsPropsFile)"
+                      Lines="$(VCOverridesOpen) OutputDirectory=%22$(OutDir)%22%3E%0D%0A$(VCOverridesCodeAnalysis)$(AdditionalVCOverrides)$(VCOverridesClose)"
+                      Overwrite="true" />
+
+    <WriteLinesToFile Condition=" '$(CustomizableOutDir)' == 'true' "
+                      File="$(VsPropsFile)"
+                      Lines="$(VCOverridesOpen) %3E%0D%0A$(VCOverridesCodeAnalysis)$(AdditionalVCOverrides)$(VCOverridesClose)"
+                      Overwrite="true" />
 
     <!-- Build using MSBuild task -->
     <MSBuild BuildInParallel="$(BuildSolutionsInParallel)"
              Projects="$(Solution)"
              Properties="Configuration=$(Configuration);Platform=$(Platform);$(OutDirOption);$(PublishDirOption);SkipInvalidConfigurations=$(SkipInvalidConfigurations);$(FxCopDirOption);$(ReferencePathOption);$(CodeAnalysisOption);
                              VCBuildOverride=$(VsPropsFile);VCBuildAdditionalLibPaths=$(VCBuildAdditionalLibPaths);VCBuildAdditionalOptions=$(VCBuildAdditionalOptions);VCBuildToolPath=$(VCBuildToolPath);VCBuildUseEnvironment=$(VCBuildUseEnvironment);
-                             TeamBuildConstants=$(TeamBuildConstants);$(CustomPropertiesForBuild);$(CustomProperties)"
+                             TeamBuildConstants=$(TeamBuildConstants);TargetsNotLogged=$(TargetsNotLogged);$(CustomPropertiesForBuild);$(CustomProperties)"
              Targets="$(Targets)"
              StopOnFirstFailure="$(StopOnFirstFailure)">
       <Output TaskParameter="TargetOutputs" ItemName="CompilationOutputs" />
@@ -1075,7 +1099,7 @@
                          BuildDirectory=$(BuildDirectory);BuildNumber=$(BuildNumber);CompilationStatus=$(CompilationStatus);CompilationSuccess=$(CompilationSuccess);
                          ConfigurationFolderUri=$(ConfigurationFolderUri);DropLocation=$(DropLocation);
                          FullLabelName=$(FullLabelName);LastChangedBy=$(LastChangedBy);LastChangedOn=$(LastChangedOn);LogLocation=$(LogLocation);
-                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
+                         MachineName=$(MachineName);MaxProcesses=$(MaxProcesses);Port=$(Port);Quality=$(Quality);Reason=$(Reason);RequestedBy=$(RequestedBy);RequestedFor=$(RequestedFor);
                          SourceGetVersion=$(SourceGetVersion);StartTime=$(StartTime);Status=$(Status);TeamProject=$(TeamProject);TestStatus=$(TestStatus);
                          TestSuccess=$(TestSuccess);WorkspaceName=$(WorkspaceName);WorkspaceOwner=$(WorkspaceOwner);
                          SolutionRoot=$(SolutionRoot);BinariesRoot=$(BinariesRoot);TestResultsRoot=$(TestResultsRoot)"
@@ -1083,6 +1107,16 @@
              StopOnFirstFailure="$(StopOnFirstFailure)">
       <Output TaskParameter="TargetOutputs" ItemName="TestOutputs" />
     </MSBuild>
+
+    <!-- Refresh the test properties so that they can be used in AfterTest, etc. -->
+    <GetBuildProperties TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                        BuildUri="$(BuildUri)"
+                        Condition=" '$(IsDesktopBuild)' != 'true' ">
+      <Output TaskParameter="TestStatus" PropertyName="TestStatus" />
+      <Output TaskParameter="TestSuccess" PropertyName="TestSuccess" />
+    </GetBuildProperties>
+
+    <OnError ExecuteTargets="SetTestBreakProperties;OnBuildBreak" />
 
   </Target>
 
@@ -1101,6 +1135,7 @@
           Condition="!Exists('$(TestResultsRoot)')" />
 
     <MSBuild Projects="@(ConfigurationList)"
+             Properties="TreatTestFailureAsBuildFailure=$(TreatTestFailureAsBuildFailure)"
              Targets="TestConfiguration"
              StopOnFirstFailure="$(StopOnFirstFailure)">
       <Output TaskParameter="TargetOutputs" ItemName="TestOutputs" />
@@ -1126,11 +1161,10 @@
   <!-- Override this target to execute custom tasks after the testing of an individual configuration -->
   <Target Name="AfterTestConfiguration" />
 
-  <Target Name="ResolveTestFilesForEndToEndIteration"
-          Condition=" '$(IsDesktopBuild)' != 'true' ">
+  <Target Name="ResolveTestFilesForEndToEndIteration">
 
     <WorkspaceItemConverterTask
-          Condition=" '@(MetaDataFile)' != '' "
+          Condition=" '@(MetaDataFile)' != '' and '$(IsDesktopBuild)' != 'true' "
           TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
           BuildUri="$(BuildUri)"
           WorkspaceName="$(WorkspaceName)"
@@ -1140,7 +1174,7 @@
     </WorkspaceItemConverterTask>
 
     <WorkspaceItemConverterTask
-          Condition=" '@(TestContainer)' != '' "
+          Condition=" '@(TestContainer)' != '' and '$(IsDesktopBuild)' != 'true' "
           TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
           BuildUri="$(BuildUri)"
           WorkspaceName="$(WorkspaceName)"
@@ -1150,10 +1184,14 @@
     </WorkspaceItemConverterTask>
 
     <!-- Expand TempTestContainer wild cards to create LocalTestContainer item that will be used later (this will replace * and ? with matching file paths)-->
-    <CreateItem Include="@(TempTestContainer)">
+    <CreateItem Include="@(TempTestContainer)" Condition=" '$(IsDesktopBuild)' != 'true' ">
       <Output TaskParameter="Include" ItemName="LocalTestContainer"/>
     </CreateItem>
-    
+
+    <CreateItem Include="@(TestContainer)" Condition=" '$(IsDesktopBuild)' == 'true' ">
+      <Output TaskParameter="Include" ItemName="LocalTestContainer"/>
+    </CreateItem>
+
   </Target>
 
   <!-- Test an individual configuration -->
@@ -1170,6 +1208,11 @@
              Text="Warning: The TestNames property cannot be used in in combination with the V8 TestToolsTask and will be ignored." />
     <Warning Condition=" '$(V8TestToolsTask)'=='true' and '@(LocalTestContainer)' != '' "
              Text="Warning: The TestContainer item group cannot be used in combination with the V8 TestToolsTask and will be ignored." />
+
+    <PropertyGroup>
+      <ContinueOnTestError Condition=" '$(StopOnTestFailure)' != 'true' ">true</ContinueOnTestError>
+      <ContinueOnTestError Condition=" '$(StopOnTestFailure)' == 'true' ">false</ContinueOnTestError>
+    </PropertyGroup>
     
     <!-- MetaDataFile tests for non-desktop builds. -->
     <TestToolsTask
@@ -1177,7 +1220,7 @@
           BuildFlavor="$(Configuration)"
           Platform="$(Platform)"
           PublishServer="$(TeamFoundationServerUrl)"
-          PublishBuild="$(BuildNumber)"
+          PublishBuild="$(BuildUri)"
           SearchPathRoot="$(OutDir)"
           PathToResultsFilesRoot="$(TestResultsRoot)"
           MetaDataFile="%(LocalMetaDataFile.Identity)"
@@ -1185,7 +1228,7 @@
           TestLists="%(LocalMetaDataFile.TestList)"
           TeamProject="$(TeamProject)"
           TestNames="$(TestNames)"
-          ContinueOnError="true" />
+          ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- 8.0 MetaDataFile tests for non-desktop builds. -->
     <TestToolsTask
@@ -1200,7 +1243,7 @@
           RunConfigFile="$(RunConfigFile)"
           TestLists="%(LocalMetaDataFile.TestList)"
           TeamProject="$(TeamProject)"
-          ContinueOnError="true" />
+          ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- TestContainer tests for non-desktop builds. -->
     <TestToolsTask
@@ -1208,14 +1251,14 @@
             BuildFlavor="$(Configuration)"
             Platform="$(Platform)"
             PublishServer="$(TeamFoundationServerUrl)"
-            PublishBuild="$(BuildNumber)"
+            PublishBuild="$(BuildUri)"
             SearchPathRoot="$(OutDir)"
             PathToResultsFilesRoot="$(TestResultsRoot)"
             RunConfigFile="$(RunConfigFile)"
             TestContainers="@(LocalTestContainer)"
             TeamProject="$(TeamProject)"
             TestNames="$(TestNames)"
-            ContinueOnError="true" />
+            ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- MetaDataFile tests for desktop builds. -->
     <TestToolsTask
@@ -1226,7 +1269,7 @@
           RunConfigFile="$(RunConfigFile)"
           TestLists="%(MetaDataFile.TestList)"
           TestNames="$(TestNames)"
-          ContinueOnError="true" />
+          ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- 8.0 MetaDataFile tests for desktop builds. -->
     <TestToolsTask
@@ -1236,7 +1279,7 @@
           MetaDataFile="%(MetaDataFile.Identity)"
           RunConfigFile="$(RunConfigFile)"
           TestLists="%(MetaDataFile.TestList)"
-          ContinueOnError="true" />
+          ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- TestContainer tests for desktop builds. -->
     <TestToolsTask
@@ -1246,7 +1289,7 @@
             RunConfigFile="$(RunConfigFile)"
             TestContainers="@(LocalTestContainer)"
             TestNames="$(TestNames)"
-            ContinueOnError="true" />
+            ContinueOnError="$(ContinueOnTestError)" />
 
     <!-- Populate TestOutputs with MetaData Files and Test Containers. -->
     <ItemGroup>
@@ -1317,11 +1360,38 @@
 
   </Target>
 
+  <!-- Set the TestBreak property to true. -->
+  <Target Name="SetTestBreakProperties">
+
+    <PropertyGroup>
+      <TestBreak>true</TestBreak>
+    </PropertyGroup>
+
+    <!-- Refresh the test properties so that they can be used in AfterTestBreak, etc. -->
+    <GetBuildProperties TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                        BuildUri="$(BuildUri)"
+                        Condition=" '$(IsDesktopBuild)' != 'true' ">
+      <Output TaskParameter="TestStatus" PropertyName="TestStatus" />
+      <Output TaskParameter="TestSuccess" PropertyName="TestSuccess" />
+    </GetBuildProperties>
+
+  </Target>
+
   <!-- Set the BuildBreak property to true. -->
   <Target Name="SetBuildBreakProperties">
+    
     <PropertyGroup>
       <BuildBreak>true</BuildBreak>
     </PropertyGroup>
+
+    <!-- Refresh the compilation properties so that they can be used in AfterBuildBreak, etc. -->
+    <GetBuildProperties TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                        BuildUri="$(BuildUri)"
+                        Condition=" '$(IsDesktopBuild)' != 'true' ">
+      <Output TaskParameter="CompilationStatus" PropertyName="CompilationStatus" />
+      <Output TaskParameter="CompilationSuccess" PropertyName="CompilationSuccess" />
+    </GetBuildProperties>
+
   </Target>
   
   <!-- Override this target to execute custom tasks before the BuildBreak target -->
@@ -1363,6 +1433,7 @@
   </PropertyGroup>
   <!-- Batch target for associating changesets on a build break -->
   <Target Name="GetChangesetsOnBuildBreak"
+          Condition=" '$(BuildBreak)' == 'true' "
           DependsOnTargets="$(GetChangesetsOnBuildBreakDependsOn)" />
 
   <!-- Override the target to execute custom tasks after associating changesets on a build break -->

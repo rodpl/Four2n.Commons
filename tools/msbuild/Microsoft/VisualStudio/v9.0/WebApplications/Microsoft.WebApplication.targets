@@ -58,8 +58,11 @@ Copyright (C) 2005 Microsoft Corporation. All rights reserved.
 
 		<!-- Copy content files recursively to _PublishedWebsites\app\ folder -->
 		<Copy SourceFiles="@(Content)" DestinationFolder="$(WebProjectOutputDir)\%(Content.RelativeDir)" />
-		
-	</Target>
+
+        	<!-- Copy items that have been marked to be copied to the bin folder -->
+        	<Copy SourceFiles="@(_SourceItemsToCopyToOutputDirectory)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="true" />
+   		<Copy SourceFiles="@(_SourceItemsToCopyToOutputDirectoryAlways)" DestinationFolder="$(WebProjectOutputDir)\bin" SkipUnchangedFiles="false" />
+ 	</Target>
 
 	<!--
 	============================================================

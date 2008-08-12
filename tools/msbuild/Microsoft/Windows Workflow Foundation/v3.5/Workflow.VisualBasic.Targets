@@ -71,6 +71,11 @@
     </ItemGroup>      
   </Target>
 
+  <PropertyGroup>
+    <WorkflowCompilationDependsOn>
+      CreateWorkflowManifestResourceNames
+    </WorkflowCompilationDependsOn>
+  </PropertyGroup>
 
   <!--Note: The inputs and outputs of the "WorkflowCompilation" target match those of 
             "Compile" target in CSharp.Targets/VisualBasic.Targets 
@@ -91,15 +96,22 @@
           @(CompiledLicenseFile)" 
           Outputs="$(DocFile);
           @(IntermediateAssembly); 
-          $(NonExistentFile)">
+          $(NonExistentFile)"
+    DependsOnTargets="$(WorkflowCompilationDependsOn)">
 
     <ItemGroup>      
       <WFCompilationResourcesWithNoCulture Include="@(EmbeddedResource)" 
         Condition="'%(EmbeddedResource.Type)'!='resx' and '%(EmbeddedResource.WithCulture)'=='false'"/>
       <WFCompilationResourcesWithNoCulture Include="$(IntermediateOutputPath)%(EmbeddedResource.ManifestResourceName).resources"
-        Condition="'%(EmbeddedResource.Type)'=='resx' and '%(EmbeddedResource.WithCulture)'=='false'">
-      </WFCompilationResourcesWithNoCulture>
-    </ItemGroup>      
+        Condition="'%(EmbeddedResource.Type)'=='resx' and '%(EmbeddedResource.WithCulture)'=='false'"/>
+
+      <WFCompilationResourcesWithUnknownCulture Include="@(EmbeddedResource)"
+        Condition="'%(EmbeddedResource.Type)'!='resx' and '%(EmbeddedResource.WithCulture)'==''"/>
+      <WFCompilationResourcesWithUnknownCulture Include="$(IntermediateOutputPath)%(EmbeddedResource.ManifestResourceName).resources"
+        Condition="'%(EmbeddedResource.Type)'=='resx' and '%(EmbeddedResource.WithCulture)'==''"/>
+      <WFCompilationResourcesWithNoCulture Include="@(WFCompilationResourcesWithUnknownCulture)"
+        Condition="'@(WFCompilationResourcesWithNoCulture)'=='' and '@(WFCompilationResourcesWithUnknownCulture)'!=''"/>
+    </ItemGroup>
 
     <ItemGroup>
        <WFCompilationOptions Include="define" Condition="'$(DefineConstants)' != ''">
@@ -130,6 +142,10 @@
        </WFCompilationOptions>
        <WFCompilationOptions Include="optioncompare" Condition="'$(OptionStrict)' == 'Text'">
           <value>text</value>
+          <delimiter>:</delimiter>
+       </WFCompilationOptions>
+       <WFCompilationOptions Include="nowarn" Condition="'$(NoWarn)' != ''">
+          <value>$(NoWarn)</value>
           <delimiter>:</delimiter>
        </WFCompilationOptions>
     </ItemGroup>      
