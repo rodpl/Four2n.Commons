@@ -38,7 +38,7 @@
     <!-- Signing Properties-->
     <PropertyGroup>
         <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$(RootPath)\rod.Commons.snk</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>$(RootPath)\$(ProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
     <!-- AssemblyInfo Properties -->
