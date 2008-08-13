@@ -89,7 +89,7 @@
         </SvnVersion>
 
         <PropertyGroup>
-            <SvnRevision Condition="$(SvnRevision) == ''">0</SvnRevision>
+            <SvnRevision Condition="$(SvnRevision) == '' or $(SvnRevision) == '-1'">0</SvnRevision>
         </PropertyGroup>
     </Target>
 
