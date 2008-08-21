@@ -10,11 +10,11 @@
 
     <!-- Import 3rd party targets -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
-
+    <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
 <!--
         Public targets
 -->
-    <Target Name="BuildAll" DependsOnTargets="BuildApp;BuildTest"/>
+    <Target Name="BuildAll" DependsOnTargets="BuildApp;BuildAllTests"/>
 
     <Target Name="BuildApp" DependsOnTargets="GetProjectsFromSolution" >
         
@@ -29,7 +29,7 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="BuildTest" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildAllTests" DependsOnTargets="GetProjectsFromSolution" >
         <MSBuild Projects="@(TestProjects)"
                  Targets="Build">
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
@@ -41,6 +41,53 @@
         </ItemGroup>
     </Target>
 
+    <Target Name="BuildPerformanceTests" DependsOnTargets="GetProjectsFromSolution" >
+        <MSBuild Projects="@(PerformanceTestProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(TestAssemblies)"/>
+        </ItemGroup>
+    </Target>
+    <Target Name="BuildAcceptanceTests" DependsOnTargets="GetProjectsFromSolution" >
+        <MSBuild Projects="@(AcceptanceTestProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(TestAssemblies)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="BuildIntegrationTests" DependsOnTargets="GetProjectsFromSolution" >
+        <MSBuild Projects="@(IntegrationTestProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(TestAssemblies)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="BuildUnitTests" DependsOnTargets="GetProjectsFromSolution" >
+        <MSBuild Projects="@(UnitTestProjects)"
+                 Targets="Build">
+            <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
+        </MSBuild>
+
+        <!-- Add all assemblies to all build assemblies -->
+        <ItemGroup>
+            <BuildAssemblies Include="@(TestAssemblies)"/>
+        </ItemGroup>
+    </Target>
+    
     <Target Name="RebuildAll" DependsOnTargets="CleanAll;BuildAll"/>
 
     <Target Name="CleanAll" DependsOnTargets="CleanApp;CleanTest"/>
@@ -57,9 +104,27 @@
         </MSBuild>
     </Target>
 
-    <Target Name="TestAll" DependsOnTargets="BuildTest">
+    <Target Name="RunAllTests" DependsOnTargets="BuildAllTests">
         <CallTarget Targets="InternalNUnit" />
     </Target>
+
+    <Target Name="RunPerformanceTests" DependsOnTargets="BuildPerformanceTests">
+        <CallTarget Targets="InternalNUnit" />
+    </Target>
+
+    <Target Name="RunAcceptanceTests" DependsOnTargets="BuildAcceptanceTests">
+        <CallTarget Targets="InternalNUnit" />
+    </Target>
+
+    <Target Name="RunIntegrationTests" DependsOnTargets="BuildIntegrationTests">
+        <CallTarget Targets="InternalNUnit" />
+    </Target>
+
+    <Target Name="RunUnitTests" DependsOnTargets="BuildUnitTests">
+        <CallTarget Targets="InternalNUnit" />
+    </Target>
+
+
 <!--
         Internal targets
 -->
@@ -78,6 +143,22 @@
         <!-- Resolve test projects -->
         <RegexMatch Input="@(Projects)" Expression="$(TestDetectionExpression)[\.]csproj$">
             <Output TaskParameter="Output" ItemName="TestProjects"/>
+        </RegexMatch>
+
+        <RegexMatch Input="@(TestProjects)" Expression="$(PerformanceTestDetectionExpression)[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="PerformanceTestProjects"/>
+        </RegexMatch>
+
+        <RegexMatch Input="@(TestProjects)" Expression="$(AcceptanceTestDetectionExpression)[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="AcceptanceTestProjects"/>
+        </RegexMatch>
+
+        <RegexMatch Input="@(TestProjects)" Expression="$(IntegrationTestDetectionExpression)[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="IntegrationTestProjects"/>
+        </RegexMatch>
+
+        <RegexMatch Input="@(TestProjects)" Expression="$(UnitTestDetectionExpression)[\.]csproj$">
+            <Output TaskParameter="Output" ItemName="UnitTestProjects"/>
         </RegexMatch>
 
         <!-- Resolve the libraries code projects -->

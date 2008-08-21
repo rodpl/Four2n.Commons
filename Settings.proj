@@ -25,7 +25,11 @@
     
     <!-- Project files -->
     <PropertyGroup>
-        <TestDetectionExpression>.[\.](Test[s]{0,1})</TestDetectionExpression>
+        <TestDetectionExpression>.[\.]((Performance|Acceptance|Integration|Unit)?Test[s]{0,1})</TestDetectionExpression>
+        <PerformanceTestDetectionExpression>.[\.](PerformanceTest[s]{0,1})</PerformanceTestDetectionExpression>
+        <AcceptanceTestDetectionExpression>.[\.](AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
+        <IntegrationTestDetectionExpression>.[\.](IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
+        <UnitTestDetectionExpression>.[\.]((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
         <SolutionPath>$(RootPath)\$(ProjectName).VS2008.sln</SolutionPath>
     </PropertyGroup>
 
@@ -37,7 +41,7 @@
 
     <!-- Signing Properties-->
     <PropertyGroup>
-        <SignAssembly>true</SignAssembly>
+        <SignAssembly Condition="$(SignAssembly) == ''">true</SignAssembly>
         <AssemblyOriginatorKeyFile>$(RootPath)\$(ProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
