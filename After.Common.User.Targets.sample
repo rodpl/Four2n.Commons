@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ======================================================
+        Common user file which is run after MS targets
+    ======================================================
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+    
+    <!--                    Custom settings                   -->
+    <PropertyGroup>
+        <BuildDependsOn>
+            $(BuildDependsOn);
+            DeployAfterBuild
+        </BuildDependsOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <DllDeploy Include="TKOPD">
+            <Path>$(RootPath)\..\..\..\..\Elligo\TKOPD.Demo\trunk\lib\net\3.5\rod.Commons\$(Configuration)</Path>
+            <Include>$(TargetDir)$(TargetName).*</Include>
+            <Exclude>$(TargetDir)*Tests.*</Exclude>
+        </DllDeploy>
+        <DllDeploy Include="nGrape">
+            <Path>$(RootPath)\..\..\..\..\Elligo\nGrape\trunk\lib\net\3.5\rod.Commons\$(Configuration)</Path>
+            <Include>$(TargetDir)$(TargetName).*</Include>
+            <Exclude>$(TargetDir)*Tests.*</Exclude>
+        </DllDeploy>
+        <DllDeploy Include="Sun.Interfaces.Commons">
+            <Path>$(RootPath)\..\..\..\..\Hogart\Sun\Interfaces\Commons\trunk\lib\net\2.0\rod.Commons\$(Configuration)</Path>
+            <Include>$(TargetDir)rod.Commons.System.dll</Include>
+            <Exclude>$(TargetDir)*Tests.*</Exclude>
+        </DllDeploy>
+        <DllDeploy Include="Rez2Sun">
+            <Path>$(RootPath)\..\..\..\..\Hogart\Sun\Interfaces\Rez2Sun\trunk\lib\net\2.0\rod.Commons\$(Configuration)</Path>
+            <Include>$(TargetDir)rod.Commons.System.dll</Include>
+            <Exclude>$(TargetDir)*Tests.*</Exclude>
+        </DllDeploy>
+    </ItemGroup>
+    
+    <!-- Copy to multiply target folders excluding tests -->
+    <!-- http://blogs.parivedasolutions.com/borrell/archive/2007/05/19/MSBuildMultipleDeployments.aspx -->
+    <Target Name="DeployAfterBuild">
+        <CreateItem Include="%(DllDeploy.Include)" Exclude="%(DllDeploy.Exclude)" AdditionalMetadata="ToDir=%(DllDeploy.Path)">
+            <Output ItemName="DllFilesToDeploy" TaskParameter="Include"/>
+        </CreateItem>
+        <Copy
+                SourceFiles="@(DllFilesToDeploy)"
+                DestinationFolder="%(ToDir)\%(RecursiveDir)"
+                ContinueOnError="true"
+        />
+    </Target>
+</Project>

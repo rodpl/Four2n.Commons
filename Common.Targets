@@ -1,33 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
     ==================================================
-        Common file for VS and external build files
+        Common targets library used by other files
     ==================================================
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    <!-- This file must be imported first -->
-    <Import Project="Settings.proj" Condition="$(ToolsPath) == ''"/>
-
-    <!-- Add additional depends to Build target -->
     <PropertyGroup>
-        <BuildDependsOn>
-            $(BuildDependsOn);
-            SayHi;
-        </BuildDependsOn>
+        <CommonTargetsLoaded>true</CommonTargetsLoaded>
     </PropertyGroup>
 
     <!-- Import 3rd party targets -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''"/>
     <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
-
-    <Target Name="BeforeCompile" DependsOnTargets="SetIsCompileUpToDate">
-        <CallTarget Targets="IncludeGeneratedAssemblyInfo" Condition="$(IsCompileUpToDate) == 'false'" />
-    </Target>
-    
-    <Target Name="SayHi" Condition="$(IsCompileUpToDate) == 'false'" >
-        <Message Text="Project $(ProjectName) says 'HI' to everyone. " Importance="High" />
-        <Beep/>
-    </Target>
 
     <Target Name="Test" DependsOnTargets="Build;GetTestAssemblies" >
         <CallTarget Targets="InternalNUnit" />
@@ -43,6 +27,40 @@
         </RegexMatch>
     </Target>
 
-    <!-- User targets can be run as the lastest -->
-    <Import Condition="Exists('$(RootPath)\Common.User.Targets')" Project="$(RootPath)\Common.User.Targets" />
+    <!--
+        Internal tasks
+    -->
+    <Target Name="InternalNUnit" DependsOnTargets="_CreateTestResutsFolder" Condition=" '@(TestAssemblies)' != '' ">
+        <PropertyGroup>
+            <NUnitTestResultXmlFiles>$(TestResultsPath)\nunit-results.xml</NUnitTestResultXmlFiles>
+            <NUnitTestResultTxtFiles>$(TestResultsPath)\nunit-results.txt</NUnitTestResultTxtFiles>
+            <NUnitTestOutputFiles>$(TestResultsPath)\nunit-output.txt</NUnitTestOutputFiles>
+            <NUnitTestSummaryFiles>$(TestResultsPath)\nunit-summary.txt</NUnitTestSummaryFiles>
+        </PropertyGroup>
+
+        <Exec Command="$(NUnitPath)\nunit-console.exe @(TestAssemblies, ' ') /xml=$(NUnitTestResultXmlFiles) /output=$(NUnitTestOutputFiles) /nologo" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="NUnitExitCode"/>
+        </Exec>
+        <Xslt
+            Inputs="$(NUnitTestResultXmlFiles)"
+            Xsl="$(NUnitPath)\xslt\Summary.xslt"
+            Output="$(NUnitTestResultTxtFiles)" ContinueOnError="false"/>
+
+        <ReadLinesFromFile File="$(NUnitTestResultTxtFiles)">
+            <Output TaskParameter="Lines" ItemName="NUnitSummaryLines"/>
+        </ReadLinesFromFile>
+
+        <Merge Mode="TextLine"
+               SourceFiles="$(NUnitTestResultTxtFiles);$(NUnitTestOutputFiles)"
+               DestinationFile="$(NUnitTestSummaryFiles)" />
+
+        <Message Condition="$(NUnitExitCode) == '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" />
+        <Message Condition="$(NUnitExitCode) != '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" Importance="High" />
+        <Exec Command="notepad.exe $(NUnitTestSummaryFiles)" />
+        <Error Condition="$(NUnitExitCode) != '0'" Text="Some tests has $(NUnitExitCode) failed tests." />
+    </Target>
+
+    <Target Name="_CreateTestResutsFolder" Condition="$(TestResultsPath) != '' And !Exists('$(TestResultsPath)')">
+        <MakeDir Directories="$(TestResultsPath)"/>
+    </Target>
 </Project>

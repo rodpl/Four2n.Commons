@@ -6,32 +6,40 @@
 -->
 <Project DefaultTargets="BuildAll" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
     <!-- This file must be imported first -->
-    <Import Project="Settings.proj" />
+    <Import Project="Settings.Targets" />
+
+    <PropertyGroup>
+        <MSBuildsDependsOn>
+            GetProjectsFromSolution;
+            _BuildPropertiesString
+        </MSBuildsDependsOn>
+    </PropertyGroup>
 
     <!-- Import 3rd party targets -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
     <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
-<!--
+    <!--
         Public targets
 -->
     <Target Name="BuildAll" DependsOnTargets="BuildApp;BuildAllTests"/>
 
-    <Target Name="BuildApp" DependsOnTargets="GetProjectsFromSolution" >
-        
+    <Target Name="BuildApp" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(AppProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)">
             <Output TaskParameter="TargetOutputs" ItemName="AppAssemblies"/>
         </MSBuild>
-        
+
         <!-- Add all assemblies to all build assemblies -->
         <ItemGroup>
             <BuildAssemblies Include="@(AppAssemblies)"/>
         </ItemGroup>
     </Target>
 
-    <Target Name="BuildAllTests" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildAllTests" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(TestProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)" >
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
         </MSBuild>
 
@@ -41,9 +49,10 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="BuildPerformanceTests" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildPerformanceTests" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(PerformanceTestProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)">
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
         </MSBuild>
 
@@ -52,9 +61,10 @@
             <BuildAssemblies Include="@(TestAssemblies)"/>
         </ItemGroup>
     </Target>
-    <Target Name="BuildAcceptanceTests" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildAcceptanceTests" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(AcceptanceTestProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)">
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
         </MSBuild>
 
@@ -64,9 +74,10 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="BuildIntegrationTests" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildIntegrationTests" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(IntegrationTestProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)">
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
         </MSBuild>
 
@@ -76,9 +87,10 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="BuildUnitTests" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="BuildUnitTests" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(UnitTestProjects)"
-                 Targets="Build">
+                 Targets="Build"
+                 Properties="%(PropertiesStrings.Identity)">
             <Output TaskParameter="TargetOutputs" ItemName="TestAssemblies"/>
         </MSBuild>
 
@@ -87,20 +99,22 @@
             <BuildAssemblies Include="@(TestAssemblies)"/>
         </ItemGroup>
     </Target>
-    
+
     <Target Name="RebuildAll" DependsOnTargets="CleanAll;BuildAll"/>
 
     <Target Name="CleanAll" DependsOnTargets="CleanApp;CleanTest"/>
 
-    <Target Name="CleanApp" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="CleanApp" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(AppProjects)"
-                 Targets="Clean">
+                 Targets="Clean"
+                 Properties="%(PropertiesStrings.Identity)">
         </MSBuild>
     </Target>
 
-    <Target Name="CleanTest" DependsOnTargets="GetProjectsFromSolution" >
+    <Target Name="CleanTest" DependsOnTargets="$(MSBuildsDependsOn)" >
         <MSBuild Projects="@(TestProjects)"
-                 Targets="Clean">
+                 Targets="Clean"
+                 Properties="%(PropertiesStrings.Identity)">
         </MSBuild>
     </Target>
 
@@ -108,7 +122,7 @@
         <CallTarget Targets="InternalNUnit" />
     </Target>
 
-    <Target Name="RunPerformanceTests" DependsOnTargets="BuildPerformanceTests">
+    <Target Name="RunPerformanceTests" DependsOnTargets="_ChangeConfigurationToRelease;BuildPerformanceTests">
         <CallTarget Targets="InternalNUnit" />
     </Target>
 
@@ -125,7 +139,7 @@
     </Target>
 
 
-<!--
+    <!--
         Internal targets
 -->
     <Target Name="GetProjectsFromSolution" >
@@ -171,4 +185,28 @@
         <Message Text="TestProjects:$(NEW_LINE)$(TAB)@(TestProjects->'%(RelativeDir)%(FileName)%(Extension)', '$(NEW_LINE)$(TAB)')" Importance="high"/>
     </Target>
 
+    <Target Name="_ChangeConfigurationToRelease">
+        <PropertyGroup>
+            <Configuration>Release</Configuration>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="_BuildPropertiesString" Inputs="@(AllConfigurations)" Outputs="%(Identity)">
+        <PropertyGroup>
+            <TempPropertyString Condition="$(Configuration) != '' AND $(Configuration) != 'ALL'">$(TempPropertyString);Configuration=$(Configuration)</TempPropertyString>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <TempPropertiesStrings Include="NONE" Condition="$(Configuration) != 'ALL'">
+                <Value>$(TempPropertyString)</Value>
+            </TempPropertiesStrings>
+            <TempPropertiesStrings Include="Config=ALL" Condition="$(Configuration) == 'ALL'">
+                <Value>Configuration=%(AllConfigurations.Identity);$(TempPropertyString)</Value>
+            </TempPropertiesStrings>
+        </ItemGroup>
+        <ItemGroup>
+            <PropertiesStrings Include="%(TempPropertiesStrings.Value)" ></PropertiesStrings>
+        </ItemGroup>
+
+    </Target>
 </Project>

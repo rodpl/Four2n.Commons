@@ -5,13 +5,16 @@
     ==================================================
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+    <PropertyGroup>
+        <SettingsLoaded>true</SettingsLoaded>
+    </PropertyGroup>
 
     <!-- Root Path definition relative for actual build file -->
     <PropertyGroup>
         <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
     </PropertyGroup>
     
-        <!-- Names -->
+    <!-- Names -->
     <PropertyGroup>
         <ProjectName>rod.Commons</ProjectName>
     </PropertyGroup>
@@ -45,47 +48,20 @@
         <AssemblyOriginatorKeyFile>$(RootPath)\$(ProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
+    <ItemGroup>
+        <AllConfigurations Include="Debug"/>
+        <AllConfigurations Include="Release"/>
+    </ItemGroup>
+
     <!-- AssemblyInfo Properties -->
     <PropertyGroup>
-        <AssemblyInfoFile>AssemblyInfo.cs</AssemblyInfoFile>
+        <AssemblyInfoFile>Properties\AssemblyInfo.cs</AssemblyInfoFile>
         <AssemblyTitle>$(ProjectName) - $(AssemblyTitle)</AssemblyTitle>
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
-        <AssemblyCompany>rod</AssemblyCompany>
-        <AssemblyCopyright>Copyright 2006-2008 rod</AssemblyCopyright>
+        <AssemblyCompany>42n</AssemblyCompany>
+        <AssemblyCopyright>Copyright 2006-2008 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
         <AssemblyProduct>$(ProjectName)</AssemblyProduct>
         <AssemblyVersion>0.1</AssemblyVersion>
     </PropertyGroup>
 
-    <!--
-        Internal tasks
-    -->
-    <Target Name="InternalNUnit" DependsOnTargets="_CreateTestResutsFolder" Condition=" '@(TestAssemblies)' != '' ">
-        <PropertyGroup>
-            <NUnitTestResultXmlFiles>$(TestResultsPath)\nunit-results.xml</NUnitTestResultXmlFiles>
-        </PropertyGroup>
-
-        <NUnit
-            ToolPath="$(NUnitPath)"
-            Assemblies="@(TestAssemblies)"
-            OutputXmlFile="$(NUnitTestResultXmlFiles)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="NUnitExitCode"/>
-        </NUnit>
-        <Xslt
-            Inputs="$(NUnitTestResultXmlFiles)"
-            Xsl="$(NUnitPath)\xslt\Summary.xslt"
-            Output="$(TestResultsPath)\nunit-summary.txt" ContinueOnError="false"/>
-
-        <ReadLinesFromFile File="$(TestResultsPath)\nunit-summary.txt">
-            <Output TaskParameter="Lines" ItemName="NUnitSummaryLines"/>
-        </ReadLinesFromFile>
-
-        <Message Condition="$(NUnitExitCode) == '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" />
-        <Message Condition="$(NUnitExitCode) != '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" Importance="High" />
-        <Exec Command="notepad.exe $(TestResultsPath)\nunit-summary.txt" />
-        <Error Condition="$(NUnitExitCode) != '0'" Text="Some tests has $(NUnitExitCode) failed tests." />
-    </Target>
-
-    <Target Name="_CreateTestResutsFolder" Condition="$(TestResultsPath) != '' And !Exists('$(TestResultsPath)')">
-        <MakeDir Directories="$(TestResultsPath)"/>
-    </Target>
 </Project>

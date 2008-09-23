@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ==================================================
+        Common file which is run before MS targets
+    ==================================================
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+    <!-- User targets can be run as the earliest -->
+    <Import Project="$(RootPath)\Before.Common.User.Targets" Condition="Exists('$(RootPath)\Before.Common.User.Targets')"/>
+
+    <!-- Settings file -->
+    <Import Project="Settings.Targets" Condition="$(SettingsLoaded) != 'true'"/>
+
+    <!-- Load common targets library -->
+    <Import Condition="$(CommonTargetsLoaded) != 'true' AND Exists('$(RootPath)\Common.Targets')" Project="$(RootPath)\Common.Targets" />
+</Project>

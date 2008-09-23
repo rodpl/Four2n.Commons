@@ -27,12 +27,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rod.Commons.MonoRail.Tests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78AC0561-AA61-43EB-8805-8918A16EAAA0}"
 	ProjectSection(SolutionItems) = preProject
+		After.Common.Targets = After.Common.Targets
+		After.Common.User.Targets = After.Common.User.Targets
+		Before.Common.Targets = Before.Common.Targets
+		Before.Common.User.Targets = Before.Common.User.Targets
 		Common.Targets = Common.Targets
-		Common.User.Targets = Common.User.Targets
 		Default.proj = Default.proj
 		IterationNumber.txt = IterationNumber.txt
 		tools\msbuild\rod.Commons\rod.Commons.Targets = tools\msbuild\rod.Commons\rod.Commons.Targets
-		Settings.proj = Settings.proj
+		Settings.Targets = Settings.Targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rod.Commons.System.Web", "src\app\rod.Commons.System.Web\rod.Commons.System.Web.csproj", "{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}"
@@ -80,8 +83,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{73C0B76A-0323-4A36-875A-A0F1354AF874} = {1B1D9A93-4C59-4230-A538-A1492AA1C720}
 		{949B153C-AF2F-41AA-965B-1D6739FD73F2} = {1B1D9A93-4C59-4230-A538-A1492AA1C720}
+		{73C0B76A-0323-4A36-875A-A0F1354AF874} = {1B1D9A93-4C59-4230-A538-A1492AA1C720}
 		{008AA833-BCA9-4F5E-AD4E-B585C53655EF} = {949B153C-AF2F-41AA-965B-1D6739FD73F2}
 		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2} = {949B153C-AF2F-41AA-965B-1D6739FD73F2}
 		{3AAF394B-5C31-4E62-89BC-630C3EDF3C68} = {6B094626-264F-47ED-B31A-028749DDE79C}

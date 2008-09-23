@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ======================================================
+        Common file file which is run after MS targets
+    ======================================================
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+
+    <Target Name="BeforeCompile" DependsOnTargets="SetIsCompileUpToDate">
+        <CallTarget Targets="IncludeGeneratedAssemblyInfo" Condition="$(IsCompileUpToDate) == 'false'" />
+    </Target>
+
+    <!-- User targets can be run as the lastest -->
+    <Import Condition="Exists('$(RootPath)\After.Common.User.Targets')" Project="$(RootPath)\After.Common.User.Targets" />
+</Project>
