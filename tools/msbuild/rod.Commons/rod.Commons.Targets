@@ -84,7 +84,8 @@
         <SvnVersion
             LocalPath="$(MSBuildProjectDirectory)"
             UseLastCommittedRevision="!$(SvnModified)"
-            ContinueOnError="true">
+            ContinueOnError="true"
+            Condition="$(SvnRevision) == ''">
             <Output TaskParameter="Revision" PropertyName="SvnRevision"/>
         </SvnVersion>
 
