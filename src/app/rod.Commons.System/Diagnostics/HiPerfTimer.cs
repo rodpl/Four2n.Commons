@@ -1,12 +1,14 @@
-﻿using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Threading;
-
-namespace rod.Commons.System.Diagnostics
+﻿namespace rod.Commons.System.Diagnostics
 {
+    using global::System;
+    using global::System.ComponentModel;
+    using global::System.Runtime.InteropServices;
+    using global::System.Threading;
+
     /// <summary>
     /// Hi-performance timer.
     /// </summary>
+    [Obsolete("Use System.Diagnostic.Stopwatch instead of this.") ]
     public class HiPerfTimer
     {
         private readonly long freq;

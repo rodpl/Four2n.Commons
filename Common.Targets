@@ -12,55 +12,95 @@
     <!-- Import 3rd party targets -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''"/>
     <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
+    <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NCoverExplorer" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
+    <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NCover" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
+    <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NUnitProject" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
 
     <Target Name="Test" DependsOnTargets="Build;GetTestAssemblies" >
         <CallTarget Targets="InternalNUnit" />
     </Target>
 
+    <Target Name="Coverage" DependsOnTargets="Build;_GetTestedAssemblies;_CreateCoverageResutsFolder" >
+        <NCover
+            ToolPath="$(NCoverPath)"
+            CommandLineExe="$(NUnitConsole)"
+            CommandLineArgs="@(TestAssemblies, ' ') $(TestCommandParameters)"
+            CoverageFile="$(CoverageXmlFile)"
+            LogLevel="Normal"
+            LogFile="$(CoverageLogFile)"
+            AssemblyList="@(TestedAssemblies)"
+            ContinueOnError="true"
+            />
+        <Message Text="$(CoverageResultsPath) $(CoverageXmlReportFile) $(CoverageHtmlReportFile) ssss" />
+        <CreateItem Include="$(CoverageXmlFile)" >
+            <Output ItemName="CoverageXmlFiles" TaskParameter="Include" />
+        </CreateItem>
+        <Message Text="@(CoverageXmlFiles)"/>
+        <NCoverExplorer
+            ToolPath="$(NCoverExplorerPath)"
+            ProjectName="TestProject"
+            ReportType="ModuleClassSummary"
+            OutputDir="$(CoverageResultsPath)"
+            XmlReportName="CoverageSummary.xml"
+            HtmlReportName="CoverageSummary.html"
+            ShowExcluded="True"
+            SatisfactoryCoverage="75"
+            CoverageFiles="@(CoverageXmlFiles)"
+            Exclusions="Assembly=*.Tests;Namespace=*.Tests*"
+            ModuleThresholds="@(ModuleThreshold)"
+        />
+        <Exec Command="$(InternetBrowser) $(CoverageResultsPath)\CoverageSummary.html" />
+    </Target>
+
     <Target Name="GetTestAssemblies" DependsOnTargets="Build">
-        <ItemGroup>
-            <Assemblies Include="$(TargetDir)$(TargetName)*.dll" />
-        </ItemGroup>
+        <CreateItem Include="$(TargetDir)$(TargetName)*.dll" >
+            <Output ItemName="Assemblies" TaskParameter="Include"/>
+        </CreateItem>
 
         <RegexMatch Input="@(Assemblies)" Expression="$(TestDetectionExpression)[\.]dll$">
             <Output TaskParameter="Output" ItemName="TestAssemblies"/>
         </RegexMatch>
     </Target>
 
+    <Target Name="_GetTestedAssemblies" DependsOnTargets="GetTestAssemblies" Condition="$(TestedAssemblies) == ''">
+        <!-- Calculate tested assmeblies from test unit naming convention-->
+        <RegexReplace Input="$(AssemblyName)" Expression="$(TestedAssembliesReplaceExpression)" Replacement="">
+            <Output TaskParameter="Output" ItemName="TestedAssemblies"/>
+        </RegexReplace>
+    </Target>
+
     <!--
         Internal tasks
     -->
     <Target Name="InternalNUnit" DependsOnTargets="_CreateTestResutsFolder" Condition=" '@(TestAssemblies)' != '' ">
-        <PropertyGroup>
-            <NUnitTestResultXmlFiles>$(TestResultsPath)\nunit-results.xml</NUnitTestResultXmlFiles>
-            <NUnitTestResultTxtFiles>$(TestResultsPath)\nunit-results.txt</NUnitTestResultTxtFiles>
-            <NUnitTestOutputFiles>$(TestResultsPath)\nunit-output.txt</NUnitTestOutputFiles>
-            <NUnitTestSummaryFiles>$(TestResultsPath)\nunit-summary.txt</NUnitTestSummaryFiles>
-        </PropertyGroup>
-
-        <Exec Command="$(NUnitPath)\nunit-console.exe @(TestAssemblies, ' ') /xml=$(NUnitTestResultXmlFiles) /output=$(NUnitTestOutputFiles) /nologo" ContinueOnError="true">
+        <Exec Command="$(NUnitConsole) @(TestAssemblies, ' ') $(TestCommandParameters)" ContinueOnError="true">
             <Output TaskParameter="ExitCode" PropertyName="NUnitExitCode"/>
         </Exec>
         <Xslt
-            Inputs="$(NUnitTestResultXmlFiles)"
+            Inputs="$(TestResultXmlFile)"
             Xsl="$(NUnitPath)\xslt\Summary.xslt"
-            Output="$(NUnitTestResultTxtFiles)" ContinueOnError="false"/>
+            Output="$(TestResultTxtFile)" ContinueOnError="false"/>
 
-        <ReadLinesFromFile File="$(NUnitTestResultTxtFiles)">
+        <ReadLinesFromFile File="$(TestResultTxtFile)">
             <Output TaskParameter="Lines" ItemName="NUnitSummaryLines"/>
         </ReadLinesFromFile>
 
         <Merge Mode="TextLine"
-               SourceFiles="$(NUnitTestResultTxtFiles);$(NUnitTestOutputFiles)"
-               DestinationFile="$(NUnitTestSummaryFiles)" />
+               SourceFiles="$(TestResultTxtFile);$(TestOutputFile)"
+               DestinationFile="$(TestSummaryFile)" />
 
         <Message Condition="$(NUnitExitCode) == '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" />
         <Message Condition="$(NUnitExitCode) != '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" Importance="High" />
-        <Exec Command="notepad.exe $(NUnitTestSummaryFiles)" />
+        <Exec Command="notepad.exe $(TestSummaryFile)" />
         <Error Condition="$(NUnitExitCode) != '0'" Text="Some tests has $(NUnitExitCode) failed tests." />
     </Target>
 
     <Target Name="_CreateTestResutsFolder" Condition="$(TestResultsPath) != '' And !Exists('$(TestResultsPath)')">
         <MakeDir Directories="$(TestResultsPath)"/>
     </Target>
+
+    <Target Name="_CreateCoverageResutsFolder" Condition="$(CoverageResultsPath) != '' And !Exists('$(CoverageResultsPath)')">
+        <MakeDir Directories="$(CoverageResultsPath)"/>
+    </Target>
+
 </Project>

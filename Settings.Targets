@@ -13,12 +13,12 @@
     <PropertyGroup>
         <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)</RootPath>
     </PropertyGroup>
-    
+
     <!-- Names -->
     <PropertyGroup>
         <ProjectName>rod.Commons</ProjectName>
     </PropertyGroup>
-    
+
     <!-- Project folders -->
     <PropertyGroup>
         <BuildPath>$(RootPath)\build</BuildPath>
@@ -28,18 +28,54 @@
     
     <!-- Project files -->
     <PropertyGroup>
-        <TestDetectionExpression>.[\.]((Performance|Acceptance|Integration|Unit)?Test[s]{0,1})</TestDetectionExpression>
-        <PerformanceTestDetectionExpression>.[\.](PerformanceTest[s]{0,1})</PerformanceTestDetectionExpression>
-        <AcceptanceTestDetectionExpression>.[\.](AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
-        <IntegrationTestDetectionExpression>.[\.](IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
-        <UnitTestDetectionExpression>.[\.]((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
+        <TestDetectionExpression>([.])((Performance|Acceptance|Integration|Unit)?Test[s]{0,1})</TestDetectionExpression>
+        <PerformanceTestDetectionExpression>([.])(PerformanceTest[s]{0,1})</PerformanceTestDetectionExpression>
+        <AcceptanceTestDetectionExpression>([.])(AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
+        <IntegrationTestDetectionExpression>([.])(IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
+        <UnitTestDetectionExpression>([.])((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
         <SolutionPath>$(RootPath)\$(ProjectName).VS2008.sln</SolutionPath>
+        <TestedAssembliesReplaceExpression>((.*\\|^)(?=[^\\]*$))|($(TestDetectionExpression).*$)</TestedAssembliesReplaceExpression>
+        <TestedAssembliesDetectionExpression1>(?&lt;=((\\|^)(?=[^\\]*$))).*(?=($(TestDetectionExpression).*$))</TestedAssembliesDetectionExpression1>
     </PropertyGroup>
 
     <!-- 3rd Party Program Paths -->
     <PropertyGroup>
         <MSBuildExtensionsPath Condition="Exists('$(ToolsPath)\msbuild')" >$(ToolsPath)\msbuild</MSBuildExtensionsPath>
+        <InternetBrowser>"C:\Program Files\Internet Explorer\iexplore.exe"</InternetBrowser>
+    </PropertyGroup>
+
+    <!-- Unit Test Definitions -->
+    <PropertyGroup>
+        <TestResultsPath>$(BuildPath)\test-results</TestResultsPath>
+        <TestResultXmlFile>$(TestResultsPath)\nunit-results.xml</TestResultXmlFile>
+        <TestResultTxtFile>$(TestResultsPath)\nunit-results.txt</TestResultTxtFile>
+        <TestOutputFile>$(TestResultsPath)\nunit-output.txt</TestOutputFile>
+        <TestSummaryFile>$(TestResultsPath)\nunit-summary.txt</TestSummaryFile>
+        <TestCommandParameters>/xml=$(TestResultXmlFile) /output=$(TestOutputFile) /nologo</TestCommandParameters>
         <NUnitPath>$(ToolsPath)\nunit</NUnitPath>
+        <NUnitConsole>$(NUnitPath)\nunit-console.exe</NUnitConsole>
+    </PropertyGroup>
+
+    <!-- Coverage Definitions-->
+    <PropertyGroup>
+        <CoverageResultsPath>$(BuildPath)\coverage-results</CoverageResultsPath>
+        <CoverageLogFile>$(CoverageResultsPath)\coverage.log</CoverageLogFile>
+        <CoverageXmlFile>$(CoverageResultsPath)\coverage.xml</CoverageXmlFile>
+        <CoverageXmlReportFile>$(CoverageResultsPath)\coverage-report.xml</CoverageXmlReportFile>
+        <CoverageHtmlReportFile>$(CoverageResultsPath)\coverage-report.html</CoverageHtmlReportFile>
+        <NCoverPath>$(ToolsPath)\ncover</NCoverPath>
+        <NCoverExplorerPath>$(ToolsPath)\ncoverexplorer</NCoverExplorerPath>
+        <NCoverExplorerTaskAssembly>$(NCoverExplorerPath)\NCoverExplorer.MSBuildTasks.dll</NCoverExplorerTaskAssembly>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ModuleThreshold Include="BusinessEntities.dll=20" />
+        <ModuleThreshold Include="BusinessLogicLayer.dll=75" />
+    </ItemGroup>
+
+    <!-- StyleCop Properties-->
+    <PropertyGroup>
+        <StyleCopPath>$(ToolsPath)\stylecop</StyleCopPath>
     </PropertyGroup>
 
     <!-- Signing Properties-->
@@ -47,7 +83,7 @@
         <SignAssembly Condition="$(SignAssembly) == ''">true</SignAssembly>
         <AssemblyOriginatorKeyFile>$(RootPath)\$(ProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <AllConfigurations Include="Debug"/>
         <AllConfigurations Include="Release"/>
@@ -55,6 +91,7 @@
 
     <!-- AssemblyInfo Properties -->
     <PropertyGroup>
+        <ToGenerateAssemblyInfo>true</ToGenerateAssemblyInfo>
         <AssemblyInfoFile>Properties\AssemblyInfo.cs</AssemblyInfoFile>
         <AssemblyTitle>$(ProjectName) - $(AssemblyTitle)</AssemblyTitle>
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
