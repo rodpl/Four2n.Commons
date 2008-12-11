@@ -5,8 +5,8 @@
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
     <AssemblyTitle>rod's Commons MonoRail library</AssemblyTitle>
     <AssemblyGuid>656A5386-A7F6-4f54-9A53-36D3C46D3CB2</AssemblyGuid>
-    <CustomBeforeMicrosoftCommonTargets Condition="Exists('$(RootPath)\Before.Common.Targets')">$(RootPath)\Before.Common.Targets</CustomBeforeMicrosoftCommonTargets>
-    <CustomAfterMicrosoftCommonTargets Condition="Exists('$(RootPath)\After.Common.Targets')">$(RootPath)\After.Common.Targets</CustomAfterMicrosoftCommonTargets>
+    <CustomBeforeMicrosoftCommonTargets Condition="Exists('$(RootPath)\Before.Microsoft.Common.Targets')">$(RootPath)\Before.Microsoft.Common.Targets</CustomBeforeMicrosoftCommonTargets>
+    <CustomAfterMicrosoftCommonTargets Condition="Exists('$(RootPath)\After.Microsoft.Common.Targets')">$(RootPath)\After.Microsoft.Common.Targets</CustomAfterMicrosoftCommonTargets>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
