@@ -1,8 +1,6 @@
 using System.Threading;
 using Castle.MonoRail.Framework;
 using NUnit.Framework;
-using NUnit.Framework.Syntax.CSharp;
-using rod.Commons.MonoRail.Helpers;
 using rod.Commons.MonoRail.Tests.Controllers;
 using Castle.MonoRail.Framework.Test;
 

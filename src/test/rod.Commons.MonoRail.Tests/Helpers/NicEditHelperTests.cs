@@ -1,8 +1,7 @@
-using NUnit.Framework;
-using NUnit.Framework.Syntax.CSharp;
-
 namespace rod.Commons.MonoRail.Helpers
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class NicEditHelperTests : HelperTestFixture<NicEditHelper>
     {
