@@ -1,11 +1,13 @@
 using System.Threading;
 using Castle.MonoRail.Framework;
 using NUnit.Framework;
-using rod.Commons.MonoRail.Tests.Controllers;
+using Rod.Commons.MonoRail.Tests.Controllers;
 using Castle.MonoRail.Framework.Test;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
+    using Tests.Controllers;
+
     [TestFixture]
     public class FckEditorHelperTests : MockedTestFixture
     {

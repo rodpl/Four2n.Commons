@@ -1,8 +1,10 @@
 using NUnit.Framework;
-using rod.Commons.System.Reflection;
+using Rod.Commons.System.Reflection;
 
-namespace rod.Commons.System.Extensions.Reflection
+namespace Rod.Commons.System.Extensions.Reflection
 {
+    using System.Reflection;
+
     [TestFixture]
     public class ReflectionHelperExtensionsTest
     {

@@ -1,4 +1,4 @@
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
     using NUnit.Framework;
 

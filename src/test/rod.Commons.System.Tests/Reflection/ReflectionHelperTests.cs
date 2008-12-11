@@ -1,8 +1,13 @@
-﻿using NUnit.Framework;
-using rod.Commons.System.Reflection;
-
-namespace rod.Commons.System.Reflection
+﻿//------------------------------------------------------------------------------------------------- 
+// <copyright file="ReflectionHelperTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the ReflectionHelperTests type.</summary>
+//-------------------------------------------------------------------------------------------------
+namespace Rod.Commons.System.Reflection
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class ReflectionHelperTests
     {
@@ -11,7 +16,7 @@ namespace rod.Commons.System.Reflection
         [Test]
         public void ProtectedFieldTest()
         {
-            
+                    
             var b = new B();
             ReflectionHelper.For(b)
                 .Field("_protectedString")

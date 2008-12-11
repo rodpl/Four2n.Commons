@@ -1,9 +1,11 @@
 using System;
 using NUnit.Framework;
-using rod.Commons.System.Reflection;
+using Rod.Commons.System.Reflection;
 
-namespace rod.Commons.System.Collections
+namespace Rod.Commons.System.Collections
 {
+    using Reflection;
+
     [TestFixture]
     public class SimplifiedKeyTests
     {
@@ -26,8 +28,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void Equals_ToInstancesWithTheSameKeyValue_ReturnsTrue()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsTrue(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));
@@ -37,8 +39,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void EqualOperator_ToInstancesWithTheSameKeyValue_ReturnsTrue()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsTrue(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));
@@ -48,8 +50,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void NonEqualOperator_ToInstancesWithTheSameKeyValue_ReturnsFalse()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsTrue(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));
@@ -59,8 +61,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void Equals_ToInstancesWithTheDifferentKeyValue_ReturnsFalse()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsFalse(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));
@@ -70,8 +72,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void EqualOperator_ToInstancesWithTheDifferentKeyValue_ReturnsFalse()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsFalse(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));
@@ -81,8 +83,8 @@ namespace rod.Commons.System.Collections
         [Test]
         public void NonEqualOperator_ToInstancesWithTheDifferentKeyValue_ReturnsTrue()
         {
-            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
-            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("_simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
+            var modelOne = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)10).Return<SimplifiedKeyMother.Implementation>();
+            var modelTwo = ReflectionHelper.For(new SimplifiedKeyMother.Implementation()).Field("simplifiedValue").SetValue((byte?)11).Return<SimplifiedKeyMother.Implementation>();
 
             Assert.IsFalse(ReferenceEquals(modelOne, modelTwo));
             Assert.IsFalse(modelOne.SimplifiedValue.Equals(modelTwo.SimplifiedValue));

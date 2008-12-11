@@ -1,141 +1,188 @@
-﻿using System;
-using System.Reflection;
-
-namespace rod.Commons.System.Reflection
+﻿//------------------------------------------------------------------------------------------------- 
+// <copyright file="ReflectionHelper.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the ReflectionHelper type.</summary>
+//-------------------------------------------------------------------------------------------------
+namespace Rod.Commons.System.Reflection
 {
+    using global::System;
+    using global::System.Reflection;
+
+    /// <summary>
+    /// Helper for reflection actions.
+    /// </summary>
     public class ReflectionHelper
     {
-        private readonly object _target;
-        private FieldInfo _fieldInfo;
-        private CodeElementType _lastSelectedElementType;
-        private PropertyInfo _propertyInfo;
+        /// <summary>
+        /// Instance which will be modified.
+        /// </summary>
+        private readonly object target;
+
+        /// <summary>
+        /// Currently used code memeber during reflection.
+        /// </summary>
+        private MemberInfo currentMemberInfo;
 
         /// <summary>
         /// Initializes a new instance of the ReflectionHelper class.
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="target">Instance of reflected object.</param>
+        /// <exception cref="ArgumentNullException">If <c>target</c> is null.</exception>
         private ReflectionHelper(object target)
         {
             if (target == null)
+            {
                 throw new ArgumentNullException("target");
-            _target = target;
+            }
+
+            this.target = target;
         }
 
         /// <summary>
-        /// Factory method which defines target instance.
+        /// Finds the field recursive by name.
         /// </summary>
-        /// <param name="instance">The instance.</param>
-        /// <returns></returns>
-        public static ReflectionHelper For(object instance)
-        {
-            return new ReflectionHelper(instance);
-        }
-
-        public ReflectionHelper Field(string fieldName)
-        {
-            _fieldInfo = FindField(_target.GetType(), fieldName);
-            if (_fieldInfo == null)
-                throw new NullReferenceException(String.Format("Sorry, There is no such field = {0} in class type {1}", fieldName,
-                                                               _target.GetType().FullName));
-            _lastSelectedElementType = CodeElementType.Field;
-            return this;
-        }
-
-        public ReflectionHelper Property(string propertyName)
-        {
-            _propertyInfo = FindProperty(_target.GetType(), propertyName);
-            if (_propertyInfo == null)
-                throw new NullReferenceException(String.Format("Sorry, There is no such property = {0} in class type {1}",
-                                                               propertyName, _target.GetType().FullName));
-            _lastSelectedElementType = CodeElementType.Property;
-            return this;
-        }
-
-        public ReflectionHelper SetValue(object value)
-        {
-            switch (_lastSelectedElementType)
-            {
-                case CodeElementType.Property:
-                    _propertyInfo.SetValue(_target, value, null);
-                    break;
-                case CodeElementType.Field:
-                    _fieldInfo.SetValue(_target, value);
-                    break;
-            }
-            return this;
-        }
-
-        public object GetValue()
-        {
-            switch (_lastSelectedElementType)
-            {
-                case CodeElementType.Property:
-                    return _propertyInfo.GetValue(_target, null);
-                case CodeElementType.Field:
-                    return _fieldInfo.GetValue(_target);
-            }
-            return null;
-        }
-
-        public T Return<T>()
-        {
-            return (T)_target;
-        }
-
-        /// <summary>
-        /// Finds the field recursive.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="name">The name.</param>
-        /// <returns></returns>
+        /// <param name="type">The class type.</param>
+        /// <param name="name">The field name.</param>
+        /// <returns>FieldInfo or null if there is no field with such name.</returns>
         public static FieldInfo FindField(Type type, string name)
         {
-            if (type == null || type == typeof (object))
+            if (type == null || type == typeof(object))
             {
                 // the full inheritance chain has been walked and we could
                 // not find the Field
                 return null;
             }
 
-            FieldInfo field =
-                type.GetField(name,
-                              BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly) ??
-                FindField(type.BaseType, name);
-
-            return field;
+            return type.GetField(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly) ??
+                    FindField(type.BaseType, name);
         }
 
         /// <summary>
         /// Finds the property recursive.
         /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="name">The name.</param>
-        /// <returns></returns>
+        /// <param name="type">The class type.</param>
+        /// <param name="name">The property name.</param>
+        /// <returns>PropertyInfo or null if there is no field with such name.</returns>
         public static PropertyInfo FindProperty(Type type, string name)
         {
-            if (type == null || type == typeof (object))
+            if (type == null || type == typeof(object))
             {
                 // the full inheritance chain has been walked and we could
                 // not find the Field
                 return null;
             }
 
-            PropertyInfo property =
-                type.GetProperty(name,
-                                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly) ??
-                FindProperty(type.BaseType, name);
-
-            return property;
+            return type.GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly) ??
+                    FindProperty(type.BaseType, name);
         }
 
-        #region Nested type: CodeElementType
-
-        internal enum CodeElementType
+        /// <summary>
+        /// Factory method which defines target instance.
+        /// </summary>
+        /// <param name="targetInstance">The target instance.</param>
+        /// <returns> Instace of <see cref="ReflectionHelper"/>.</returns>
+        public static ReflectionHelper For(object targetInstance)
         {
-            Property,
-            Field
+            return new ReflectionHelper(targetInstance);
         }
 
-        #endregion
+        /// <summary>
+        /// Select field with the specified field name for modification.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns> ReflectionHelper for chaining </returns>
+        /// <exception cref="NullReferenceException">If there is no such field.</exception>
+        public ReflectionHelper Field(string fieldName)
+        {
+            this.currentMemberInfo = FindField(this.target.GetType(), fieldName);
+            if (this.currentMemberInfo == null)
+            {
+                throw new NullReferenceException(
+                        String.Format("Sorry, There is no such field = {0} in class type {1}", fieldName, this.target.GetType().FullName));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Gets the value of last selected member.
+        /// </summary>
+        /// <returns>Value of last selected member.</returns>
+        /// <exception cref="NotSupportedException">Unsupported type of modified memeber.</exception>
+        public object GetValue()
+        {
+            var type = this.currentMemberInfo.GetType();
+            if (type.IsSubclassOf(typeof(PropertyInfo)))
+            {
+                return ((PropertyInfo)this.currentMemberInfo).GetValue(this.target, null);
+            }
+
+            if (type.IsSubclassOf(typeof(FieldInfo)))
+            {
+                return ((FieldInfo)this.currentMemberInfo).GetValue(this.target);
+            }
+
+            throw new NotSupportedException(string.Format("Unsupported type of modified memeber. {0}", type.Name));
+        }
+
+        /// <summary>
+        /// Properties the specified property name.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>Self for chaining.</returns>
+        /// <exception cref="NullReferenceException" />
+        public ReflectionHelper Property(string propertyName)
+        {
+            this.currentMemberInfo = FindProperty(this.target.GetType(), propertyName);
+            if (this.currentMemberInfo == null)
+            {
+                throw new NullReferenceException(
+                        String.Format("Sorry, There is no such property = {0} in class type {1}", propertyName, this.target.GetType().FullName));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Returns this instance.
+        /// </summary>
+        /// <typeparam name="T">Type for casting.</typeparam>
+        /// <returns>Modified instance.</returns>
+        public T Return<T>()
+        {
+            return (T)this.target;
+        }
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>Self for chaining.</returns>
+        /// <exception cref="NotSupportedException">Unsupported type of modified memeber.</exception>
+        /// <exception cref="NullReferenceException">Modified member is null.</exception>
+        public ReflectionHelper SetValue(object value)
+        {
+            if (this.currentMemberInfo == null)
+            {
+                throw new NullReferenceException("Modified member is null.");
+            }
+
+            var type = this.currentMemberInfo.GetType();
+            if (type.IsSubclassOf(typeof(PropertyInfo)))
+            {
+                ((PropertyInfo)this.currentMemberInfo).SetValue(this.target, value, null);
+            }
+            else if (type.IsSubclassOf(typeof(FieldInfo)))
+            {
+                ((FieldInfo)this.currentMemberInfo).SetValue(this.target, value);
+            }
+            else
+            {
+                throw new NotSupportedException(string.Format("Unsupported type of modified memeber. {0}", type.Name));
+            }
+
+            return this;
+        }
     }
 }

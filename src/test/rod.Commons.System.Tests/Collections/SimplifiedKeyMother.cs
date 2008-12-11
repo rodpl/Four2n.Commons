@@ -1,7 +1,7 @@
 using System;
-using rod.Commons.System.Collections;
+using Rod.Commons.System.Collections;
 
-namespace rod.Commons.System.Collections
+namespace Rod.Commons.System.Collections
 {
     public static class SimplifiedKeyMother
     {

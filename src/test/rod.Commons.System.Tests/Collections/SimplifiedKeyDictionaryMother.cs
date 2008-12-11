@@ -1,11 +1,13 @@
-using rod.Commons.System.Collections;
-
-namespace rod.Commons.System.Collections
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="SimplifiedKeyDictionaryMother.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the SimplifiedKeyDictionaryMother type.</summary>
+//-------------------------------------------------------------------------------------------------
+namespace Rod.Commons.System.Collections
 {
     public class SimplifiedKeyDictionaryMother
     {
-        #region Nested type: Implementation
-
         public class Implementation :
             SimplifiedKeyDictionary<byte, SimplifiedKeyMother.Implementation, SimplifiedKeyIdentifiableMother.Implementation>
         {
@@ -14,7 +16,5 @@ namespace rod.Commons.System.Collections
                 return new Implementation();
             }
         }
-
-        #endregion
     }
 }

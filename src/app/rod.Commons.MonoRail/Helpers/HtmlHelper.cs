@@ -1,7 +1,7 @@
 using System;
 using Castle.MonoRail.Framework.Helpers;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
     /// <summary>
     /// Provides useful common methods to generate HTML elements.

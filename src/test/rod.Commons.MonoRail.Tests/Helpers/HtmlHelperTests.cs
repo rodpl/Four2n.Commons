@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using rod.Commons.MonoRail.Helpers;
+using Rod.Commons.MonoRail.Helpers;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
     [TestFixture]
     public class HtmlHelperTests

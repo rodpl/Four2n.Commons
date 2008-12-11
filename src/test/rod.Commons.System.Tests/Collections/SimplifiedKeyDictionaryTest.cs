@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace rod.Commons.System.Collections
+namespace Rod.Commons.System.Collections
 {
     [TestFixture]
     public class SimplifiedKeyDictionaryTest

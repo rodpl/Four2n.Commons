@@ -2,10 +2,12 @@ using Castle.MonoRail.Framework;
 using Castle.MonoRail.Framework.Helpers;
 using Castle.MonoRail.Framework.Test;
 using NUnit.Framework;
-using rod.Commons.MonoRail.Tests.Controllers;
+using Rod.Commons.MonoRail.Tests.Controllers;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
+    using Tests.Controllers;
+
     public abstract class HelperTestFixture<T>
         where T : AbstractHelper
     {

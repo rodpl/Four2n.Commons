@@ -1,6 +1,6 @@
-﻿using Castle.MonoRail.Framework;
+using Castle.MonoRail.Framework;
 
-namespace rod.Commons.MonoRail.Tests.Controllers
+namespace Rod.Commons.MonoRail.Tests.Controllers
 {
     internal class HomeController : Controller
     {

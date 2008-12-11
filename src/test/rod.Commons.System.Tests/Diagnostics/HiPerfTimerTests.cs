@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using rod.Commons.System.Diagnostics;
+using NUnit.Framework;
+using Rod.Commons.System.Diagnostics;
 
-namespace rod.Commons.System.Diagnostics
+namespace Rod.Commons.System.Diagnostics
 {
     [TestFixture]
     public class HiPerfTimerTests

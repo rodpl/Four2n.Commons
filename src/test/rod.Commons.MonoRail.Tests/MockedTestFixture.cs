@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace rod.Commons.MonoRail
+namespace Rod.Commons.MonoRail
 {
     /// <summary>
     /// Base class for test fixtures which uses mocks.

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace rod.Commons.System.Collections
+namespace Rod.Commons.System.Collections
 {
     /// <summary>
     /// Helper class with static methods

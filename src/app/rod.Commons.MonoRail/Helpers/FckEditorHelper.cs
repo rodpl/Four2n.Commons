@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Castle.MonoRail.Framework.Helpers;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
     /// <summary>
     /// Helper for FCKEditor.

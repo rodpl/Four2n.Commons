@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using rod.Commons.System.Collections;
+using Rod.Commons.System.Collections;
 
-namespace rod.Commons.System.Collections
+namespace Rod.Commons.System.Collections
 {
     [TestFixture]
     public class CollectionToolsTests

@@ -1,7 +1,7 @@
 using System.Text;
 using Castle.MonoRail.Framework.Helpers;
 
-namespace rod.Commons.MonoRail.Helpers
+namespace Rod.Commons.MonoRail.Helpers
 {
     public class NicEditHelper : AbstractHelper
     {
