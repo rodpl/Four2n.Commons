@@ -7,8 +7,8 @@ namespace rod.Commons.MonoRail.Helpers
     {
         public string CreateHtml(string instanceName)
         {
-            StringBuilder html = new StringBuilder();
-            //html
+            var html = new StringBuilder();
+            html.Append("<div>\n</div>\n");
             return html.ToString();
         }
     }
