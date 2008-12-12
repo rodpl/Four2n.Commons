@@ -6,7 +6,22 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 
+    <PropertyGroup>
+        <StyleCopDependsOn>$(StyleCopDependsOn);IncludeOnlyModifiedFilesForSourceAnalysis</StyleCopDependsOn>
+    </PropertyGroup>
+
     <Import Project="$(StyleCopPath)\Microsoft.StyleCop.Targets"/>
+
+    <Target Name="IncludeOnlyModifiedFilesForSourceAnalysis">
+        <Message Text="itsme"/>
+        <Message Text="$(MSBuildProjectDirectory)\%(Compile.Identity)"/>
+        
+        <SvnVersion LocalPath="$(MSBuildProjectDirectory)\%(Compile.Identity)" ContinueOnError="false">
+            <Output TaskParameter="Modifications" ItemName="SvnModified" />
+        </SvnVersion>
+        <Message Text="itsme @(SvnModified)"/>
+    </Target>
+
 
     <Target Name="BeforeCompile" DependsOnTargets="SetIsCompileUpToDate">
         <CallTarget Targets="IncludeGeneratedAssemblyInfo" Condition="$(IsCompileUpToDate) == 'false'" />

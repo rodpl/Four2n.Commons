@@ -113,18 +113,19 @@ namespace Rod.Commons.System.Collections
         [Test]
         public void JoinEnumerators_Test()
         {
-            var listOne = new List<int> {1, 2};
-            var listTwo = new List<int> {3, 4};
+            var listOne = new List<int> { 1, 2 };
+            var listTwo = new List<int> { 3, 4 };
 
             var joined = CollectionTools.JoinEnumerators(listOne, listTwo);
 
             var counter = 0;
-            var text = "";
-            foreach(var item in joined)
+            var text = string.Empty;
+            foreach (var item in joined)
             {
                 counter++;
                 text = text + item;
             }
+
             Assert.AreEqual(4, counter);
             Assert.AreEqual("1234", text);
         }

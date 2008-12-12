@@ -41,7 +41,7 @@ namespace Rod.Commons.System.Collections
 
             public static List<Implementation> CreateListOfOne()
             {
-                return new List<Implementation> {new Implementation("James", "Brown", new DateTime(1942, 02, 17))};
+                return new List<Implementation> { new Implementation("James", "Brown", new DateTime(1942, 02, 17)) };
             }
 
             public static List<Implementation> CreateListOfTwoUnique()
@@ -50,7 +50,7 @@ namespace Rod.Commons.System.Collections
                 var two = new Implementation("Phil", "Izaak", new DateTime(1748, 12, 02));
                 Assert.IsFalse(one.Key.Equals(two.Key));
                 Assert.IsFalse(one.Key.BusinessEquals(two.Key));
-                return new List<Implementation>{ one, two };
+                return new List<Implementation> { one, two };
             }
 
             public static List<Implementation> CreateListOfThreeUnique()

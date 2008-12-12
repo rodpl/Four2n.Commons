@@ -1,9 +1,16 @@
-using Rod.Commons.System.Reflection;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="ReflectionHelperExtensions.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the ReflectionHelperExtensions type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Extensions.Reflection
 {
     using System.Reflection;
 
+    /// <summary>
+    /// Extensions for <see cref="ReflectionHelper"/>.
+    /// </summary>
     public static class ReflectionHelperExtensions
     {
         /// <summary>

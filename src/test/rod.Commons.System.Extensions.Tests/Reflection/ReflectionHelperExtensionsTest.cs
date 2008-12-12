@@ -1,9 +1,8 @@
-using NUnit.Framework;
-using Rod.Commons.System.Reflection;
-
 namespace Rod.Commons.System.Extensions.Reflection
 {
     using System.Reflection;
+
+    using NUnit.Framework;
 
     [TestFixture]
     public class ReflectionHelperExtensionsTest

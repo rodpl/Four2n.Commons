@@ -3,6 +3,7 @@
   <UsingTask AssemblyFile="Microsoft.StyleCop.dll" TaskName="StyleCopTask"/>
 
   <PropertyGroup>
+    <StyleCopDependsOn>$(StyleCopDependsOn)</StyleCopDependsOn>
     <BuildDependsOn>$(BuildDependsOn);StyleCop</BuildDependsOn>
     <RebuildDependsOn>StyleCopForceFullAnalysis;$(RebuildDependsOn)</RebuildDependsOn>
   </PropertyGroup>
@@ -71,7 +72,7 @@
   </Target>
 
   <!-- Define target: StyleCop -->
-  <Target Name="StyleCop" Condition="'$(StyleCopEnabled)' != 'false'">
+  <Target Name="StyleCop" Condition="'$(StyleCopEnabled)' != 'false'" DependsOnTargets="$(StyleCopDependsOn)">
     <!-- Determine what files should be checked. Take all Compile items, but exclude those that have
         set ExcludeFromStyleCop=true or ExcludeFromSourceAnalysis=true. -->
     <CreateItem Include="@(Compile)" Condition="('%(Compile.ExcludeFromStyleCop)' != 'true') and ('%(Compile.ExcludeFromSourceAnalysis)' != 'true')">
