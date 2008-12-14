@@ -204,14 +204,22 @@
             <Output ItemName="TempPropertiesStrings" TaskParameter="Include"/>
         </CreateItem>
 
-        <CreateItem Condition="$(Configuration) == 'ALL'"
+        <CreateItem Condition="$(Configuration) == 'ALL' AND $(TempPropertyString) != ''"
                     Include="Config=ALL"
                     AdditionalMetadata="Value=Configuration=%(AllConfigurations.Identity)%3B$(TempPropertyString)">
+            <Output ItemName="TempPropertiesStrings" TaskParameter="Include"/>
+        </CreateItem>
+
+        <CreateItem Condition="$(Configuration) == 'ALL' AND $(TempPropertyString) == ''"
+            Include="Config=ALL"
+            AdditionalMetadata="Value=Configuration=%(AllConfigurations.Identity)">
             <Output ItemName="TempPropertiesStrings" TaskParameter="Include"/>
         </CreateItem>
 
         <CreateItem Include="%(TempPropertiesStrings.Value)" >
             <Output ItemName="PropertiesStrings" TaskParameter="Include"/>
         </CreateItem>
+        
+        <Message Text="sss @(PropertiesStrings)" />
     </Target>
 </Project>
