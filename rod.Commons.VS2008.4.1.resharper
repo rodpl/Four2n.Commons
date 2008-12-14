@@ -306,7 +306,6 @@ II.2.12 <HandlesEvent />
         <Readonly/>
         <Name/>
       </Sort>
-      <Group Region="All fields"/>
     </Entry>
 
     <!-- Constructors/Finalizers. Place static one first -->
@@ -321,7 +320,6 @@ II.2.12 <HandlesEvent />
         <Static/>
         <Kind Order="constructor destructor" />
       </Sort>
-      <Group Region="All constructors"/>
     </Entry>
     
 

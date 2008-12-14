@@ -6,9 +6,11 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 
+    <!--
     <PropertyGroup>
         <StyleCopDependsOn>$(StyleCopDependsOn);IncludeOnlyModifiedFilesForSourceAnalysis</StyleCopDependsOn>
     </PropertyGroup>
+    -->
 
     <Import Project="$(StyleCopPath)\Microsoft.StyleCop.Targets"/>
 

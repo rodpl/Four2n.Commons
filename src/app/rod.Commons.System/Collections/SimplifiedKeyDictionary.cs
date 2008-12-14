@@ -64,7 +64,8 @@ namespace Rod.Commons.System.Collections
         /// <summary>
         /// Gets or sets the <see cref="T"/> with the specified key.
         /// </summary>
-        /// <value>Key</value>
+        /// <param name="key">The key as index.</param>
+        /// <value>The <see cref="T"/> with the specified key.</value>
         /// <exception cref="ArgumentException">There is no such key.</exception>
         /// <exception cref="NotImplementedException"><c>NotImplementedException</c>.</exception>
         public T this[K key]
@@ -75,6 +76,7 @@ namespace Rod.Commons.System.Collections
                 {
                     return this.recordsWithUniqueSimplifiedKey[key];
                 }
+                
                 if (this.doubledSimplifiedKeyValues.ContainsKey(key) && this.recordsWithUniqueBusinessKey.ContainsKey(key.BusinessValue))
                 {
                     return this.recordsWithUniqueBusinessKey[key.BusinessValue];
@@ -135,7 +137,7 @@ namespace Rod.Commons.System.Collections
         /// </returns>
         public bool ContainsKey(K key)
         {
-            if (this.recordsWithUniqueSimplifiedKey.ContainsKey(key) & this.recordsWithUniqueSimplifiedKey[key].Key.BusinessEquals(key))
+            if (this.recordsWithUniqueSimplifiedKey.ContainsKey(key) && this.recordsWithUniqueSimplifiedKey[key].Key.BusinessEquals(key))
             {
                 return true;
             }
@@ -186,6 +188,7 @@ namespace Rod.Commons.System.Collections
             {
                 yield return item;
             }
+
             foreach (T item in this.recordsWithUniqueBusinessKey.Values)
             {
                 yield return item;

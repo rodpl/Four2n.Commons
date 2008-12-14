@@ -100,5 +100,5 @@
         <AssemblyProduct>$(ProjectName)</AssemblyProduct>
         <AssemblyVersion>0.1</AssemblyVersion>
     </PropertyGroup>
-
+    
 </Project>

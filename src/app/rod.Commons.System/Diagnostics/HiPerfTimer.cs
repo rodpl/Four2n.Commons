@@ -84,17 +84,17 @@ namespace Rod.Commons.System.Diagnostics
         /// <summary>
         /// Queries the performance counter.
         /// </summary>
-        /// <param name="lpPerformanceCount">The lp performance count.</param>
-        /// <returns></returns>
+        /// <param name="performanceCount">The performance count.</param>
+        /// <returns>True if command runs correctly.</returns>
         [DllImport("Kernel32.dll")]
-        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+        private static extern bool QueryPerformanceCounter(out long performanceCount);
 
         /// <summary>
         /// Queries the performance frequency.
         /// </summary>
-        /// <param name="lpFrequency">The lp frequency.</param>
-        /// <returns></returns>
+        /// <param name="frequency">The frequency.</param>
+        /// <returns>True if command runs correctly.</returns>
         [DllImport("Kernel32.dll")]
-        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
+        private static extern bool QueryPerformanceFrequency(out long frequency);
     }
 }

@@ -15,12 +15,14 @@ namespace Rod.Commons.System.Collections
     public abstract class SimplifiedKey<V> : IEquatable<SimplifiedKey<V>> where V : struct
     {
         /// <summary>
+        /// Business value of the key.
         /// </summary>
-        protected string businessValue;
+        private string businessValue;
 
         /// <summary>
+        /// Simplified, calculated value ot the key.
         /// </summary>
-        protected V? simplifiedValue;
+        private V? simplifiedValue;
 
         /// <summary>
         /// Gets BusinessValue.
@@ -55,35 +57,65 @@ namespace Rod.Commons.System.Collections
         }
 
         /// <summary>
-        /// Businesses the equals.
+        /// Implements the operator ==.
         /// </summary>
-        /// <param name="obj">The obj.</param>
-        /// <returns></returns>
-        public bool BusinessEquals(SimplifiedKey<V> obj)
+        /// <param name="left">The left side.</param>
+        /// <param name="right">The right side.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(SimplifiedKey<V> left, SimplifiedKey<V> right)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return this.GenerateBussinessKeyValue().Equals(obj.GenerateBussinessKeyValue());
+            return object.Equals(left, right);
         }
 
         /// <summary>
-        /// Equalses the specified obj.
+        /// Implements the operator !=.
         /// </summary>
-        /// <param name="obj">The obj.</param>
-        /// <returns></returns>
-        public bool Equals(SimplifiedKey<V> obj)
+        /// <param name="left">The left side.</param>
+        /// <param name="right">The right side.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(SimplifiedKey<V> left, SimplifiedKey<V> right)
         {
-            if (ReferenceEquals(null, obj))
+            return !object.Equals(left, right);
+        }
+
+        /// <summary>
+        /// Equalses the specified key by business value.
+        /// </summary>
+        /// <param name="key">The compared key.</param>
+        /// <returns>Returns true if keys are equal.</returns>
+        public bool BusinessEquals(SimplifiedKey<V> key)
+        {
+            if (ReferenceEquals(null, key))
             {
                 return false;
             }
 
-            if (ReferenceEquals(this, obj))
+            if (ReferenceEquals(this, key))
             {
                 return true;
             }
 
-            return obj.SimplifiedValue.Equals(this.SimplifiedValue);
+            return this.GenerateBussinessKeyValue().Equals(key.GenerateBussinessKeyValue());
+        }
+
+        /// <summary>
+        /// Equalses the specified key by simplified value.
+        /// </summary>
+        /// <param name="key">The compared key.</param>
+        /// <returns>Returns true if keys are equal.</returns>
+        public bool Equals(SimplifiedKey<V> key)
+        {
+            if (ReferenceEquals(null, key))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, key))
+            {
+                return true;
+            }
+
+            return key.SimplifiedValue.Equals(this.SimplifiedValue);
         }
 
         /// <summary>
@@ -141,35 +173,13 @@ namespace Rod.Commons.System.Collections
         /// <summary>
         /// Generates the bussiness key value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Value of generated business key.</returns>
         protected abstract string GenerateBussinessKeyValue();
 
         /// <summary>
         /// Generates the simplified key value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Value of generated simplified key.</returns>
         protected abstract V GenerateSimplifiedKeyValue();
-
-        /// <summary>
-        /// Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator ==(SimplifiedKey<V> left, SimplifiedKey<V> right)
-        {
-            return Equals(left, right);
-        }
-
-        /// <summary>
-        /// Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
-        public static bool operator !=(SimplifiedKey<V> left, SimplifiedKey<V> right)
-        {
-            return !Equals(left, right);
-        }
     }
 }
