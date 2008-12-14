@@ -336,7 +336,6 @@ II.2.12 <HandlesEvent />
           </Or>
         </And>
       </Match>
-      <Group Region="Setup/Teardown"/>
     </Entry>
     
     
@@ -351,16 +350,10 @@ II.2.12 <HandlesEvent />
       <Sort>
         <Name/>
       </Sort>
-      <Group Region="Test methods">
-        <Name Region="${Name}" />
-      </Group>
     </Entry>
 
     <!--All other members-->
     <Entry>
-      <Group Region="Other methods">
-        <Name Region="${Name}" />
-      </Group>
     </Entry>
     
   </Pattern>

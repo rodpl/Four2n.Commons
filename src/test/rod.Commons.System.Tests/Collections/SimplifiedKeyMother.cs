@@ -1,35 +1,40 @@
-using System;
-using Rod.Commons.System.Collections;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="SimplifiedKeyMother.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the SimplifiedKeyMother type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Collections
 {
+    using global::System;
+
     public static class SimplifiedKeyMother
     {
         #region Nested type: Implementation
 
         public class Implementation : SimplifiedKey<byte>
         {
-            private readonly SimplifiedKeyIdentifiableMother.Implementation _parent;
+            private readonly SimplifiedKeyIdentifiableMother.Implementation parent;
+
+            public Implementation(SimplifiedKeyIdentifiableMother.Implementation parent)
+            {
+                this.parent = parent;
+            }
 
             internal Implementation()
             {
             }
 
-            public Implementation(SimplifiedKeyIdentifiableMother.Implementation parent)
-            {
-                _parent = parent;
-            }
-
             protected override string GenerateBussinessKeyValue()
             {
-                return String.Concat(_parent.FirstName, _parent.SureName, _parent.BirthDate.ToShortDateString());
+                return String.Concat(this.parent.FirstName, this.parent.SureName, this.parent.BirthDate.ToShortDateString());
             }
 
             protected override byte GenerateSimplifiedKeyValue()
             {
-                var result = _parent.FirstName.GetHashCode();
-                result = result*29 + _parent.SureName.GetHashCode();
-                result = result*29 + _parent.BirthDate.GetHashCode();
+                var result = this.parent.FirstName.GetHashCode();
+                result = (result * 29) + this.parent.SureName.GetHashCode();
+                result = (result * 29) + this.parent.BirthDate.GetHashCode();
                 return (byte)(result % 8);
             }
         }

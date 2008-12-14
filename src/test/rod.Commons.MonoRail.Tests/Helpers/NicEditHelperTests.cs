@@ -1,3 +1,9 @@
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="NicEditHelperTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the NicEditHelperTests type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.MonoRail.Helpers
 {
     using NUnit.Framework;
@@ -5,19 +11,19 @@ namespace Rod.Commons.MonoRail.Helpers
     [TestFixture]
     public class NicEditHelperTests : HelperTestFixture<NicEditHelper>
     {
-        private NicEditHelper _sut;
+        private NicEditHelper sut;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new NicEditHelper();
-            InitializeSut(_sut);
+            this.sut = new NicEditHelper();
+            InitializeSut(this.sut);
         }
 
         [Test]
         public void CreateHtmlTest_ReturnsHtmlInDivTags()
         {
-            var html = _sut.CreateHtml("instance");
+            var html = this.sut.CreateHtml("instance");
             Assert.That(html, Text.StartsWith("<div>\n"));
             Assert.That(html, Text.EndsWith("</div>\n"));
         }

@@ -1,3 +1,9 @@
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="ReflectionHelperExtensionsTest.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the ReflectionHelperExtensionsTest type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Extensions.Reflection
 {
     using System.Reflection;
@@ -17,7 +23,7 @@ namespace Rod.Commons.System.Extensions.Reflection
 
             model
                 .Reflect()
-                .Field("_protectedString")
+                .Field("protectedString")
                 .SetValue(TEXT);
             Assert.AreEqual(TEXT, model.ProtectedString);
         }

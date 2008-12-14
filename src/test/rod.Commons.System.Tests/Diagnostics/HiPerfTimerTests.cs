@@ -1,39 +1,49 @@
-using NUnit.Framework;
-using Rod.Commons.System.Diagnostics;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="HiPerfTimerTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the HiPerfTimerTests type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Diagnostics
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class HiPerfTimerTests
     {
         [Test]
         public void SimpleTest()
         {
-            var hiPerfTimer = new HiPerfTimer();
+            var timer = new HiPerfTimer();
 
             // Initial duration is set to zero
-            Assert.AreEqual(0, hiPerfTimer.Duration);
+            Assert.AreEqual(0, timer.Duration);
 
-            hiPerfTimer.Start();
+            timer.Start();
+
             // If we did not stop the timer, Duration sould be zero
-            Assert.AreEqual(0, hiPerfTimer.Duration);
+            Assert.AreEqual(0, timer.Duration);
 
-            hiPerfTimer.Stop();
+            timer.Stop();
+
             // After stop, Duration is > 0
-            Assert.Less(0, hiPerfTimer.Duration);
+            Assert.Less(0, timer.Duration);
 
-            var lastTime = hiPerfTimer.Duration;
+            var lastTime = timer.Duration;
+
             // Duration should be the same as before
-            Assert.AreEqual(lastTime, hiPerfTimer.Duration);
+            Assert.AreEqual(lastTime, timer.Duration);
 
-            hiPerfTimer.Stop();
+            timer.Stop();
+
             // Now it should be updated
-            Assert.Less(lastTime, hiPerfTimer.Duration);
+            Assert.Less(lastTime, timer.Duration);
 
-            hiPerfTimer.Start();
+            timer.Start();
+
             // Should equals to zero
-            Assert.AreEqual(0, hiPerfTimer.Duration);
-            Assert.AreEqual("0 seconds", hiPerfTimer.ToString());
+            Assert.AreEqual(0, timer.Duration);
+            Assert.AreEqual("0 seconds", timer.ToString());
         }
     }
 }

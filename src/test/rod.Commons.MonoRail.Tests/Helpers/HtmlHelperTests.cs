@@ -1,17 +1,22 @@
-using NUnit.Framework;
-using Rod.Commons.MonoRail.Helpers;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="HtmlHelperTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the HtmlHelperTests type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.MonoRail.Helpers
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class HtmlHelperTests
     {
-        private HtmlHelper _model;
+        private HtmlHelper model;
 
         [SetUp]
         public void SetUp()
         {
-            _model = new HtmlHelper();
+            this.model = new HtmlHelper();
         }
 
         [TestCase(null, HtmlHelper.NBSP)]
@@ -25,7 +30,7 @@ namespace Rod.Commons.MonoRail.Helpers
         [TestCase(1, "1")]
         public void ToNbsp_StringInputs_ReturnsInputOrNbsp(object input, string expected)
         {
-            Assert.AreEqual(expected, _model.ToNbsp(input));
+            Assert.AreEqual(expected, this.model.ToNbsp(input));
         }
     }
 }

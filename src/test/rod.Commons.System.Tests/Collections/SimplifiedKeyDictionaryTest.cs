@@ -1,3 +1,9 @@
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="SimplifiedKeyDictionaryTest.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the SimplifiedKeyDictionaryTest type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Collections
 {
     using global::System;
@@ -17,12 +23,94 @@ namespace Rod.Commons.System.Collections
         }
 
         [Test]
-        public void Ctor_WithNoArguments_CreatesModelWithZeroCount()
+        public void
+                Add_ThreeItemWithNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
         {
-            var local = new SimplifiedKeyDictionaryMother.Implementation();
-            Assert.IsNotNull(local);
-            Assert.AreEqual(0, local.Count);
-            this.AssertEnumerator(local);
+            List<SimplifiedKeyIdentifiableMother.Implementation> list =
+                    SimplifiedKeyIdentifiableMother.Implementation.CreateListOfThreeNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
+
+            list.ForEach(i => this.model.Add(i));
+            Assert.AreEqual(3, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
+            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
+
+            list.ForEach(i => this.model.Remove(i));
+            Assert.AreEqual(0, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
+
+            list.ForEach(i => this.model.Add(i));
+            Assert.AreEqual(3, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
+            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
+
+            list.ForEach(i => this.model.Remove(i.Key));
+            Assert.AreEqual(0, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
+        }
+
+        [Test]
+        public void
+                Add_TwoItemsWithNonUniqueSimplifiedKeyValueAndNonUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
+        {
+            bool wasError = false;
+            List<SimplifiedKeyIdentifiableMother.Implementation> list =
+                    SimplifiedKeyIdentifiableMother.Implementation.
+                            CreateListOfTwoNonUniqueSimplifiedKeyValueAndNonUniqueBusinessKeyValue();
+
+            try
+            {
+                list.ForEach(i => this.model.Add(i));
+            }
+            catch (ArgumentException)
+            {
+                wasError = true;
+            }
+
+            Assert.AreEqual(1, this.model.Count);
+            AssertEnumerator(this.model);
+            Assert.IsTrue(this.model.ContainsKey(list[0].Key));
+            Assert.AreEqual(list[0], this.model[list[0].Key]);
+            Assert.IsTrue(wasError);
+
+            Assert.IsTrue(this.model.Remove(list[0]));
+            Assert.IsFalse(this.model.Remove(list[1]));
+            Assert.AreEqual(0, this.model.Count);
+            AssertEnumerator(this.model);
+            Assert.IsFalse(this.model.ContainsKey(list[0].Key));
+        }
+
+        [Test]
+        public void
+                Add_TwoItemsWithNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
+        {
+            List<SimplifiedKeyIdentifiableMother.Implementation> list =
+                    SimplifiedKeyIdentifiableMother.Implementation.CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
+
+            list.ForEach(i => this.model.Add(i));
+            Assert.AreEqual(2, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
+            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
+
+            list.ForEach(i => this.model.Remove(i));
+            Assert.AreEqual(0, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
+
+            list.ForEach(i => this.model.Add(i));
+            Assert.AreEqual(2, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
+            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
+
+            list.ForEach(i => this.model.Remove(i.Key));
+            Assert.AreEqual(0, this.model.Count);
+            AssertEnumerator(this.model);
+            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
         }
 
         [Test]
@@ -82,102 +170,18 @@ namespace Rod.Commons.System.Collections
             Assert.AreEqual(0, this.model.Count);
             AssertEnumerator(this.model);
             list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
-
-        }
-
-
-        [Test]
-        public void
-            Add_TwoItemsWithNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
-        {
-            List<SimplifiedKeyIdentifiableMother.Implementation> list =
-                SimplifiedKeyIdentifiableMother.Implementation.CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
-
-            list.ForEach(i => this.model.Add(i));
-            Assert.AreEqual(2, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
-            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
-
-            list.ForEach(i => this.model.Remove(i));
-            Assert.AreEqual(0, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
-
-            list.ForEach(i => this.model.Add(i));
-            Assert.AreEqual(2, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
-            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
-
-            list.ForEach(i => this.model.Remove(i.Key));
-            Assert.AreEqual(0, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
-
         }
 
         [Test]
-        public void
-            Add_TwoItemsWithNonUniqueSimplifiedKeyValueAndNonUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
+        public void Clear_ModelContainsOneItem_MakesDictionaryEmpty()
         {
-            bool wasError = false;
             List<SimplifiedKeyIdentifiableMother.Implementation> list =
-                SimplifiedKeyIdentifiableMother.Implementation.
-                    CreateListOfTwoNonUniqueSimplifiedKeyValueAndNonUniqueBusinessKeyValue();
-
-            try
-            {
-                list.ForEach(i => this.model.Add(i));
-            }
-            catch (ArgumentException)
-            {
-                wasError = true;
-            }
-
+                    SimplifiedKeyIdentifiableMother.Implementation.CreateListOfOne();
+            list.ForEach(i => this.model.Add(i));
             Assert.AreEqual(1, this.model.Count);
-            AssertEnumerator(this.model);
-            Assert.IsTrue(this.model.ContainsKey(list[0].Key));
-            Assert.AreEqual(list[0], this.model[list[0].Key]);
-            Assert.IsTrue(wasError);
 
-            Assert.IsTrue(this.model.Remove(list[0]));
-            Assert.IsFalse(this.model.Remove(list[1]));
+            this.model.Clear();
             Assert.AreEqual(0, this.model.Count);
-            AssertEnumerator(this.model);
-            Assert.IsFalse(this.model.ContainsKey(list[0].Key));
-
-        }
-
-        [Test]
-        public void
-            Add_ThreeItemWithNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValueToEmptyDictionary_AddsProperly()
-        {
-            List<SimplifiedKeyIdentifiableMother.Implementation> list =
-                SimplifiedKeyIdentifiableMother.Implementation.CreateListOfThreeNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue
-                    ();
-
-            list.ForEach(i => this.model.Add(i));
-            Assert.AreEqual(3, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
-            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
-
-            list.ForEach(i => this.model.Remove(i));
-            Assert.AreEqual(0, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
-
-            list.ForEach(i => this.model.Add(i));
-            Assert.AreEqual(3, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsTrue(this.model.ContainsKey(i.Key)));
-            list.ForEach(i => Assert.AreEqual(i, this.model[i.Key]));
-
-            list.ForEach(i => this.model.Remove(i.Key));
-            Assert.AreEqual(0, this.model.Count);
-            AssertEnumerator(this.model);
-            list.ForEach(i => Assert.IsFalse(this.model.ContainsKey(i.Key)));
         }
 
         [Test]
@@ -194,27 +198,24 @@ namespace Rod.Commons.System.Collections
             Assert.IsTrue(this.model.ContainsKey(list[1].Key));
         }
 
-        private void AssertEnumerator(SimplifiedKeyDictionaryMother.Implementation model)
+        [Test]
+        public void Ctor_WithNoArguments_CreatesModelWithZeroCount()
+        {
+            var local = new SimplifiedKeyDictionaryMother.Implementation();
+            Assert.IsNotNull(local);
+            Assert.AreEqual(0, local.Count);
+            AssertEnumerator(local);
+        }
+
+        private static void AssertEnumerator(SimplifiedKeyDictionaryMother.Implementation dictionary)
         {
             var counter = 0;
-            foreach(var item in model)
+            foreach (var item in dictionary)
             {
                 counter++;
             }
-            Assert.AreEqual(model.Count, counter);
-        }
 
-
-        [Test]
-        public void Clear_ModelContainsOneItem_MakesDictionaryEmpty()
-        {
-            List<SimplifiedKeyIdentifiableMother.Implementation> list =
-                SimplifiedKeyIdentifiableMother.Implementation.CreateListOfOne();
-            list.ForEach(i => this.model.Add(i));
-            Assert.AreEqual(1, this.model.Count);
-
-            this.model.Clear();
-            Assert.AreEqual(0, this.model.Count);
+            Assert.AreEqual(dictionary.Count, counter);
         }
     }
 }

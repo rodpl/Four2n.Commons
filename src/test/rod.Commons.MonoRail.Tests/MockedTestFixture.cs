@@ -1,8 +1,13 @@
-using NUnit.Framework;
-using Rhino.Mocks;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="MockedTestFixture.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the MockedTestFixture type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.MonoRail
 {
+    using Rhino.Mocks;
+
     /// <summary>
     /// Base class for test fixtures which uses mocks.
     /// </summary>
@@ -12,7 +17,7 @@ namespace Rod.Commons.MonoRail
 
         public virtual void SetUp()
         {
-            Mocks = new MockRepository();
+            this.Mocks = new MockRepository();
         }
     }
 }

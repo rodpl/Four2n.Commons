@@ -11,15 +11,14 @@ namespace Rod.Commons.System.Reflection
     [TestFixture]
     public class ReflectionHelperTests
     {
-        const string TEXT = "someText";
+        private const string TEXT = "someText";
 
         [Test]
         public void ProtectedFieldTest()
         {
-                    
             var b = new B();
             ReflectionHelper.For(b)
-                .Field("_protectedString")
+                .Field("protectedString")
                 .SetValue(TEXT);
             Assert.AreEqual(TEXT, b.ProtectedString);
         }
@@ -36,17 +35,14 @@ namespace Rod.Commons.System.Reflection
 
         #region Nested type: A
 
-        ///<summary>
-        ///
-        ///</summary>
         public class A
         {
-            protected string _protectedString;
+            protected string protectedString;
 
             public string ProtectedString
             {
-                get { return _protectedString; }
-                private set { _protectedString = value; }
+                get { return this.protectedString; }
+                private set { this.protectedString = value; }
             }
         }
 

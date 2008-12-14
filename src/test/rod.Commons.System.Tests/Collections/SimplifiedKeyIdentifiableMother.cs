@@ -1,35 +1,43 @@
-using System;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Rod.Commons.System.Collections;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="SimplifiedKeyIdentifiableMother.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the SimplifiedKeyIdentifiableMother type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.System.Collections
 {
+    using global::System;
+    using global::System.Collections.Generic;
+
+    using NUnit.Framework;
+
     public static class SimplifiedKeyIdentifiableMother
     {
         #region Nested type: Implementation
 
         public class Implementation : ISimplifiedKeyIdentifiable<byte, SimplifiedKeyMother.Implementation>
         {
-            private readonly SimplifiedKeyMother.Implementation _key;
+            private readonly SimplifiedKeyMother.Implementation key;
 
             public Implementation(string firstName, string sureName, DateTime birthDate)
             {
-                FirstName = firstName;
-                SureName = sureName;
-                BirthDate = birthDate;
-                _key = new SimplifiedKeyMother.Implementation(this);
+                this.FirstName = firstName;
+                this.SureName = sureName;
+                this.BirthDate = birthDate;
+                this.key = new SimplifiedKeyMother.Implementation(this);
             }
 
             public string FirstName { get; set; }
+
             public string SureName { get; set; }
+
             public DateTime BirthDate { get; set; }
 
             #region ISimplifiedKeyIdentifiable<byte,Implementation> Members
 
             public SimplifiedKeyMother.Implementation Key
             {
-                get { return _key; }
+                get { return this.key; }
             }
 
             #endregion

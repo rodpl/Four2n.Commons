@@ -1,8 +1,15 @@
-using System;
-using Castle.MonoRail.Framework.Helpers;
-
+//------------------------------------------------------------------------------------------------- 
+// <copyright file="HtmlHelper.cs" company="Daniel Dabrowski - rod.blogsome.com">
+// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// </copyright>
+// <summary>Defines the HtmlHelper type.</summary>
+//-------------------------------------------------------------------------------------------------
 namespace Rod.Commons.MonoRail.Helpers
 {
+    using System;
+
+    using Castle.MonoRail.Framework.Helpers;
+
     /// <summary>
     /// Provides useful common methods to generate HTML elements.
     /// </summary>
@@ -25,9 +32,15 @@ namespace Rod.Commons.MonoRail.Helpers
         public string ToNbsp(string text)
         {
             if (String.IsNullOrEmpty(text))
+            {
                 return NBSP;
+            }
+
             if (text.Trim().Length == 0)
+            {
                 return text.Replace(" ", NBSP);
+            }
+
             return text;
         }
 
@@ -39,7 +52,7 @@ namespace Rod.Commons.MonoRail.Helpers
         /// <remarks>This method is very useful for filling table cells to avoid empty borders.</remarks>
         public string ToNbsp(object input)
         {
-            return input == null ? NBSP : ToNbsp(input.ToString());
+            return input == null ? NBSP : this.ToNbsp(input.ToString());
         }
     }
 }
