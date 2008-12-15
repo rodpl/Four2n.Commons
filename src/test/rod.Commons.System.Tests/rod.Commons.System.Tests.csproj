@@ -57,6 +57,8 @@
     <Compile Include="Collections\SimplifiedKeyIdentifiableMother.cs" />
     <Compile Include="Collections\SimplifiedKeyMother.cs" />
     <Compile Include="Collections\SimplifiedKeyTests.cs" />
+    <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_business_value.cs" />
+    <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_simplified_value_but_different_business_value.cs" />
     <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
     <Compile Include="Reflection\ReflectionHelperTests.cs" />
   </ItemGroup>

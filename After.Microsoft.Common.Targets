@@ -12,6 +12,10 @@
     </PropertyGroup>
     -->
 
+    <PropertyGroup Condition="$(StyleCopEnabled) == ''" >
+        <StyleCopEnabled>true</StyleCopEnabled>
+    </PropertyGroup>
+    
     <Import Project="$(StyleCopPath)\Microsoft.StyleCop.Targets"/>
 
     <Target Name="IncludeOnlyModifiedFilesForSourceAnalysis">
