@@ -6,12 +6,10 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 
-    <!--
     <PropertyGroup>
         <StyleCopDependsOn>$(StyleCopDependsOn);IncludeOnlyModifiedFilesForSourceAnalysis</StyleCopDependsOn>
     </PropertyGroup>
-    -->
-
+    
     <PropertyGroup Condition="$(StyleCopEnabled) == ''" >
         <StyleCopEnabled>true</StyleCopEnabled>
     </PropertyGroup>
@@ -19,13 +17,42 @@
     <Import Project="$(StyleCopPath)\Microsoft.StyleCop.Targets"/>
 
     <Target Name="IncludeOnlyModifiedFilesForSourceAnalysis">
-        <Message Text="itsme"/>
-        <Message Text="$(MSBuildProjectDirectory)\%(Compile.Identity)"/>
-        
-        <SvnVersion LocalPath="$(MSBuildProjectDirectory)\%(Compile.Identity)" ContinueOnError="false">
-            <Output TaskParameter="Modifications" ItemName="SvnModified" />
-        </SvnVersion>
-        <Message Text="itsme @(SvnModified)"/>
+        <PropertyGroup>
+            <SvnStatusOutputFile>$(Temp)\svnstatus.tmp</SvnStatusOutputFile>
+        </PropertyGroup>
+        <Delete Files="$(SvnStatusOutputFile)" />
+        <SvnClient Command="status --xml" Verbose="true">
+            <Output TaskParameter="Output" PropertyName="SvnStatusOutput"/>
+        </SvnClient>
+
+        <WriteLinesToFile Lines="$(SvnStatusOutput)" File="$(SvnStatusOutputFile)"/>
+        <XmlQuery Lines="$(SvnStatusOutput)"
+                  XPath="//entry[wc-status[@item='modified']]/@path | //entry[wc-status[@item='added']]/@path | //entry[wc-status[@item='unversioned ']]/@path">
+            <Output TaskParameter="Values" ItemName="ModifiedFiles" />
+        </XmlQuery>
+        <Delete Files="$(SvnStatusOutputFile)" />
+        <ItemGroup>
+            <NotInCompile Include="@(ModifiedFiles)" Exclude="@(Compile)" />
+            <NotToStyleCop Include="@(ModifiedFiles)" Exclude="@(Compile);@(NotInCompile)" Condition="%(Compile.ExcludeFromStyleCop) != 'true'" />
+            <CompileTemp Include="@(NotToStyleCop)">
+                <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+            </CompileTemp>
+            <CompileTemp Include="@(Compile)" Exclude="@(ModifiedFiles)">
+                <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+            </CompileTemp>
+            <CompileTemp Include="@(ModifiedFiles)" Exclude="@(NotInCompile);@(NotToStyleCop)">
+                <ExcludeFromStyleCop>false</ExcludeFromStyleCop>
+            </CompileTemp>
+            <Compile Remove="@(Compile)"/>
+            <Compile Include="@(CompileTemp)">
+                <ExcludeFromStyleCop>%(CompileTemp.ExcludeFromStyleCop)</ExcludeFromStyleCop>
+            </Compile>
+        </ItemGroup>
+        <!--
+        <Message Text="not In Compile %(NotInCompile.Identity)  %(NotInCompile.ExcludeFromStyle)"/>
+        <Message Text="not to Stylecop %(NotToStyleCop.Identity)  %(NotToStyleCop.ExcludeFromStyle)"/>
+        <Message Text="to compile %(Compile.Identity) %(Compile.ExcludeFromStyleCop)"/>
+        -->
     </Target>
 
 

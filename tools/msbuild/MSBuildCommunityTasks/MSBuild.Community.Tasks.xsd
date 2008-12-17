@@ -142,6 +142,14 @@
               <xs:documentation>[Optional] Gets or sets the GUID.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="InternalsVisibleTo" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Makes it possible to make certain assemblies able to use constructs marked as internal.
+            Example might be setting this value to "UnitTests" assembly. The typical use case might 
+            be constructors in classes which shouldn't be available to other assemblies, but the unit
+            tests should be able to use them.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="NeutralResourcesLanguage" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the neutral language which is used as a fallback language configuration 
@@ -271,6 +279,32 @@
           <xs:attribute name="OSVersion" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] [Output] Gets the version number of the build computer's operating system.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteTree" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Delete a directory tree.  This task supports wild card directory selection.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="DeletedDirectories" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the deleted directories.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Directories" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Gets or sets the directories to be deleted.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Recursive" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether this  is recursive.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -486,19 +520,32 @@
   </xs:element>
   <xs:element name="FtpUpload" substitutionGroup="msb:Task">
     <xs:annotation>
-      <xs:documentation>Uploads a file using File Transfer Protocol (FTP).</xs:documentation>
+      <xs:documentation>Uploads a group of files using File Transfer Protocol (FTP).</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:complexContent mixed="false">
         <xs:extension base="msb:TaskType">
-          <xs:attribute name="LocalFile" type="msb:non_empty_string" use="required">
+          <xs:attribute name="LocalFile" type="xs:string">
             <xs:annotation>
-              <xs:documentation>Gets or sets the local file to upload.</xs:documentation>
+              <xs:documentation>[Optional] Gets or sets the single file to upload.  Use
+            this or LocalFiles, but not both.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="LocalFiles" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the local files to upload.  Use this
+            or LocalFile, but not both.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the password.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RemoteFiles" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Gets or sets the remote files to upload.
+            Each item in this list should have a corresponding item in LocalFiles.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="RemoteUri" type="msb:non_empty_string" use="required">
@@ -851,6 +898,11 @@
               <xs:documentation>Gets or sets the name of the app pool.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the password for the account the task will run under.  This property
@@ -1005,6 +1057,11 @@
             Service (WWW Service) should rotate worker processes in an application pool when the configuration
             has changed. This means that the worker processes will not pick up application pool changes to
             values passed to the worker process, such as  and .</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="IdleTimeout" type="xs:string">
@@ -1252,6 +1309,11 @@
           <xs:attribute name="ApplicationPoolName" type="msb:non_empty_string" use="required">
             <xs:annotation>
               <xs:documentation>Gets or sets the name of the application pool.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -1646,6 +1708,11 @@
             resources and time.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the password for the account the task will run under.  This property
@@ -1706,6 +1773,11 @@
     <xs:complexType>
       <xs:complexContent mixed="false">
         <xs:extension base="msb:TaskType">
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the password for the account the task will run under.  This property
@@ -1757,6 +1829,11 @@
           <xs:attribute name="Extension" type="msb:non_empty_string" use="required">
             <xs:annotation>
               <xs:documentation>The filename extension that will be mapped to an executable.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="MapToAspNet" type="msb:non_empty_string">
@@ -1812,6 +1889,11 @@
     <xs:complexType>
       <xs:complexContent mixed="false">
         <xs:extension base="msb:TaskType">
+          <xs:attribute name="HostHeaderName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets host header. Used when you have more than one website in IIS that have the same port but different host headers.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the password for the account the task will run under.  This property
@@ -1979,6 +2061,40 @@
             into one for the target assembly.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InnoSetup" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>MSBuild task to create installer with InnoSetup</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="ExitCode" />
+          <xs:attribute name="OutputFileName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Specify output filename</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="OutputPath" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Specify output path</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Quiet" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Quiet compile</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ScriptFile" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Filename of Inno Setup script (.iss)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Timeout" />
+          <xs:attribute name="ToolPath" type="xs:string" />
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -2408,6 +2524,37 @@
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="HttpRequest" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Makes an HTTP request, optionally validating the result and writing it to a file.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="EnsureResponseContains" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Optional: if set then the task fails if the response text doesn't contain the text specified.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="FailOnNon2xxResponse" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Default is true.  When true, if the web server returns a status code less than 200 or greater than 299 then the task fails.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Url" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>The URL to make an HTTP request against.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="WriteResponseTo" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Optional; the name of the file to write the response to.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NUnit" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>Run NUnit 2.4 on a group of assemblies.</xs:documentation>
@@ -2539,6 +2686,102 @@
           <xs:attribute name="UserInput" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] [Output] The text entered at the console.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegexCompiler" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Compiles regular expressions and saves them to disk in an assembly.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="AssemblyCompany" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly company.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyCopyright" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly copyright.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyCulture" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly culture.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyDescription" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly description.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyFileVersion" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly file version.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyInformationalVersion" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly informational version.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyKeyFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly key file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyName" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Gets or sets the name of the assembly to be created by the regex compiler.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyProduct" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly product.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyTitle" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly title.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="AssemblyVersion" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the assembly version.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="IsPublic" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether the default value is public for regular expression instances.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Namespace" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the default namespace for regular expression instances.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Options" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the default regular expression options.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="OutputDirectory" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Gets or sets the directory where the assembly will be saved.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="OutputFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets or sets the output file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="RegularExpressions" type="msb:non_empty_string" use="required">
+            <xs:annotation>
+              <xs:documentation>Gets or sets the regular expressions.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -4046,9 +4289,19 @@
               <xs:documentation>The connection string</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="OutputFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] The file name to write to</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Result" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] [Output] Output the return count/value</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="SelectMode" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] The SQL Selection Mode.  Set to NonQuery, Scalar, or ScalarXml.  Default is NonQuery.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -4233,7 +4486,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4246,6 +4499,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4275,7 +4538,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4302,7 +4565,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4315,6 +4578,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4344,7 +4617,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4371,7 +4644,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4384,6 +4657,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4413,7 +4696,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4445,7 +4728,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4458,6 +4741,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4492,7 +4785,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4519,7 +4812,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4532,6 +4825,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4561,7 +4864,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4588,7 +4891,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4618,9 +4921,19 @@
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="NodeKind" type="msb:NodeKindType">
             <xs:annotation>
               <xs:documentation>[Optional] [Output] The Subversion node kind.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4665,7 +4978,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4743,7 +5056,7 @@
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="ExitCode" />
-          <xs:attribute name="Force" type="xs:string">
+          <xs:attribute name="Force" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the force.</xs:documentation>
             </xs:annotation>
@@ -4756,6 +5069,16 @@
           <xs:attribute name="Message" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the message.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="MessageFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Output" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] [Output] Gets the output of SVN command-line client.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="Password" type="xs:string">
@@ -4785,7 +5108,7 @@
               <xs:documentation>[Optional] Gets or sets the username.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Verbose" type="xs:string">
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the verbose.</xs:documentation>
             </xs:annotation>
@@ -4850,6 +5173,149 @@
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SymStore" substitutionGroup="msb:Task">
+    <xs:annotation>
+      <xs:documentation>Task that wraps the Symbol Server SymStore.exe application.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="Append" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating SymStore will append new indexing information to an existing index file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Command" type="msb:SymStoreCommandsType">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the command.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Comment" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the comment for the transaction.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Compress" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating SymStore will create a compressed version of each file copied to the symbol store instead of using an uncompressed copy of the file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ExitCode" />
+          <xs:attribute name="Files" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the network path of files or directories to add.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ID" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the transaction ID string.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Local" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether the file will be in a local directory rather than a network path.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="LogFile" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a log file to be used for command output. If this is not included, transaction information and other output is sent to stdout.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Message" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the message to be added to each file.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="NoReference" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether to omit the creation of reference pointer files for the files and pointers being stored.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Pointer" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether SymStore will store a pointer to the file, rather than the file itself.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Product" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the name of the product.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ReadIndex" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the index file. Causes SymStore to read the data from a file created with WriteIndexFile.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Recursive" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether SymStore will add files or directories recursively.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Relative" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether the paths in the file pointers will be relative.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Share" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the server and share where the symbol files were originally stored.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Store" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the root directory for the symbol store.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Timeout" />
+          <xs:attribute name="ToolPath" type="xs:string" />
+          <xs:attribute name="Verbose" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether SymStore will display verbose output.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="Version" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the version of the product.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="WriteIndex" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets the index file. Causes SymStore not to store the actual symbol files. Instead, SymStore records information in the IndexFile that will enable SymStore to access the symbol files at a later time.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="SymStoreCommandsType">
+    <xs:union memberTypes="msb:non_empty_string">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="add">
+            <xs:annotation>
+              <xs:documentation>
+            Add to the symbol server store.
+            </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="query">
+            <xs:annotation>
+              <xs:documentation>
+            Query the symbol server store.
+            </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="delete">
+            <xs:annotation>
+              <xs:documentation>
+            Delete from the symbol serer store.
+            </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
   <xs:element name="TemplateFile" substitutionGroup="msb:Task">
     <xs:annotation>
       <xs:documentation>MSBuild task that replaces tokens in a template file and writes out a new file.</xs:documentation>
@@ -5386,6 +5852,11 @@
     <xs:complexType>
       <xs:complexContent mixed="false">
         <xs:extension base="msb:TaskType">
+          <xs:attribute name="Delete" type="msb:non_empty_string">
+            <xs:annotation>
+              <xs:documentation>[Optional] Gets or sets a value indicating whether the matched node is deleted.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="Namespace" type="xs:string">
             <xs:annotation>
               <xs:documentation>[Optional] Gets or sets the default namespace.</xs:documentation>
@@ -5396,9 +5867,9 @@
               <xs:documentation>[Optional] Gets or sets the prefix to associate with the namespace being added.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="Value" type="msb:non_empty_string" use="required">
+          <xs:attribute name="Value" type="xs:string">
             <xs:annotation>
-              <xs:documentation>Gets or sets the value to write.</xs:documentation>
+              <xs:documentation>[Optional] Gets or sets the value to write.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="XmlFileName" type="msb:non_empty_string" use="required">
