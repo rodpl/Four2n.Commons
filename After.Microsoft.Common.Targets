@@ -18,13 +18,12 @@
 
     <Target Name="IncludeOnlyModifiedFilesForSourceAnalysis">
         <PropertyGroup>
-            <SvnStatusOutputFile>$(Temp)\svnstatus.tmp</SvnStatusOutputFile>
+            <SvnStatusOutputFile>$(Temp)\$(MSBuildProjectName).tmp</SvnStatusOutputFile>
         </PropertyGroup>
         <Delete Files="$(SvnStatusOutputFile)" />
         <SvnClient Command="status --xml" Verbose="true">
             <Output TaskParameter="Output" PropertyName="SvnStatusOutput"/>
         </SvnClient>
-
         <WriteLinesToFile Lines="$(SvnStatusOutput)" File="$(SvnStatusOutputFile)"/>
         <XmlQuery Lines="$(SvnStatusOutput)"
                   XPath="//entry[wc-status[@item='modified']]/@path | //entry[wc-status[@item='added']]/@path | //entry[wc-status[@item='unversioned ']]/@path">
