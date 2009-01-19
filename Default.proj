@@ -219,7 +219,5 @@
         <CreateItem Include="%(TempPropertiesStrings.Value)" >
             <Output ItemName="PropertiesStrings" TaskParameter="Include"/>
         </CreateItem>
-        
-        <Message Text="sss @(PropertiesStrings)" />
     </Target>
 </Project>
