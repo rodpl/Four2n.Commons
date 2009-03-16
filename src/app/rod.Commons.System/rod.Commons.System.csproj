@@ -48,6 +48,7 @@
     <Compile Include="Collections\SimplifiedKey.cs" />
     <Compile Include="Collections\SimplifiedKeyDictionary.cs" />
     <Compile Include="Collections\ISimplifiedKeyIdentifiable.cs" />
+    <Compile Include="Diagnostics\Benchmark.cs" />
     <Compile Include="Diagnostics\HiPerfTimer.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
   </ItemGroup>

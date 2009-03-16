@@ -15,7 +15,7 @@
     <ProjectGuid>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System</RootNamespace>
+    <RootNamespace>Rod.Commons</RootNamespace>
     <AssemblyName>rod.Commons.System.Tests</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
