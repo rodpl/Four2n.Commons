@@ -89,9 +89,9 @@
             <Output TaskParameter="Revision" PropertyName="SvnRevision"/>
         </SvnVersion>
 
-        <PropertyGroup>
-            <SvnRevision Condition="$(SvnRevision) == '' or $(SvnRevision) == '-1'">0</SvnRevision>
-        </PropertyGroup>
+        <CreateProperty Value="0" Condition="$(SvnRevision) == '' or $(SvnRevision) == '-1'">
+            <Output PropertyName="SvnRevision" TaskParameter="ValueSetByTask" />
+        </CreateProperty>
     </Target>
 
     <Target Name="IncludeGeneratedAssemblyInfo" DependsOnTargets="GenerateAssemblyInfo">
