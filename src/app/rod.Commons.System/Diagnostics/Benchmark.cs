@@ -20,6 +20,7 @@ namespace Rod.Commons.System.Diagnostics
         private readonly Stopwatch timer = new Stopwatch();
         private OutputType currentOutputType;
         private string currentMessageFormat;
+        private Action<string> outputDelegate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Benchmark"/> class.
@@ -50,7 +51,12 @@ namespace Rod.Commons.System.Diagnostics
             /// <summary>
             /// Console output.
             /// </summary>
-            Console
+            Console,
+            
+            /// <summary>
+            /// Delegate output.
+            /// </summary>
+            Delegate
         }
 
         /// <summary>
@@ -77,6 +83,19 @@ namespace Rod.Commons.System.Diagnostics
         }
 
         /// <summary>
+        /// Send benchmark output to the delegate.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns><see cref="Benchmark"/> instance for chaining.</returns>
+        public Benchmark ToDelegate(Action<string> action)
+        {
+            this.currentOutputType = OutputType.Delegate;
+            this.timer.Reset();
+            this.timer.Start();
+            return this;
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -95,6 +114,10 @@ namespace Rod.Commons.System.Diagnostics
             {
                 case OutputType.Console:
                     Console.Out.WriteLine(this.currentMessageFormat, duration);
+                    break;
+                    
+                case OutputType.Delegate:
+                    this.outputDelegate(duration.ToString());
                     break;
             }
         }
