@@ -20,7 +20,7 @@ namespace Rod.Commons.System.Diagnostics
         private readonly Stopwatch timer = new Stopwatch();
         private OutputType currentOutputType;
         private string currentMessageFormat;
-        private Action<string> outputDelegate;
+        private Action<object> outputDelegate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Benchmark"/> class.
@@ -87,9 +87,10 @@ namespace Rod.Commons.System.Diagnostics
         /// </summary>
         /// <param name="action">The action.</param>
         /// <returns><see cref="Benchmark"/> instance for chaining.</returns>
-        public Benchmark ToDelegate(Action<string> action)
+        public Benchmark ToDelegate(Action<object> action)
         {
             this.currentOutputType = OutputType.Delegate;
+            this.outputDelegate = action;
             this.timer.Reset();
             this.timer.Start();
             return this;
@@ -117,7 +118,7 @@ namespace Rod.Commons.System.Diagnostics
                     break;
                     
                 case OutputType.Delegate:
-                    this.outputDelegate(duration.ToString());
+                    this.outputDelegate(duration);
                     break;
             }
         }

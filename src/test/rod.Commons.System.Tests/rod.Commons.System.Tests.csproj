@@ -59,6 +59,7 @@
     <Compile Include="Collections\SimplifiedKeyTests.cs" />
     <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_business_value.cs" />
     <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_simplified_value_but_different_business_value.cs" />
+    <Compile Include="Diagnostics\BenchmarkTests.cs" />
     <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
     <Compile Include="Reflection\ReflectionHelperTests.cs" />
   </ItemGroup>
