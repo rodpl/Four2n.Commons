@@ -7,7 +7,6 @@
 namespace Rod.Commons.MonoRail.Helpers
 {
     using System;
-
     using Castle.MonoRail.Framework.Helpers;
 
     /// <summary>

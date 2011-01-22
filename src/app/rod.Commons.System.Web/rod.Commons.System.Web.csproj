@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Root Path definition relative for actual build file -->
   <PropertyGroup>
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
@@ -7,6 +7,10 @@
     <AssemblyGuid>37F62576-B3E1-4902-B0B3-3941961D8B46</AssemblyGuid>
     <CustomBeforeMicrosoftCommonTargets Condition="Exists('$(RootPath)\Before.Microsoft.Common.Targets')">$(RootPath)\Before.Microsoft.Common.Targets</CustomBeforeMicrosoftCommonTargets>
     <CustomAfterMicrosoftCommonTargets Condition="Exists('$(RootPath)\After.Microsoft.Common.Targets')">$(RootPath)\After.Microsoft.Common.Targets</CustomAfterMicrosoftCommonTargets>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
