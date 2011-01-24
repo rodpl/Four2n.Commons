@@ -1,9 +1,12 @@
-//------------------------------------------------------------------------------------------------- 
-// <copyright file="SimplifiedKeyIdentifiableMother.cs" company="Daniel Dabrowski - rod.blogsome.com">
-// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SimplifiedKeyIdentifiableMother.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
-// <summary>Defines the SimplifiedKeyIdentifiableMother type.</summary>
-//-------------------------------------------------------------------------------------------------
+// <summary>
+//   Defines the SimplifiedKeyIdentifiableMother type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Rod.Commons.System.Collections
 {
     using global::System;
@@ -76,7 +79,17 @@ namespace Rod.Commons.System.Collections
             public static List<Implementation> CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue()
             {
                 var one = new Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
-                var two = new Implementation("John", "Doe", new DateTime(1978, 02, 10));
+                Implementation two;
+
+                if (IntPtr.Size == 4)
+                {
+                    two = new Implementation("John", "Doe", new DateTime(1978, 02, 10));
+                }
+                else
+                {
+                    throw new Exception("Im in x64");
+                }
+
                 Assert.IsTrue(one.Key.Equals(two.Key));
                 Assert.IsFalse(one.Key.BusinessEquals(two.Key));
                 return new List<Implementation> { one, two };

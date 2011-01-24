@@ -3,7 +3,6 @@
   <UsingTask AssemblyFile="Microsoft.StyleCop.dll" TaskName="StyleCopTask"/>
 
   <PropertyGroup>
-    <StyleCopDependsOn>$(StyleCopDependsOn)</StyleCopDependsOn>
     <BuildDependsOn>$(BuildDependsOn);StyleCop</BuildDependsOn>
     <RebuildDependsOn>StyleCopForceFullAnalysis;$(RebuildDependsOn)</RebuildDependsOn>
   </PropertyGroup>
@@ -72,20 +71,32 @@
   </Target>
 
   <!-- Define target: StyleCop -->
-  <Target Name="StyleCop" Condition="'$(StyleCopEnabled)' != 'false'" DependsOnTargets="$(StyleCopDependsOn)">
+  <Target Name="StyleCop" Condition="'$(StyleCopEnabled)' != 'false'">
+    <Message Text="Forcing full StyleCop reanalysis." Condition="'$(StyleCopForceFullAnalysis)' == 'true'" Importance="Low" />
+
     <!-- Determine what files should be checked. Take all Compile items, but exclude those that have
         set ExcludeFromStyleCop=true or ExcludeFromSourceAnalysis=true. -->
     <CreateItem Include="@(Compile)" Condition="('%(Compile.ExcludeFromStyleCop)' != 'true') and ('%(Compile.ExcludeFromSourceAnalysis)' != 'true')">
       <Output TaskParameter="Include" ItemName="StyleCopFiles"/>
     </CreateItem>
 
-    <Message Text="Forcing full StyleCop reanalysis." Condition="'$(StyleCopForceFullAnalysis)' == 'true'" Importance="Low" />
-
     <Message Text="Analyzing @(StyleCopFiles)" Importance="Low" />
+
+    <!-- Show list of what files should be excluded. checked. Take all Compile items, but exclude those that have
+        set ExcludeFromStyleCop=true or ExcludeFromSourceAnalysis=true. -->
+    <CreateItem Include="@(Compile)" Condition="('%(Compile.ExcludeFromStyleCop)' == 'true') or ('%(Compile.ExcludeFromSourceAnalysis)' == 'true')">
+      <Output TaskParameter="Include" ItemName="StyleCopExcludedFiles"/>
+    </CreateItem>
+
+    <ItemGroup>
+       <StyleCopFiles Remove="@(ExcludeFromStyleCop)" />    
+    </ItemGroup>
+
+    <Message Text="Excluding @(StyleCopExcludedFiles)" Importance="Normal" />
 
     <!-- Run the StyleCop MSBuild task. -->
     <StyleCopTask
-      ProjectFullPath="$(MSBuildProjectFile)"
+      ProjectFullPath="$(MSBuildProjectDirectory)"
       SourceFiles="@(StyleCopFiles)"
       AdditionalAddinPaths="@(StyleCopAdditionalAddinPaths)"
       ForceFullAnalysis="$(StyleCopForceFullAnalysis)"

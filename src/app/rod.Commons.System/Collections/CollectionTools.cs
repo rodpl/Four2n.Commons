@@ -1,9 +1,12 @@
-//------------------------------------------------------------------------------------------------- 
-// <copyright file="CollectionTools.cs" company="Daniel Dabrowski - rod.blogsome.com">
-// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CollectionTools.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
-// <summary>Defines the CollectionTools type.</summary>
-//-------------------------------------------------------------------------------------------------
+// <summary>
+//   Defines the CollectionTools type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Rod.Commons.System.Collections
 {
     using global::System;

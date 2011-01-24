@@ -1,9 +1,12 @@
-//------------------------------------------------------------------------------------------------- 
-// <copyright file="HiPerfTimerTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
-// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HiPerfTimerTests.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
-// <summary>Defines the HiPerfTimerTests type.</summary>
-//-------------------------------------------------------------------------------------------------
+// <summary>
+//   Defines the HiPerfTimerTests type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Rod.Commons.System.Diagnostics
 {
     using NUnit.Framework;

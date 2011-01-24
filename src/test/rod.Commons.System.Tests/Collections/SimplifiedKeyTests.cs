@@ -1,9 +1,12 @@
-//------------------------------------------------------------------------------------------------- 
-// <copyright file="SimplifiedKeyTests.cs" company="Daniel Dabrowski - rod.blogsome.com">
-// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SimplifiedKeyTests.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
-// <summary>Defines the SimplifiedKeyTests type.</summary>
-//-------------------------------------------------------------------------------------------------
+// <summary>
+//   Defines the SimplifiedKeyTests type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Rod.Commons.System.Collections
 {
     using global::System;

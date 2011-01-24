@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="XmlType.cs" company="Daniel Dabrowski - rod.blogsome.com">
-//   Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// <copyright file="XmlType.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
 // <summary>
-//   UserType allowing easy saving of <see cref="NHibernate" /> <see cref="XmlDocument" /> property.
+//   UserType allowing easy saving of   property.
 //   Based on example from here http://ayende.com/Blog/archive/2006/05/30/NHibernateAndXMLColumnTypes.aspx.
 //   With some modifications by Tobin Harris
 // </summary>

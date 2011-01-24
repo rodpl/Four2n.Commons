@@ -1,9 +1,12 @@
-//------------------------------------------------------------------------------------------------- 
-// <copyright file="FckEditorHelper.cs" company="Daniel Dabrowski - rod.blogsome.com">
-// Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FckEditorHelper.cs" company="Daniel Dabrowski - rod.42n.pl">
+//   Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.
 // </copyright>
-// <summary>Defines the FckEditorHelper type.</summary>
-//-------------------------------------------------------------------------------------------------
+// <summary>
+//   Defines the FckEditorHelper type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Rod.Commons.MonoRail.Helpers
 {
     using System.Collections;

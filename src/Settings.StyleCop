@@ -1,5 +1,12 @@
 <StyleCopSettings Version="4.3">
   <Analyzers>
+    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.DocumentationRules">
+      <AnalyzerSettings>
+        <StringProperty Name="CompanyName">Daniel Dabrowski - rod.42n.pl</StringProperty>
+        <StringProperty Name="Copyright">Copyright (c) Daniel Dabrowski - rod.42n.pl. All rights reserved.</StringProperty>
+        <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
+      </AnalyzerSettings>
+    </Analyzer>
     <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.SpacingRules">
       <Rules>
         <Rule Name="TabsMustNotBeUsed">
@@ -9,13 +16,6 @@
         </Rule>
       </Rules>
       <AnalyzerSettings />
-    </Analyzer>
-    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.DocumentationRules">
-      <AnalyzerSettings>
-        <StringProperty Name="CompanyName">Daniel Dabrowski - rod.blogsome.com</StringProperty>
-        <StringProperty Name="Copyright">Copyright (c) Daniel Dabrowski - rod.blogsome.com.  All rights reserved.</StringProperty>
-        <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
-      </AnalyzerSettings>
     </Analyzer>
   </Analyzers>
 </StyleCopSettings>
