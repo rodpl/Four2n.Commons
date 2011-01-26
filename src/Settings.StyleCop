@@ -7,15 +7,5 @@
         <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
       </AnalyzerSettings>
     </Analyzer>
-    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.SpacingRules">
-      <Rules>
-        <Rule Name="TabsMustNotBeUsed">
-          <RuleSettings>
-            <BooleanProperty Name="Enabled">False</BooleanProperty>
-          </RuleSettings>
-        </Rule>
-      </Rules>
-      <AnalyzerSettings />
-    </Analyzer>
   </Analyzers>
 </StyleCopSettings>

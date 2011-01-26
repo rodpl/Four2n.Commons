@@ -78,9 +78,9 @@
       <Project>{843C066F-54E8-41ED-A597-1DFCAC466831}</Project>
       <Name>rod.Commons.System.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\app\rod.Commons.System\rod.Commons.System.csproj">
+    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>rod.Commons.System</Name>
+      <Name>Rod.Commons.System</Name>
     </ProjectReference>
     <ProjectReference Include="..\rod.Commons.System.Tests\rod.Commons.System.Tests.csproj">
       <Project>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</Project>
