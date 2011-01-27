@@ -31,7 +31,10 @@ namespace Rod.Commons.System.Collections
         public void BusinessEquals_ToInstancesWithTheSameSimplifiedKeyValueButDifferentBussinesKeyValue_ReturnsFalse()
         {
             var itemOne = new SimplifiedKeyIdentifiableMother.Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
-            var itemTwo = new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1978, 02, 10));
+            var itemTwo = Runtime.Isx64()
+                              ? new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1971, 02, 10))
+                              : new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1978, 02, 10));
+
             Assert.IsTrue(itemOne.Key.Equals(itemTwo.Key));
             Assert.IsFalse(itemOne.Key.BusinessEquals(itemTwo.Key));
         }

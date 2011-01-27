@@ -24,7 +24,9 @@ namespace Rod.Commons.System.Collections.SimplifiedKey
         public void SetUp()
         {
             this.itemOne = new SimplifiedKeyIdentifiableMother.Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
-            this.itemTwo = new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1978, 02, 10));
+            this.itemTwo = Runtime.Isx64()
+                  ? new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1971, 02, 10))
+                  : new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(1978, 02, 10));
         }
 
         [Test]

@@ -79,16 +79,9 @@ namespace Rod.Commons.System.Collections
             public static List<Implementation> CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue()
             {
                 var one = new Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
-                Implementation two;
-
-                if (IntPtr.Size == 4)
-                {
-                    two = new Implementation("John", "Doe", new DateTime(1978, 02, 10));
-                }
-                else
-                {
-                    throw new Exception("Im in x64");
-                }
+                var two = Runtime.Isx64()
+                                  ? new Implementation("John", "Doe", new DateTime(1971, 02, 10))
+                                  : new Implementation("John", "Doe", new DateTime(1978, 02, 10));
 
                 Assert.IsTrue(one.Key.Equals(two.Key));
                 Assert.IsFalse(one.Key.BusinessEquals(two.Key));
@@ -107,8 +100,13 @@ namespace Rod.Commons.System.Collections
             public static List<Implementation> CreateListOfThreeNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue()
             {
                 var one = new Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
-                var two = new Implementation("John", "Doe", new DateTime(1978, 02, 10));
-                var three = new Implementation("Jeremy", "Brown", new DateTime(1951, 10, 02));
+                var two = Runtime.Isx64()
+                                  ? new Implementation("John", "Doe", new DateTime(1971, 02, 10))
+                                  : new Implementation("John", "Doe", new DateTime(1978, 02, 10));
+
+                var three = Runtime.Isx64()
+                                    ? new Implementation("Jeremy", "Brown", new DateTime(1970, 10, 02))
+                                    : new Implementation("Jeremy", "Brown", new DateTime(1969, 10, 02));
 
                 Assert.IsTrue(one.Key.Equals(two.Key));
                 Assert.IsTrue(one.Key.Equals(three.Key));

@@ -210,6 +210,42 @@ namespace Rod.Commons.System.Collections
             AssertEnumerator(local);
         }
 
+        [Test]
+        public void TestKeyObjectMohter()
+        {
+            SimplifiedKeyIdentifiableMother.Implementation.CreateListOfTwoUnique();
+            SimplifiedKeyIdentifiableMother.Implementation.
+                    CreateListOfTwoNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
+            SimplifiedKeyIdentifiableMother.Implementation.
+                    CreateListOfTwoNonUniqueSimplifiedKeyValueAndNonUniqueBusinessKeyValue();
+            SimplifiedKeyIdentifiableMother.Implementation.CreateListOfThreeUnique();
+            SimplifiedKeyIdentifiableMother.Implementation.
+                    CreateListOfThreeNonUniqueSimplifiedKeyValueAndUniqueBusinessKeyValue();
+        }
+
+        [Test]
+        [Explicit]
+        public void FindNonUniqueValues()
+        {
+            var one = new SimplifiedKeyIdentifiableMother.Implementation("Daniel", "Dabrowski", new DateTime(1922, 02, 17));
+            SimplifiedKeyIdentifiableMother.Implementation two = null;
+            SimplifiedKeyIdentifiableMother.Implementation three = null;
+            for (int i = 1900; i < 2000; i++)
+            {
+                two = new SimplifiedKeyIdentifiableMother.Implementation("John", "Doe", new DateTime(i, 02, 10));
+                three = new SimplifiedKeyIdentifiableMother.Implementation("Jeremy", "Brown", new DateTime(i, 10, 02));
+                if (one.Key.Equals(two.Key))
+                {
+                    Console.Out.WriteLine("TWO " + i);
+                }
+
+                if (one.Key.Equals(three.Key))
+                {
+                    Console.Out.WriteLine("THREE " + i);
+                }
+            }
+        }
+
         private static void AssertEnumerator(SimplifiedKeyDictionaryMother.Implementation dictionary)
         {
             var counter = 0;
