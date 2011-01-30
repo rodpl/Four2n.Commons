@@ -78,10 +78,11 @@
         </Exec>
         <Xslt
             Inputs="$(TestResultXmlFile)"
-            Xsl="$(NUnitPath)\xslt\Summary.xslt"
+            Xsl="$(ToolsPath)\nunit\xslt\Summary.xslt"
             Output="$(TestResultTxtFile)" ContinueOnError="false"/>
 
-        <ReadLinesFromFile File="$(TestResultTxtFile)">
+        <ReadLinesFromFile File="$(TestResultTxtFile)"
+                           Condition="'$(NUnitExitCode)' != '0'">
             <Output TaskParameter="Lines" ItemName="NUnitSummaryLines"/>
         </ReadLinesFromFile>
 
@@ -91,7 +92,7 @@
 
         <Message Condition="$(NUnitExitCode) == '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" />
         <Message Condition="$(NUnitExitCode) != '0'" Text="@(NUnitSummaryLines, '$(NEW_LINE)')" Importance="High" />
-        <Exec Command="notepad.exe $(TestSummaryFile)" />
+        <Exec Command="notepad.exe $(TestSummaryFile)" Condition="$(NUnitExitCode) != '0'"/>
         <Error Condition="$(NUnitExitCode) != '0'" Text="Some tests has $(NUnitExitCode) failed tests." />
     </Target>
 

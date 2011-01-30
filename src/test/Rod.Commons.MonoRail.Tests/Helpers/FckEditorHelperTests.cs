@@ -41,8 +41,8 @@ namespace Rod.Commons.MonoRail.Helpers
         public void CreateHtmlTest_ReturnsHtmlInDivTags()
         {
             var html = this.sut.CreateHtml("instance");
-            Assert.That(html, Text.StartsWith("<div>\n"));
-            Assert.That(html, Text.EndsWith("</div>\n"));
+            Assert.That(html, Is.StringStarting("<div>\n"));
+            Assert.That(html, Is.StringEnding("</div>\n"));
         }
 
         [Test]

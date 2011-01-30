@@ -23,6 +23,7 @@
     <PropertyGroup>
         <BuildPath>$(RootPath)\build</BuildPath>
         <TestResultsPath>$(BuildPath)\test-results</TestResultsPath>
+        <PackagesPath>$(RootPath)\packages</PackagesPath>
         <ToolsPath>$(RootPath)\tools</ToolsPath>
     </PropertyGroup>
     
@@ -33,7 +34,7 @@
         <AcceptanceTestDetectionExpression>([.])(AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
         <IntegrationTestDetectionExpression>([.])(IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
         <UnitTestDetectionExpression>([.])((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
-        <SolutionPath>$(RootPath)\$(ProjectName).VS2008.sln</SolutionPath>
+        <SolutionPath>$(RootPath)\$(ProjectName).VS2010.sln</SolutionPath>
         <TestedAssembliesReplaceExpression>((.*\\|^)(?=[^\\]*$))|($(TestDetectionExpression).*$)</TestedAssembliesReplaceExpression>
         <TestedAssembliesDetectionExpression1>(?&lt;=((\\|^)(?=[^\\]*$))).*(?=($(TestDetectionExpression).*$))</TestedAssembliesDetectionExpression1>
     </PropertyGroup>
@@ -52,8 +53,8 @@
         <TestOutputFile>$(TestResultsPath)\nunit-output.txt</TestOutputFile>
         <TestSummaryFile>$(TestResultsPath)\nunit-summary.txt</TestSummaryFile>
         <TestCommandParameters>/xml=$(TestResultXmlFile) /output=$(TestOutputFile) /nologo</TestCommandParameters>
-        <NUnitPath>$(ToolsPath)\nunit</NUnitPath>
-        <NUnitConsole>$(NUnitPath)\nunit-console.exe</NUnitConsole>
+        <NUnitPath>$(PackagesPath)\NUnit.2.5.7.10213</NUnitPath>
+        <NUnitConsole>$(NUnitPath)\Tools\nunit-console-x86.exe</NUnitConsole>
     </PropertyGroup>
 
     <!-- Coverage Definitions-->

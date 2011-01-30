@@ -11,13 +11,13 @@
 
 namespace Rod.Commons.NHibernate.UserTypes
 {
-    using System;
-    using System.Data;
-    using System.Data.Common;
-    using System.Xml;
-
     using global::NHibernate.SqlTypes;
     using global::NHibernate.UserTypes;
+
+    using global::System;
+    using global::System.Data;
+    using global::System.Data.Common;
+    using global::System.Xml;
 
     using Rod.Commons.NHibernate.SqlTypes;
 

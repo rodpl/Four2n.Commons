@@ -9,7 +9,7 @@
 
 namespace Rod.Commons.NHibernate.Dialect
 {
-    using System.Data;
+    using global::System.Data;
 
     /// <summary>
     /// Customized dialect for MS Sql 2008.

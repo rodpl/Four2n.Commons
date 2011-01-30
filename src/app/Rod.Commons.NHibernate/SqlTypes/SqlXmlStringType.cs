@@ -9,9 +9,9 @@
 
 namespace Rod.Commons.NHibernate.SqlTypes
 {
-    using System.Data;
-
     using global::NHibernate.SqlTypes;
+
+    using global::System.Data;
 
     /// <summary>
     /// Xml type as string 4000 chars long.

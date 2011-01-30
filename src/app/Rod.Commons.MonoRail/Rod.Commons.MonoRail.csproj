@@ -45,11 +45,11 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>True</SpecificVersion>
-      <HintPath>..\..\..\lib\net\2.0\Castle\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\lib\Castle.MonoRail\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MonoRail.Framework, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>True</SpecificVersion>
-      <HintPath>..\..\..\lib\net\2.0\Castle\Castle.MonoRail.Framework.dll</HintPath>
+      <HintPath>..\..\..\lib\Castle.MonoRail\Castle.MonoRail.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

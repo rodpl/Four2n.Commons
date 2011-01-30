@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-lazy="false">
+    <class name="Rod.Commons.NHibernate.Tests.Domain.DateRangeModel,Rod.Commons.NHibernate.Tests" table="DateRangeModel">
+        <id name="Id" type="Int32" >
+            <generator class="identity" />
+        </id>
+        <property name="DatePeriod" type="Rod.Commons.NHibernate.UserTypes.DateRangeUserType,Rod.Commons.NHibernate">
+            <column name="DatePeriodStart"/>
+            <column name="DatePeriodEnd" />
+        </property>
+        <property name="DateTimePeriod" type="Rod.Commons.NHibernate.UserTypes.DateTimeRangeUserType,Rod.Commons.NHibernate">
+            <column name="DateTimePeriodStart"/>
+            <column name="DateTimePeriodEnd" />
+        </property>
+    </class>
+</hibernate-mapping>
