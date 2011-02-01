@@ -20,7 +20,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rod.Commons.System</RootNamespace>
-    <AssemblyName>rod.Commons.System.Tests</AssemblyName>
+    <AssemblyName>Rod.Commons.System.Tests</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

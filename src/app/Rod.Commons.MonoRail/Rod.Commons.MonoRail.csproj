@@ -21,7 +21,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rod.Commons.MonoRail</RootNamespace>
-    <AssemblyName>rod.Commons.MonoRail</AssemblyName>
+    <AssemblyName>Rod.Commons.MonoRail</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

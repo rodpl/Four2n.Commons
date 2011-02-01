@@ -21,7 +21,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rod.Commons.System.Extensions</RootNamespace>
-    <AssemblyName>rod.Commons.System.Extensions</AssemblyName>
+    <AssemblyName>Rod.Commons.System.Extensions</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

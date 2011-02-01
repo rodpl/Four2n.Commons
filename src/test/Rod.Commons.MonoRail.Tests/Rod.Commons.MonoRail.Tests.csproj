@@ -20,7 +20,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rod.Commons.MonoRail</RootNamespace>
-    <AssemblyName>rod.Commons.MonoRail.Tests</AssemblyName>
+    <AssemblyName>Rod.Commons.MonoRail.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
