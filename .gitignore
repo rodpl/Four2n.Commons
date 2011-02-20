@@ -1,5 +1,6 @@
 *.obj
 *.exe
+!/tools/**/*.exe
 *.pdb
 *.user
 *.aps
@@ -16,6 +17,7 @@
 *.lib
 *.sbr
 *.scc
+*.swp
 [Bb]in/
 !/tools/gallio/bin/
 [Db]ebug/
