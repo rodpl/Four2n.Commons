@@ -69,6 +69,7 @@
     <Compile Include="DateTimeRangeTests.cs" />
     <Compile Include="Diagnostics\BenchmarkTests.cs" />
     <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
+    <Compile Include="EnumExtendedInfoAttributeTests.cs" />
     <Compile Include="Reflection\ReflectionHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>

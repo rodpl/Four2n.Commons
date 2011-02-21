@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-lazy="false">
+    <class name="Rod.Commons.NHibernate.Tests.Domain.FlagEnumExtendedModel,Rod.Commons.NHibernate.Tests" table="FlagEnumExtendedModel">
+        <id name="Id" type="Int32" >
+            <generator class="identity" />
+        </id>
+      <property name="SampleEnum" type="Rod.Commons.NHibernate.UserTypes.FlagEnumWithExtendedInfoUserType`1[[Rod.Commons.NHibernate.Tests.Domain.ExtendedTestFlagEnum, Rod.Commons.NHibernate.Tests]],Rod.Commons.NHibernate">
+        <column name="SampleEnumValue"/>
+      </property>
+      <property name="SampleEnumTwo">
+          <column name="SampleEnumValueTwo"/>
+          <type name="Rod.Commons.NHibernate.UserTypes.FlagEnumWithExtendedInfoUserType`1[[Rod.Commons.NHibernate.Tests.Domain.ExtendedTestFlagEnum, Rod.Commons.NHibernate.Tests]],Rod.Commons.NHibernate">
+            <param name="separator">, </param>
+          </type>
+        </property>
+    </class>
+</hibernate-mapping>

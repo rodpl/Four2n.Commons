@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-lazy="false">
+    <class name="Rod.Commons.NHibernate.Tests.Domain.EnumExtendedModel,Rod.Commons.NHibernate.Tests" table="EnumExtendedModel">
+        <id name="Id" type="Int32" >
+            <generator class="identity" />
+        </id>
+        <property name="SampleEnum" type="Rod.Commons.NHibernate.UserTypes.EnumWithExtendedInfoUserType`1[[Rod.Commons.NHibernate.Tests.Domain.ExtendedTestEnum, Rod.Commons.NHibernate.Tests]],Rod.Commons.NHibernate">
+            <column name="SampleEnumValue"/>
+        </property>
+    </class>
+</hibernate-mapping>

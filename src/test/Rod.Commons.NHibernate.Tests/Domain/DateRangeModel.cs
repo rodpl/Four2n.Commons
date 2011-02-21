@@ -11,10 +11,8 @@ namespace Rod.Commons.NHibernate.Tests.Domain
 {
     using Rod.Commons.System;
 
-    public class DateRangeModel
+    public class DateRangeModel : BaseTestModel
     {
-        public int Id { get; set; }
-
         public DateRange DatePeriod { get; set; }
 
         public DateTimeRange DateTimePeriod { get; set; }

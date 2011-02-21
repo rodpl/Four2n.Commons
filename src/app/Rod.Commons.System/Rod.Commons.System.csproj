@@ -70,6 +70,7 @@
     <Compile Include="DateRange.cs" />
     <Compile Include="Diagnostics\Benchmark.cs" />
     <Compile Include="Diagnostics\HiPerfTimer.cs" />
+    <Compile Include="EnumExtendedInfoAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Runtime.cs" />
   </ItemGroup>
