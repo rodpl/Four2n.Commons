@@ -1,17 +1,17 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CompileWorkflowTask" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CreateWorkflowManifestResourceNameForCSharp" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <PropertyGroup>
-        <WinWFTempFiles>
-        </WinWFTempFiles>
-        <KeepWinWFTempFiles>
-        </KeepWinWFTempFiles>
-    </PropertyGroup>
-    <PropertyGroup>
-        <CoreCompileDependsOn>$(CoreCompileDependsOn);WorkflowCompilation</CoreCompileDependsOn>
-        <CoreBuildDependsOn>$(CoreBuildDependsOn);WorkflowCompilationCleanup</CoreBuildDependsOn>
-    </PropertyGroup>
-    <!--Note: The inputs and outputs of the "WorkflowCompilation" target match those of 
+	<UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CompileWorkflowTask" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+	<UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CreateWorkflowManifestResourceNameForCSharp" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+	<PropertyGroup>
+		<WinWFTempFiles>
+		</WinWFTempFiles>
+		<KeepWinWFTempFiles>
+		</KeepWinWFTempFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CoreCompileDependsOn>$(CoreCompileDependsOn);WorkflowCompilation</CoreCompileDependsOn>
+		<CoreBuildDependsOn>$(CoreBuildDependsOn);WorkflowCompilationCleanup</CoreBuildDependsOn>
+	</PropertyGroup>
+	<!--Note: The inputs and outputs of the "WorkflowCompilation" target match those of 
               "Compile" target in CSharp.Targets/VisualBasic.Targets 
               except that "WorkflowCompilation" have @(Content) also as the input 
               because .Xoml files are represented as content items in the 
@@ -85,7 +85,7 @@
   </PropertyGroup>
   
   <Target Name="WorkflowCompilation" 
-      Inputs="$(MSBuildAllProjects);
+	  Inputs="$(MSBuildAllProjects);
           @(Compile);
           @(Content);
           @(EmbeddedResource);
@@ -125,28 +125,28 @@
     </ItemGroup>      
 
     <CompileWorkflowTask 
-    Imports="@(Import)"
-    RootNamespace="$(RootNamespace)" 
-    AssemblyName="$(AssemblyName)"
-    ProjectDirectory="$(MSBuildProjectDirectory)" 
-    ProjectExtension="$(MSBuildProjectExtension)" 
-    ResourceFiles="@(WFCompilationResourcesWithNoCulture);@(CompiledLicenseFile)"
-    ReferenceFiles="@(ReferencePath)" 
-    SourceCodeFiles="@(Compile)" 
-    WorkflowMarkupFiles="@(Content)"
+	Imports="@(Import)"
+	RootNamespace="$(RootNamespace)" 
+	AssemblyName="$(AssemblyName)"
+	ProjectDirectory="$(MSBuildProjectDirectory)" 
+	ProjectExtension="$(MSBuildProjectExtension)" 
+	ResourceFiles="@(WFCompilationResourcesWithNoCulture);@(CompiledLicenseFile)"
+	ReferenceFiles="@(ReferencePath)" 
+	SourceCodeFiles="@(Compile)" 
+	WorkflowMarkupFiles="@(Content)"
         CompilationOptions="@(WFCompilationOptions)"
         DelaySign="$(DelaySign)"
         KeyContainer="$(KeyContainerName)"
         KeyFile="$(KeyOriginatorFile)">
         <Output TaskParameter="OutputFiles" ItemName="Compile" />
-    <Output TaskParameter="TemporaryFiles" ItemName="WinWFTempFiles" />
-    <Output TaskParameter="KeepTemporaryFiles" ItemName="KeepWinWFTempFiles" />
+	<Output TaskParameter="TemporaryFiles" ItemName="WinWFTempFiles" />
+	<Output TaskParameter="KeepTemporaryFiles" ItemName="KeepWinWFTempFiles" />
     </CompileWorkflowTask>
   </Target>
 
   <Target Name="WorkflowCompilationCleanup" Condition="'@(KeepWinWFTempFiles)'=='False'">
     <Delete 
-    Files="@(WinWFTempFiles)" 
-    Condition="'@(WinWFTempFiles)' != ''" />
+	Files="@(WinWFTempFiles)" 
+	Condition="'@(WinWFTempFiles)' != ''" />
   </Target>
 </Project>

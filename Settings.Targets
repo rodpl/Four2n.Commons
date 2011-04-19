@@ -98,9 +98,10 @@
         <AssemblyTitle>$(ProjectName) - $(AssemblyTitle)</AssemblyTitle>
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
         <AssemblyCompany>42n</AssemblyCompany>
-        <AssemblyCopyright>Copyright 2006-2008 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
+        <AssemblyCopyright>Copyright 2006-2011 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
         <AssemblyProduct>$(ProjectName)</AssemblyProduct>
         <AssemblyVersion>0.1</AssemblyVersion>
+        <AllowPartiallyTrustedCallers>True</AllowPartiallyTrustedCallers>
     </PropertyGroup>
     
 </Project>

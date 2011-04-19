@@ -76,7 +76,7 @@
     </Target>
 
     <!-- Get the revision number of the local working copy -->
-    <Target Name="GetSvnRevision">
+    <Target Name="GetSvnRevision" Condition="$(SvnRevision) == '' or $(SvnRevision) == '-1'">
         <SvnVersion LocalPath="$(MSBuildProjectDirectory)" ContinueOnError="true">
             <Output TaskParameter="Modifications" PropertyName="SvnModified" />
         </SvnVersion>
@@ -111,6 +111,7 @@
             AssemblyProduct="$(AssemblyProduct)"
             AssemblyVersion="$(AssemblyVersion)"
             AssemblyFileVersion="$(AssemblyVersion)"
+            AllowPartiallyTrustedCallers="$(AllowPartiallyTrustedCallers)"
             Guid="$(AssemblyGuid)" />
     </Target>
 
