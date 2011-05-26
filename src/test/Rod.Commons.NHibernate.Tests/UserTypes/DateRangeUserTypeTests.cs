@@ -32,20 +32,72 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
         }
 
         [Test]
-        public void SimplePersistingTest()
+        [TestCase(typeof(DateRange), "2000-1-1", "2000-1-31")]
+        [TestCase(typeof(DateRange), "2000-1-1", null)]
+        [TestCase(typeof(DateRange), null, "2000-1-31")]
+        [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", "2000-1-31 13:01:05")]
+        [TestCase(typeof(DateTimeRange), null, "2000-1-31 13:01:05")]
+        [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", null)]
+        public void SaveModelTest(Type type, string beginsString, string endsString)
         {
             var model = new DateRangeModel();
-            model.DatePeriod = new DateRange(new DateTime(2000, 1, 1), new DateTime(2000, 1, 31));
-            model.DateTimePeriod = new DateTimeRange(new DateTime(2000, 1, 1, 12, 0, 4), new DateTime(2000, 1, 31, 13, 1, 5));
+            DateTime? begins = beginsString == null ? (DateTime?)null : DateTime.Parse(beginsString);
+            DateTime? ends = endsString == null ? (DateTime?)null : DateTime.Parse(endsString);
+
+            model.DatePeriod = new DateRange(begins, ends);
+            model.DateTimePeriod = new DateTimeRange(begins, ends);
 
             this.Session.Save(model);
             this.Session.Flush();
             this.Session.Clear();
 
             var modelFromDb = this.Session.Get<DateRangeModel>(model.Id);
-            Assert.That(modelFromDb.DatePeriod.Equals(model.DatePeriod), Is.True);
-            Assert.AreEqual(modelFromDb.DateTimePeriod.Begins, model.DateTimePeriod.Begins);
-            Assert.That(modelFromDb.DateTimePeriod.Equals(model.DateTimePeriod), Is.True);
+            Assert.That(model.Id, Is.GreaterThan(0));
+
+            if (typeof(DateRange).Equals(type))
+            {
+                Assert.AreEqual(modelFromDb.DatePeriod, model.DatePeriod);
+            }
+            else if (typeof(DateTimeRange).Equals(type))
+            {
+                Assert.AreEqual(modelFromDb.DateTimePeriod, model.DateTimePeriod);
+            }
+        }
+
+        [Test]
+        [TestCase(typeof(DateRange), "2000-1-1", "2000-1-31")]
+        [TestCase(typeof(DateRange), "2000-1-1", null)]
+        [TestCase(typeof(DateRange), null, "2000-1-31")]
+        [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", "2000-1-31 13:01:05")]
+        [TestCase(typeof(DateTimeRange), null, "2000-1-31 13:01:05")]
+        [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", null)]
+        public void SaveOdupdateCopyModelTest(Type type, string beginsString, string endsString)
+        {
+            var model = new DateRangeModel();
+            DateTime? begins = beginsString == null ? (DateTime?)null : DateTime.Parse(beginsString);
+            DateTime? ends = endsString == null ? (DateTime?)null : DateTime.Parse(endsString);
+
+            model.DatePeriod = new DateRange(begins, ends);
+            model.DateTimePeriod = new DateTimeRange(begins, ends);
+
+            this.Session.Save(model);
+            this.Session.Evict(model);
+
+            this.Session.SaveOrUpdateCopy(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<DateRangeModel>(model.Id);
+            Assert.That(model.Id, Is.GreaterThan(0));
+
+            if (typeof(DateRange).Equals(type))
+            {
+                Assert.AreEqual(modelFromDb.DatePeriod, model.DatePeriod);
+            }
+            else if (typeof(DateTimeRange).Equals(type))
+            {
+                Assert.AreEqual(modelFromDb.DateTimePeriod, model.DateTimePeriod);
+            }
         }
 
         [Test]

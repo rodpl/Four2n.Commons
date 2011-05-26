@@ -78,7 +78,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// </returns>
         public object Assemble(object cached, ISessionImplementor session, object owner)
         {
-            throw new NotImplementedException();
+            return this.DeepCopy(cached);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <returns>the value to be merged</returns>
         public object Replace(object original, object target, ISessionImplementor session, object owner)
         {
-            throw new NotImplementedException();
+            return original;
         }
 
         /// <summary>
@@ -220,7 +220,17 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <param name="value">the value to set</param>
         public void SetPropertyValue(object component, int property, object value)
         {
-            throw new NotImplementedException();
+            var casted = (T)component;
+            if (property == 0)
+            {
+                casted = this.Create((DateTime)value, casted.Ends);
+            }
+            else if (property == 1)
+            {
+                casted = this.Create(casted.Begins, (DateTime)value);
+            }
+
+            component = casted;
         }
 
         /// <summary>
