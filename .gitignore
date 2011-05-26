@@ -18,6 +18,7 @@
 *.sbr
 *.scc
 *.swp
+*.docstates
 [Bb]in/
 !/tools/gallio/bin/
 [Db]ebug/
