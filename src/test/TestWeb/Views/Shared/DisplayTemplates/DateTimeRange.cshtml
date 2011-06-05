@@ -1,0 +1,74 @@
+﻿@model Rod.Commons.System.DateTimeRange?
+@using Rod.Commons.System;
+
+<div id="dateTimeRangePicker_@(ViewData.ModelMetadata.PropertyName)">
+    <script type="text/javascript" language="javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            var $div = $('#dateTimeRangePicker_@(ViewData.ModelMetadata.PropertyName)');
+            $div.find('.date').datepicker({ altFormat: 'dd-mm-yy' });
+        });
+
+        function clearDateTimePicker_@(ViewData.ModelMetadata.PropertyName)() {
+            var $div = $('#dateTimeRangePicker_@(ViewData.ModelMetadata.PropertyName)');
+
+            $div.find('.date').val('');
+            $div.find('.hour').val('00');
+            $div.find('.minute').val('00');
+
+            updateData_@(ViewData.ModelMetadata.PropertyName)();
+        }
+
+        function updateData_@(ViewData.ModelMetadata.PropertyName)() {
+            var $div = $('#dateTimeRangePicker_@(ViewData.ModelMetadata.PropertyName)');
+
+            var $date = $div.find('.date').val();
+            var $hour = $div.find('.hour').val();
+            var $minute = $div.find('.minute').val();
+
+            var $data = '';
+
+            if ($date != '')
+            {
+                $data = $date + ' ' + $hour + ':' + $minute;
+            }
+
+            $div.find('.data').val($data);
+        }
+        //]]>
+    </script>
+
+    @* Hidden field holding the client data *@
+    @Html.Hidden("", Model.HasValue ? Model.Value.ToShortTimeString() : string.Empty, new { @class = "data" })
+
+    @* Date - should equal DatePicker.cshtml *@
+    <input type="text" class="date" value="@(Model.HasValue ? Model.Value.ToShortDateString() : string.Empty)" 
+        onchange="javascript:updateData_@(ViewData.ModelMetadata.PropertyName)()" />
+    <img alt="@Resources.SelectDate" src="../../../Content/Images/calendar.png" class="calendarIcon" />
+
+    @* Time - should equal TimePicker.cshtml *@
+    <select class="hour" style="width: auto; margin-left: 5px;" onchange="javascript:updateData_@(ViewData.ModelMetadata.PropertyName)()">
+    @{
+        for (int hour = 0; hour < 24; hour += 1)
+        {
+            <text><option @{ if (Model.HasValue && Model.Value.Hour == hour) { <text>selected="selected"</text> }}>@(hour.ToString("D02"))</option></text>
+        }        
+    }
+    </select>
+
+    :
+
+    <select class="minute" style="width: auto; margin-left: 5px;" onchange="javascript:updateData_@(ViewData.ModelMetadata.PropertyName)()">
+    @{
+        for (int minute = 0; minute < 60; minute += 1)
+        {
+            <text><option @{ if (Model.HasValue && Model.Value.Minute == minute) { <text>selected="selected"</text> }}>@(minute.ToString("D02"))</option></text>
+        }        
+    }
+    </select>
+    <img alt="@Resources.SelectTime" src="../../../images/icon_clock_2.gif" style="margin-right: 5px" />
+
+    <input type="button" value="@Resources.Clear" class="ui-state-default" onclick="javascript:clearDateTimePicker_@(ViewData.ModelMetadata.PropertyName)()" />
+</div>
+@Html.TextBox("Begins", Model.Value.Begins) - 
+@Html.TextBox("Ends", Model.Value.Ends)

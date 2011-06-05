@@ -10,6 +10,7 @@
 namespace Rod.Commons.System
 {
     using global::System;
+    using global::System.ComponentModel;
 
     /// <summary>
     /// Interface for DateRange structures.
@@ -32,6 +33,8 @@ namespace Rod.Commons.System
     /// <summary>
     /// Structure of date range as period of time with a day as minimal unit of time.
     /// </summary>
+    [Serializable]
+    [TypeConverter(typeof(DateRangeTypeConverter))]
     public struct DateRange : IDateTimeRange, IEquatable<DateRange>
     {
         /// <summary>
@@ -140,11 +143,24 @@ namespace Rod.Commons.System
                 return ((this.Begins.HasValue ? this.Begins.Value.GetHashCode() : 0) * 397) ^ (this.Ends.HasValue ? this.Ends.Value.GetHashCode() : 0);
             }
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", this.Begins.HasValue ? this.Begins.Value.ToShortDateString() : "∞", this.Ends.HasValue ? this.Ends.Value.ToShortDateString() : "∞");
+        }
     }
 
     /// <summary>
     /// Structure of date range as period of time with a tick as minimal unit of time.
     /// </summary>
+    [Serializable]
+    [TypeConverter(typeof(DateTimeRangeTypeConverter))]
     public struct DateTimeRange : IDateTimeRange
     {
         /// <summary>
@@ -245,6 +261,17 @@ namespace Rod.Commons.System
             {
                 return ((this.Begins.HasValue ? this.Begins.Value.GetHashCode() : 0) * 397) ^ (this.Ends.HasValue ? this.Ends.Value.GetHashCode() : 0);
             }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", this.Begins.HasValue ? this.Begins.Value.ToString() : "∞", this.Ends.HasValue ? this.Ends.Value.ToString() : "∞");
         }
     }
 }

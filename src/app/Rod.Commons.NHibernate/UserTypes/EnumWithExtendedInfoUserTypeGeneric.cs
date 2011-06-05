@@ -67,7 +67,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// </returns>
         public object Assemble(object cached, object owner)
         {
-            throw new NotImplementedException();
+            return this.DeepCopy(cached);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <returns>the value to be merged</returns>
         public object Replace(object original, object target, object owner)
         {
-            throw new NotImplementedException();
+            return original;
         }
     }
 }

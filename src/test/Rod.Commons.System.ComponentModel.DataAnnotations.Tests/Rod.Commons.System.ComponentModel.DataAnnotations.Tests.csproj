@@ -2,26 +2,26 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Root Path definition relative for actual build file -->
   <PropertyGroup>
-    <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
-    <AssemblyTitle>rod's Commons System Tests library</AssemblyTitle>
+    <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\Settings.Targets') ">$(MSBuildProjectDirectory)</RootPath>
+    <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..</RootPath>
+    <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
+    <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..\..\..</RootPath>
+    <AssemblyTitle>DataAnnotations tests library.</AssemblyTitle>
+    <AssemblyGuid>02F2494F-73C6-4E04-AA40-EBE773006C72</AssemblyGuid>
     <CustomBeforeMicrosoftCommonTargets Condition="Exists('$(RootPath)\Before.Microsoft.Common.Targets')">$(RootPath)\Before.Microsoft.Common.Targets</CustomBeforeMicrosoftCommonTargets>
     <CustomAfterMicrosoftCommonTargets Condition="Exists('$(RootPath)\After.Microsoft.Common.Targets')">$(RootPath)\After.Microsoft.Common.Targets</CustomAfterMicrosoftCommonTargets>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</ProjectGuid>
+    <ProjectGuid>{9DBD8FC6-889A-40C4-8565-7859C1124F47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Tests</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <RootNamespace>Rod.Commons.System.ComponentModel.DataAnnotations</RootNamespace>
+    <AssemblyName>Rod.Commons.System.ComponentModel.DataAnnotations.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,50 +42,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.mocks">
       <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
     </Reference>
-    <Reference Include="pnunit.framework, Version=1.0.4109.34242, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="pnunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\CollectionToolsTests.cs" />
-    <Compile Include="Collections\SimplifiedKeyDictionaryMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyDictionaryTest.cs" />
-    <Compile Include="Collections\SimplifiedKeyIdentifiableMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyMother.cs" />
-    <Compile Include="Collections\SimplifiedKeyTests.cs" />
-    <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_business_value.cs" />
-    <Compile Include="Collections\SimplifiedKey\When_two_instances_has_the_same_simplified_value_but_different_business_value.cs" />
-    <Compile Include="DateRangeTests.cs" />
-    <Compile Include="DateTimeRangeGenericTestCase.cs" />
-    <Compile Include="DateTimeRangeTests.cs" />
-    <Compile Include="Diagnostics\BenchmarkTests.cs" />
-    <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
-    <Compile Include="EnumExtendedInfoAttributeTests.cs" />
-    <Compile Include="Reflection\ReflectionHelperTests.cs" />
+    <Compile Include="NipNumberValidatorAttributeTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
-      <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\Rod.Commons.System.ComponentModel.DataAnnotations\Rod.Commons.System.ComponentModel.DataAnnotations.csproj">
+      <Project>{F112F4D5-6FDF-4B44-9EF5-9921FF1DA381}</Project>
+      <Name>Rod.Commons.System.ComponentModel.DataAnnotations</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

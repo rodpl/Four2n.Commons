@@ -40,6 +40,23 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
         }
 
         [Test]
+        public void DefaultValue_SaveOrUpdateCopyPersistance()
+        {
+            var model = new FlagEnumExtendedModel();
+
+            this.Session.Save(model);
+            this.Session.Evict(model);
+
+            this.Session.SaveOrUpdateCopy(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<FlagEnumExtendedModel>(model.Id);
+            Assert.That(modelFromDb.SampleEnum, Is.EqualTo((ExtendedTestFlagEnum)0));
+            Assert.That(modelFromDb.SampleEnumTwo, Is.EqualTo((ExtendedTestFlagEnum)0));
+        }
+
+        [Test]
         public void StringValue_WithDefaultSeparator_Persistance()
         {
             var enumField = ExtendedTestFlagEnum.Something | ExtendedTestFlagEnum.Misc;
@@ -48,6 +65,25 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
             model.SampleEnum = enumField;
 
             this.Session.Save(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<FlagEnumExtendedModel>(model.Id);
+            Assert.That(modelFromDb.SampleEnum, Is.EqualTo(enumField));
+        }
+
+        [Test]
+        public void StringValue_WithDefaultSeparator_SaveOrUpdateCopyPersistance()
+        {
+            var enumField = ExtendedTestFlagEnum.Something | ExtendedTestFlagEnum.Misc;
+
+            var model = new FlagEnumExtendedModel();
+            model.SampleEnum = enumField;
+
+            this.Session.Save(model);
+            this.Session.Evict(model);
+
+            this.Session.SaveOrUpdateCopy(model);
             this.Session.Flush();
             this.Session.Clear();
 

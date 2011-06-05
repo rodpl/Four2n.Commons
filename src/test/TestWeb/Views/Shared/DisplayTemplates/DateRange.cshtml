@@ -1,0 +1,11 @@
+﻿@model Rod.Commons.System.DateRange?
+@using System.Globalization;
+@if (Model.HasValue)
+{
+  string formatString = ViewData.ModelMetadata.DisplayFormatString;
+  if (string.IsNullOrEmpty(formatString))
+  {
+    formatString = "{0:d}";
+  }
+  @string.Format("{0} - {1}", Model.Value.Begins.HasValue ? String.Format(CultureInfo.CurrentCulture, formatString, Model.Value.Begins) : "∞", Model.Value.Ends.HasValue ? String.Format(CultureInfo.CurrentCulture, formatString, Model.Value.Ends) : "∞")
+}

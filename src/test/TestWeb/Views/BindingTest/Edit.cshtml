@@ -1,0 +1,13 @@
+﻿@model TestWeb.Domain.SomeModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+  @Html.EditorForModel()
+  <button type="submit">Ok</button>
+}

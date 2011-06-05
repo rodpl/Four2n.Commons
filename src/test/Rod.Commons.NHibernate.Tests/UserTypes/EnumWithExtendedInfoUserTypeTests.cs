@@ -41,6 +41,41 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
             var modelFromDb = this.Session.Get<EnumExtendedModel>(model.Id);
             Assert.That(modelFromDb.SampleEnum, Is.EqualTo(enumField));
+
+            modelFromDb.SampleEnum = ExtendedTestEnum.Pending;
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDbTwo = this.Session.Get<EnumExtendedModel>(model.Id);
+            Assert.That(modelFromDbTwo.SampleEnum, Is.EqualTo(ExtendedTestEnum.Pending));
+        }
+
+        [Test]
+        public void StringValue_SaveOrUpdateCopyPersistance()
+        {
+            var enumField = ExtendedTestEnum.Something;
+            Assert.That(EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(enumField).CustomValue, Is.TypeOf<string>());
+
+            var model = new EnumExtendedModel();
+            model.SampleEnum = enumField;
+
+            this.Session.Save(model);
+            this.Session.Evict(model);
+
+            this.Session.SaveOrUpdateCopy(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<EnumExtendedModel>(model.Id);
+            Assert.That(modelFromDb.SampleEnum, Is.EqualTo(enumField));
+
+            model.SampleEnum = ExtendedTestEnum.Pending;
+            this.Session.SaveOrUpdateCopy(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDbTwo = this.Session.Get<EnumExtendedModel>(model.Id);
+            Assert.That(modelFromDbTwo.SampleEnum, Is.EqualTo(ExtendedTestEnum.Pending));
         }
     }
 }

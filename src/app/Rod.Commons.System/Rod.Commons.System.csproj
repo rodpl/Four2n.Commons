@@ -68,6 +68,9 @@
     <Compile Include="Collections\SimplifiedKeyDictionary.cs" />
     <Compile Include="Collections\ISimplifiedKeyIdentifiable.cs" />
     <Compile Include="DateRange.cs" />
+    <Compile Include="DateRangeTypeConverter.cs" />
+    <Compile Include="DateTimeRangeTypeConverterGeneric.cs" />
+    <Compile Include="DateTimeRangeTypeConverter.cs" />
     <Compile Include="Diagnostics\Benchmark.cs" />
     <Compile Include="Diagnostics\HiPerfTimer.cs" />
     <Compile Include="EnumExtendedInfoAttribute.cs" />

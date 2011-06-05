@@ -37,3 +37,7 @@ tools/CrudScaffolding/ScaffoldingGeneratorCommand.txt
 AssemblyInfo.cs
 /packages/*
 !/packages/repositories.config
+/src/test/TestWeb/Content/themes/
+/src/test/TestWeb/Scripts/jquery-*.*
+/src/test/TestWeb/Scripts/jquery.*.*
+/src/test/TestWeb/Scripts/modernizr*.*
