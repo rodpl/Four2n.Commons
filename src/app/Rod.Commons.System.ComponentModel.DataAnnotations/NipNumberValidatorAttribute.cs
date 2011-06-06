@@ -34,7 +34,17 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
         /// </returns>
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             var nip = value.ToString();
+
+            if (string.Empty.Equals(nip))
+            {
+                return true;
+            }
 
             if (!Regex.IsMatch(nip, @"^[\d]{10}$"))
             {

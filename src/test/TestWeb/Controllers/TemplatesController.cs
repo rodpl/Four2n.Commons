@@ -69,7 +69,7 @@ namespace TestWeb.Controllers
         [HttpPost]
         public ActionResult DateTimeRangeTests(DateTimeRangeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         public class DateRangeViewModel

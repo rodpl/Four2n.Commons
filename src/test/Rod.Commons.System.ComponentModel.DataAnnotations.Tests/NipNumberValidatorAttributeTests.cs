@@ -19,6 +19,8 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
     public class NipNumberValidatorAttributeTests
     {
         [Test]
+        [TestCase(null)]
+        [TestCase("")]
         [TestCase("7680002466")]
         public void IsValid_ForValidValues_ReturnsTrue(object value)
         {
