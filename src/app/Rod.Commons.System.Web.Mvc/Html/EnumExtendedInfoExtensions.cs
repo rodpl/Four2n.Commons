@@ -29,10 +29,10 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="name">The name of control.</param>
         /// <param name="value">The value.</param>
         /// <returns>Mvc string</returns>
-        public static MvcHtmlString DropdownEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue value)
+        public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue value)
                 where TValue : struct
         {
-            return DropdownEnumExtendedInfoInternal(helper, name, value, false, Enum.GetValues(typeof(TValue)));
+            return DropDownListEnumExtendedInfoInternal(helper, name, value, false, Enum.GetValues(typeof(TValue)));
         }
 
         /// <summary>
@@ -44,10 +44,10 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="value">The value.</param>
         /// <param name="choices">The choices.</param>
         /// <returns>Mvc string</returns>
-        public static MvcHtmlString DropdownEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue value, IEnumerable<TValue> choices)
+        public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue value, IEnumerable<TValue> choices)
             where TValue : struct
         {
-            return DropdownEnumExtendedInfoInternal(helper, name, value, false, choices);
+            return DropDownListEnumExtendedInfoInternal(helper, name, value, false, choices);
         }
 
         /// <summary>
@@ -58,10 +58,10 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="name">The name of control.</param>
         /// <param name="value">The value.</param>
         /// <returns>Mvc string</returns>
-        public static MvcHtmlString DropdownEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue? value)
+        public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue? value)
                 where TValue : struct
         {
-            return DropdownEnumExtendedInfoInternal(helper, name, value, true, Enum.GetValues(typeof(TValue)));
+            return DropDownListEnumExtendedInfoInternal(helper, name, value, true, Enum.GetValues(typeof(TValue)));
         }
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="value">The value.</param>
         /// <param name="choices">The choices.</param>
         /// <returns>Mvc string</returns>
-        public static MvcHtmlString DropdownEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue? value, IEnumerable<TValue> choices)
+        public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(this HtmlHelper helper, string name, TValue? value, IEnumerable<TValue> choices)
             where TValue : struct
         {
-            return DropdownEnumExtendedInfoInternal(helper, name, value, true, choices);
+            return DropDownListEnumExtendedInfoInternal(helper, name, value, true, choices);
         }
 
         /// <summary>
@@ -87,12 +87,12 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="helper">The helper.</param>
         /// <param name="expression">The expression.</param>
         /// <returns> Mvc string </returns>
-        public static MvcHtmlString DropdownEnumExtendedInfoFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString DropDownListEnumExtendedInfoFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
             where TValue : struct
         {
             var data = expression.Compile()(helper.ViewData.Model);
             var memberExpression = expression.Body as MemberExpression;
-            return DropdownEnumExtendedInfoInternal(helper, memberExpression.Member.Name, data, false, Enum.GetValues(expression.Body.Type));
+            return DropDownListEnumExtendedInfoInternal(helper, memberExpression.Member.Name, data, false, Enum.GetValues(expression.Body.Type));
         }
 
         /// <summary>
@@ -103,12 +103,12 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="helper">The helper.</param>
         /// <param name="expression">Tree expression.</param>
         /// <returns> Mvc string </returns>
-        public static MvcHtmlString DropdownEnumExtendedInfoFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue?>> expression)
+        public static MvcHtmlString DropDownListEnumExtendedInfoFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue?>> expression)
             where TValue : struct
         {
             var data = expression.Compile()(helper.ViewData.Model);
             var memberExpression = expression.Body as MemberExpression;
-            return DropdownEnumExtendedInfoInternal(helper, memberExpression.Member.Name, data, true, Enum.GetValues(Nullable.GetUnderlyingType(expression.Body.Type)));
+            return DropDownListEnumExtendedInfoInternal(helper, memberExpression.Member.Name, data, true, Enum.GetValues(Nullable.GetUnderlyingType(expression.Body.Type)));
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Rod.Commons.System.Web.Mvc.Html
         /// <param name="isNullable">if set to <c>true</c> [is nullable].</param>
         /// <param name="choices">The choices.</param>
         /// <returns>Mvc string</returns>
-        internal static MvcHtmlString DropdownEnumExtendedInfoInternal(HtmlHelper helper, string name, object value, bool isNullable, IEnumerable choices)
+        internal static MvcHtmlString DropDownListEnumExtendedInfoInternal(HtmlHelper helper, string name, object value, bool isNullable, IEnumerable choices)
         {
             StringBuilder build = new StringBuilder();
             build.AppendFormat("<select name='{0}'>", helper.Encode(name));
