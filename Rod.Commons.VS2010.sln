@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{73C0B76A-032
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78AC0561-AA61-43EB-8805-8918A16EAAA0}"
 	ProjectSection(SolutionItems) = preProject
-		After.Microsoft.Common.Targets = After.Microsoft.Common.Targets
 		After.Microsoft.Common.User.Targets = After.Microsoft.Common.User.Targets
 		Before.Microsoft.Common.Targets = Before.Microsoft.Common.Targets
 		Before.Microsoft.Common.User.Targets = Before.Microsoft.Common.User.Targets
@@ -53,6 +52,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rod.Commons.System.ComponentModel.DataAnnotations", "src\app\Rod.Commons.System.ComponentModel.DataAnnotations\Rod.Commons.System.ComponentModel.DataAnnotations.csproj", "{F112F4D5-6FDF-4B44-9EF5-9921FF1DA381}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rod.Commons.System.ComponentModel.DataAnnotations.Tests", "src\test\Rod.Commons.System.ComponentModel.DataAnnotations.Tests\Rod.Commons.System.ComponentModel.DataAnnotations.Tests.csproj", "{9DBD8FC6-889A-40C4-8565-7859C1124F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rod.Commons.System.Web.Mvc.Tests", "src\test\Rod.Commons.System.Web.Mvc.Tests\Rod.Commons.System.Web.Mvc.Tests.csproj", "{0E330642-A5AD-456E-8A18-B579F94CC0CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +113,10 @@ Global
 		{9DBD8FC6-889A-40C4-8565-7859C1124F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DBD8FC6-889A-40C4-8565-7859C1124F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DBD8FC6-889A-40C4-8565-7859C1124F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E330642-A5AD-456E-8A18-B579F94CC0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E330642-A5AD-456E-8A18-B579F94CC0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E330642-A5AD-456E-8A18-B579F94CC0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E330642-A5AD-456E-8A18-B579F94CC0CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +139,7 @@ Global
 		{FCD77F3B-BD9E-471B-B0AA-004D2E35997A} = {73C0B76A-0323-4A36-875A-A0F1354AF874}
 		{41D96CDA-E325-45DE-B0D3-E6074374079C} = {DB182D9A-EEA3-4A87-9C7C-59C2A1947ABD}
 		{DBB008BB-9938-4C73-8E51-1FD5BC68BBF6} = {DB182D9A-EEA3-4A87-9C7C-59C2A1947ABD}
+		{0E330642-A5AD-456E-8A18-B579F94CC0CC} = {DB182D9A-EEA3-4A87-9C7C-59C2A1947ABD}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

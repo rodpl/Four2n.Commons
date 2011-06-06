@@ -16,7 +16,7 @@
 
     <!-- Names -->
     <PropertyGroup>
-        <ProjectName>rod.Commons</ProjectName>
+      <GeneralProjectName>rod.Commons</GeneralProjectName>
     </PropertyGroup>
 
     <!-- Project folders -->
@@ -34,7 +34,7 @@
         <AcceptanceTestDetectionExpression>([.])(AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
         <IntegrationTestDetectionExpression>([.])(IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
         <UnitTestDetectionExpression>([.])((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
-        <SolutionPath>$(RootPath)\$(ProjectName).VS2010.sln</SolutionPath>
+        <SolutionPath>$(RootPath)\$(GeneralProjectName).VS2010.sln</SolutionPath>
         <TestedAssembliesReplaceExpression>((.*\\|^)(?=[^\\]*$))|($(TestDetectionExpression).*$)</TestedAssembliesReplaceExpression>
         <TestedAssembliesDetectionExpression1>(?&lt;=((\\|^)(?=[^\\]*$))).*(?=($(TestDetectionExpression).*$))</TestedAssembliesDetectionExpression1>
     </PropertyGroup>
@@ -83,7 +83,7 @@
     <!-- Signing Properties-->
     <PropertyGroup>
         <SignAssembly Condition="$(SignAssembly) == ''">true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$(RootPath)\$(ProjectName).snk</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>$(RootPath)\$(GeneralProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -95,11 +95,11 @@
     <PropertyGroup>
         <ToGenerateAssemblyInfo>true</ToGenerateAssemblyInfo>
         <AssemblyInfoFile>Properties\AssemblyInfo.cs</AssemblyInfoFile>
-        <AssemblyTitle>$(ProjectName) - $(AssemblyTitle)</AssemblyTitle>
+        <AssemblyTitle>$(GeneralProjectName) - $(AssemblyTitle)</AssemblyTitle>
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
         <AssemblyCompany>42n</AssemblyCompany>
         <AssemblyCopyright>Copyright 2006-2011 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
-        <AssemblyProduct>$(ProjectName)</AssemblyProduct>
+        <AssemblyProduct>$(GeneralProjectName)</AssemblyProduct>
         <AssemblyVersion>0.1</AssemblyVersion>
         <AllowPartiallyTrustedCallers>True</AllowPartiallyTrustedCallers>
     </PropertyGroup>

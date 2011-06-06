@@ -6,8 +6,8 @@
     <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..</RootPath>
     <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..\..</RootPath>
     <RootPath Condition=" '$(RootPath)' == '' and Exists('$(MSBuildProjectDirectory)\..\..\..\..\Settings.Targets') ">$(MSBuildProjectDirectory)\..\..\..\..</RootPath>
-    <AssemblyTitle>MVC helpers library.</AssemblyTitle>
-    <AssemblyGuid>0F7E848A-2CF1-45DA-A1D3-2311E27261EC</AssemblyGuid>
+    <AssemblyTitle>Mvc tests library.</AssemblyTitle>
+    <AssemblyGuid>6C9C0CE4-44D8-4DB9-9AF0-826CD50A7A65</AssemblyGuid>
     <CustomBeforeMicrosoftCommonTargets Condition="Exists('$(RootPath)\Before.Microsoft.Common.Targets')">$(RootPath)\Before.Microsoft.Common.Targets</CustomBeforeMicrosoftCommonTargets>
     <CustomAfterMicrosoftCommonTargets Condition="Exists('$(RootPath)\After.Microsoft.Common.Targets')">$(RootPath)\After.Microsoft.Common.Targets</CustomAfterMicrosoftCommonTargets>
   </PropertyGroup>
@@ -16,11 +16,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DBB008BB-9938-4C73-8E51-1FD5BC68BBF6}</ProjectGuid>
+    <ProjectGuid>{0E330642-A5AD-456E-8A18-B579F94CC0CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rod.Commons.System.Web.Mvc</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Web.Mvc</AssemblyName>
+    <AssemblyName>Rod.Commons.System.Web.Mvc.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,12 +41,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,16 +68,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Html\EnumExtendedInfoExtensions.cs" />
-    <Compile Include="ModelBinders\DateRangeModelBinder.cs" />
-    <Compile Include="ModelBinders\DateTimeRangeModelBinder.cs" />
-    <Compile Include="ModelBinders\DateTimeRangeModelBinderGeneric.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <Compile Include="Html\EnumExtendedInfoExtensionTests.cs" />
+    <Compile Include="UnitTestUtils\MvcHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\Rod.Commons.System.Web.Mvc\Rod.Commons.System.Web.Mvc.csproj">
+      <Project>{DBB008BB-9938-4C73-8E51-1FD5BC68BBF6}</Project>
+      <Name>Rod.Commons.System.Web.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
       <Name>Rod.Commons.System</Name>
     </ProjectReference>
