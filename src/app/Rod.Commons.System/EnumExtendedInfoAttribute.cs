@@ -50,8 +50,25 @@ namespace Rod.Commons.System
         /// </summary>
         public object CustomValue
         {
-            get { return this.customValue ?? (this.customValue = this.Name); }
-            set { this.customValue = value; }
+            get
+            {
+                return this.customValue ?? (this.customValue = this.Name);
+            }
+
+            set
+            {
+                if (value is string)
+                {
+                    var dec = 0m;
+                    if (Decimal.TryParse((string)value, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out dec))
+                    {
+                        this.customValue = dec;
+                        return;
+                    }
+                }
+
+                this.customValue = value;
+            }
         }
 
         /// <summary>
@@ -101,12 +118,6 @@ namespace Rod.Commons.System
         /// <returns>Enum value.</returns>
         public static TEnum GetEnumValueByCustomValue<TEnum>(object value)
         {
-            // HACK: Decimals must be treated as ints.
-            if (value is decimal)
-            {
-                value = Convert.ToInt32(value);
-            }
-
             foreach (TEnum item in Enum.GetValues(typeof(TEnum)))
             {
                 if (GetExtendedInfoByEnumValue(item).CustomValue.Equals(value))

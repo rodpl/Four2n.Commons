@@ -16,5 +16,11 @@ namespace Rod.Commons.NHibernate.Tests.Domain
     public class EnumExtendedModel : BaseTestModel
     {
         public ExtendedTestEnum SampleEnum { get; set; }
+
+        public ExtendedTestStringEnum StringEnum { get; set; }
+
+        public ExtendedTestIntEnum IntEnum { get; set; }
+
+        public ExtendedTestDecimalEnum DecimalEnum { get; set; }
     }
 }

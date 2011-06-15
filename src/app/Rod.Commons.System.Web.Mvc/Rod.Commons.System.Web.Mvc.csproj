@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExtendedInfoHelper.cs" />
     <Compile Include="Html\EnumExtendedInfoExtensions.cs" />
     <Compile Include="ModelBinders\DateRangeModelBinder.cs" />
     <Compile Include="ModelBinders\DateTimeRangeModelBinder.cs" />

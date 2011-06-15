@@ -71,6 +71,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExtendedInfoHelperTests.cs" />
     <Compile Include="Html\EnumExtendedInfoExtensionTests.cs" />
     <Compile Include="UnitTestUtils\MvcHelper.cs" />
   </ItemGroup>

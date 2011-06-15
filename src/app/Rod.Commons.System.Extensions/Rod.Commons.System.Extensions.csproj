@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Reflection\ReflectionHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

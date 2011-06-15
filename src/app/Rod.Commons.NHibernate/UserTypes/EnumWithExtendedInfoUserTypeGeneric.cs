@@ -15,6 +15,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::NHibernate.UserTypes;
 
     using global::System;
+    using global::System.Collections.Generic;
     using global::System.Data;
 
     /// <summary>
@@ -22,7 +23,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// CustomValue property is database representation for enum field value.
     /// </summary>
     /// <typeparam name="TEnum">Enum type decorated with <see cref="EnumExtendedInfoAttribute"/>.</typeparam>
-    public class EnumWithExtendedInfoUserType<TEnum> : IUserType
+    public class EnumWithExtendedInfoUserType<TEnum> : IUserType, IParameterizedType
     {
         private static readonly Type returnedType = typeof(TEnum);
         private static readonly SqlType[] sqlTypes = new SqlType[] { SqlTypeFactory.GetString(50) };
@@ -170,6 +171,15 @@ namespace Rod.Commons.NHibernate.UserTypes
         public object Replace(object original, object target, object owner)
         {
             return original;
+        }
+
+        /// <summary>
+        /// Gets called by Hibernate to pass the configured type parameters to
+        /// the implementation.
+        /// </summary>
+        /// <param name="parameters">Parameters dictionary</param>
+        public void SetParameterValues(IDictionary<string, string> parameters)
+        {
         }
     }
 }

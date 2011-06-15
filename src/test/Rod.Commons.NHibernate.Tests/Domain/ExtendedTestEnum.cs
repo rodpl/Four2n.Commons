@@ -25,4 +25,28 @@ namespace Rod.Commons.NHibernate.Tests.Domain
         [EnumExtendedInfo(CustomValue = 23)]
         Integer
     }
+
+    public enum ExtendedTestStringEnum
+    {
+        [EnumExtendedInfo(Name = "waiting", CustomValue = "pend")]
+        Pending,
+        [EnumExtendedInfo(Name = "misc", CustomValue = "misc")]
+        Misc
+    }
+
+    public enum ExtendedTestIntEnum
+    {
+        [EnumExtendedInfo(Name = "waiting", CustomValue = 1)]
+        Pending,
+        [EnumExtendedInfo(Name = "misc", CustomValue = 2)]
+        Misc
+    }
+
+    public enum ExtendedTestDecimalEnum
+    {
+        [EnumExtendedInfo(Name = "waiting", CustomValue = "0.1")]
+        Pending,
+        [EnumExtendedInfo(Name = "misc", CustomValue = "0.2")]
+        Misc
+    }
 }

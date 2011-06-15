@@ -12,6 +12,7 @@ namespace Rod.Commons.System
     using Diagnostics;
 
     using global::System;
+    using global::System.Globalization;
 
     using NUnit.Framework;
 
@@ -30,7 +31,9 @@ namespace Rod.Commons.System
             [EnumExtendedInfo(CustomValue = 12L)]
             Numeric,
             [EnumExtendedInfo(CustomValue = 23)]
-            Integer
+            Integer,
+            [EnumExtendedInfo(CustomValue = "0.2")]
+            Decimal
         }
 
         public enum AnoterTestEnum
@@ -105,6 +108,14 @@ namespace Rod.Commons.System
 
         [Test]
         [Description("Value tests")]
+        public void GetExtendedInfoByEnumValue_CustomValueLooksLikeDecimal_ReturnsDecimal()
+        {
+            Assert.AreEqual(0.2m, EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Decimal).CustomValue);
+            Assert.AreEqual(typeof(decimal), EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Decimal).CustomValue.GetType());
+        }
+
+        [Test]
+        [Description("Value tests")]
         public void GetExtendedInfoByEnumValue_ValueWithAttributeWithoutNameAndWithValueName_ReturnsAttributeInstanceWithValueNameAsPassedIntoAttribute()
         {
             Assert.AreEqual("dbName", EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Something).CustomValue as string);
@@ -155,9 +166,9 @@ namespace Rod.Commons.System
         }
 
         [Test]
-        public void GetEnumValueByCustomValue_Decimal_FindsRepresentationOfIntegerOnly()
+        public void GetEnumValueByCustomValue_Decimal_FindsStringRepresentation()
         {
-            Assert.AreEqual(TestEnum.Integer, EnumExtendedInfoAttribute.GetEnumValueByCustomValue<TestEnum>(23M));
+            Assert.AreEqual(TestEnum.Decimal, EnumExtendedInfoAttribute.GetEnumValueByCustomValue<TestEnum>(0.2M));
             Assert.Throws<ArgumentException>(delegate { EnumExtendedInfoAttribute.GetEnumValueByCustomValue<TestEnum>(12M); });
         }
 
@@ -179,20 +190,20 @@ namespace Rod.Commons.System
              * 100 times takes 0 ms
              * 100.000 times takes 89 ms
              * TryGetValue in dictionary
-             * 1 times takes 2 ms
+             * 1 times takes 1 ms
              * 100 times takes 0 ms
-             * 100.000 times takes 49 ms
+             * 100.000 times takes 40 ms
              */
             using (Benchmark.InMiliseconds().ToConsole("1 times takes {0} ms"))
             {
-                EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Integer);
+                var a = EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Decimal).CustomValue;
             }
 
             using (Benchmark.InMiliseconds().ToConsole("100 times takes {0} ms"))
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Integer);
+                    var a = EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Decimal).CustomValue;
                 }
             }
 
@@ -200,7 +211,7 @@ namespace Rod.Commons.System
             {
                 for (int i = 0; i < 100000; i++)
                 {
-                    EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Integer);
+                    var a = EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(TestEnum.Decimal).CustomValue;
                 }
             }
         }
@@ -211,7 +222,7 @@ namespace Rod.Commons.System
         {
             /* 1 times takes 3 ms
              * 100 times takes 0 ms
-             * 100.000 times takes 50 ms
+             * 100.000 times takes 38 ms
              */
             using (Benchmark.InMiliseconds().ToConsole("1 times takes {0} ms"))
             {
