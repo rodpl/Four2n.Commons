@@ -52,6 +52,11 @@ namespace Rod.Commons.System
         {
             get
             {
+                if (this.enumValue == null)
+                {
+                    return null;
+                }
+
                 return this.customValue ?? (this.customValue = this.Name);
             }
 
@@ -78,6 +83,11 @@ namespace Rod.Commons.System
         {
             get
             {
+                if (this.enumValue == null)
+                {
+                    return null;
+                }
+
                 if (this.name == null)
                 {
                     string representedValueString = this.enumValue.ToString();
@@ -141,6 +151,11 @@ namespace Rod.Commons.System
         /// <returns>Extended info attribute for passed type of enum value.</returns>
         public static EnumExtendedInfoAttribute GetExtendedInfoByEnumValue(object field)
         {
+            if (field == null)
+            {
+                return CreateEmptyFor(field);
+            }
+
             EnumExtendedInfoAttribute result;
 
             if (cachedAtttributes.TryGetValue(field, out result) == false)

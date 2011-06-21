@@ -62,6 +62,7 @@
     <Compile Include="UserTypes\DateRangeUserType.cs" />
     <Compile Include="UserTypes\DateTimeRangeUserType.cs" />
     <Compile Include="UserTypes\DateTimeRangeUserTypeGeneric.cs" />
+    <Compile Include="UserTypes\EnumWithExtendedInfoNullableUserType.cs" />
     <Compile Include="UserTypes\EnumWithExtendedInfoUserTypeGeneric.cs" />
     <Compile Include="UserTypes\FlagEnumWithExtendedInfoUserTypeGeneric.cs" />
     <Compile Include="UserTypes\XmlType.cs" />

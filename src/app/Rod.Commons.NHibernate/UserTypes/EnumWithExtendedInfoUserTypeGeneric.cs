@@ -43,7 +43,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// Gets the type of the returned.
         /// </summary>
         /// <value>The type of the returned.</value>
-        public Type ReturnedType
+        public virtual Type ReturnedType
         {
             get { return returnedType; }
         }

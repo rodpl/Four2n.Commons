@@ -7,5 +7,8 @@
         <property name="SampleEnum" type="Rod.Commons.NHibernate.UserTypes.EnumWithExtendedInfoUserType`1[[Rod.Commons.NHibernate.Tests.Domain.ExtendedTestEnum, Rod.Commons.NHibernate.Tests]],Rod.Commons.NHibernate">
             <column name="SampleEnumValue"/>
         </property>
+      <property name="SampleNullableEnum" type="Rod.Commons.NHibernate.UserTypes.EnumWithExtendedInfoNullableUserType`1[[Rod.Commons.NHibernate.Tests.Domain.ExtendedTestEnum, Rod.Commons.NHibernate.Tests]],Rod.Commons.NHibernate" not-null="true">
+        <column name="SampleNullableEnumValue"/>
+      </property>
     </class>
 </hibernate-mapping>

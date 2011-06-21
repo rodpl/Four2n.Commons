@@ -142,6 +142,13 @@ namespace Rod.Commons.System
         }
 
         [Test]
+        public void GetExtendedInfoByEnumValue_NullValue_ReturnsEmptyAttributeWithNullValuesAndNames()
+        {
+            Assert.AreEqual(null, EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue((TestEnum?)null).CustomValue);
+            Assert.AreEqual(null, EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue((TestEnum?)null).Name);
+        }
+
+        [Test]
         [Description("Value tests")]
         [TestCase("...", TestEnum.Pending)]
         [TestCase("misc", TestEnum.Misc)]

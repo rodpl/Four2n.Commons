@@ -22,5 +22,7 @@ namespace Rod.Commons.NHibernate.Tests.Domain
         public ExtendedTestIntEnum IntEnum { get; set; }
 
         public ExtendedTestDecimalEnum DecimalEnum { get; set; }
+
+        public ExtendedTestEnum? SampleNullableEnum { get; set; }
     }
 }
