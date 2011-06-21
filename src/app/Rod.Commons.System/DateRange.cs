@@ -28,6 +28,27 @@ namespace Rod.Commons.System
         /// Returns null if there is no end date.
         /// </summary>
         DateTime? Ends { get; }
+
+        /// <summary>
+        /// Returns true if date is later than begins date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is later than begins date.</returns>
+        bool LaterEqualThanBegins(DateTime? date);
+
+        /// <summary>
+        /// Returns true if date is earlier than ends date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is earlier than ends date.</returns>
+        bool EarlierEqualThanEnds(DateTime? date);
+
+        /// <summary>
+        /// Returns true if date is within defined range
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is within defined range.</returns>
+        bool Includes(DateTime date);
     }
 
     /// <summary>
@@ -154,6 +175,56 @@ namespace Rod.Commons.System
         {
             return string.Format("{0} - {1}", this.Begins.HasValue ? this.Begins.Value.ToShortDateString() : "∞", this.Ends.HasValue ? this.Ends.Value.ToShortDateString() : "∞");
         }
+
+        /// <summary>
+        /// Returns true if date is later than begins date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is later than begins date.</returns>
+        public bool LaterEqualThanBegins(DateTime? date)
+        {
+            if (this.Begins == null)
+            {
+                return true;
+            }
+
+            if (date != null)
+            {
+                return date.Value >= this.Begins.Value;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if date is earlier than ends date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is earlier than ends date.</returns>
+        public bool EarlierEqualThanEnds(DateTime? date)
+        {
+            if (this.Ends == null)
+            {
+                return true;
+            }
+
+            if (date != null)
+            {
+                return date.Value <= this.Ends.Value;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if date is within defined range
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is within defined range.</returns>
+        public bool Includes(DateTime date)
+        {
+            return this.LaterEqualThanBegins(date) && this.EarlierEqualThanEnds(date);
+        }
     }
 
     /// <summary>
@@ -272,6 +343,56 @@ namespace Rod.Commons.System
         public override string ToString()
         {
             return string.Format("{0} - {1}", this.Begins.HasValue ? this.Begins.Value.ToString() : "∞", this.Ends.HasValue ? this.Ends.Value.ToString() : "∞");
+        }
+
+        /// <summary>
+        /// Returns true if date is later than begins date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is later than begins date.</returns>
+        public bool LaterEqualThanBegins(DateTime? date)
+        {
+            if (this.Begins == null)
+            {
+                return true;
+            }
+
+            if (date != null)
+            {
+                return date.Value >= this.Begins.Value;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if date is earlier than ends date.
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is earlier than ends date.</returns>
+        public bool EarlierEqualThanEnds(DateTime? date)
+        {
+            if (this.Ends == null)
+            {
+                return true;
+            }
+
+            if (date != null)
+            {
+                return date.Value <= this.Ends.Value;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if date is within defined range
+        /// </summary>
+        /// <param name="date">DateTime to check.</param>
+        /// <returns>True if date is within defined range.</returns>
+        public bool Includes(DateTime date)
+        {
+            return this.LaterEqualThanBegins(date) && this.EarlierEqualThanEnds(date);
         }
     }
 }

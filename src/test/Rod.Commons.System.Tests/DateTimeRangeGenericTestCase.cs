@@ -96,6 +96,18 @@ namespace Rod.Commons.System
             Assert.That(this.CreateSample().Equals(DateTime.Today), Is.False);
         }
 
+        [Test]
+        public void Include_Tests()
+        {
+            var sut = this.Create(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1));
+            Assert.IsTrue(sut.LaterEqualThanBegins(DateTime.Now));
+            Assert.IsFalse(sut.LaterEqualThanBegins(DateTime.Now.AddDays(-2)));
+            Assert.IsTrue(sut.EarlierEqualThanEnds(DateTime.Now));
+            Assert.IsFalse(sut.EarlierEqualThanEnds(DateTime.Now.AddDays(2)));
+            Assert.IsTrue(sut.Includes(DateTime.Now));
+            Assert.IsFalse(sut.Includes(DateTime.Now.AddDays(5)));
+        }
+
         protected abstract T Create(DateTime? startDate, DateTime? endDate);
 
         protected abstract bool EqualsStatic(object sutOne, object sutTwo);
