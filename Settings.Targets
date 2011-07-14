@@ -78,6 +78,7 @@
     <PropertyGroup>
         <StyleCopPath>$(ToolsPath)\stylecop</StyleCopPath>
         <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+        <StyleCopEnabled>false</StyleCopEnabled>
     </PropertyGroup>
 
     <!-- Signing Properties-->
