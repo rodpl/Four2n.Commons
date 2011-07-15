@@ -81,7 +81,7 @@
         <StyleCopEnabled>false</StyleCopEnabled>
     </PropertyGroup>
 
-    <!-- Signing Properties-->
+  <!-- Signing Properties-->
     <PropertyGroup>
         <SignAssembly Condition="$(SignAssembly) == ''">true</SignAssembly>
         <AssemblyOriginatorKeyFile>$(RootPath)\$(GeneralProjectName).snk</AssemblyOriginatorKeyFile>

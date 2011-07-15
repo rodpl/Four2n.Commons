@@ -53,13 +53,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="antlr.runtime">
+    <Reference Include="antlr.runtime, Version=2.7.7.3, Culture=neutral, PublicKeyToken=d7701e059243744f">
       <HintPath>..\..\..\packages\Antlr.3.1.1\lib\antlr.runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Antlr3.Runtime">
+    <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Antlr.3.1.1\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Antlr3.Utility">
+    <Reference Include="Antlr3.Utility, Version=0.1.0.39272, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Antlr.3.1.1\lib\Antlr3.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
@@ -95,15 +95,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="StringTemplate">
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Antlr.3.1.1\lib\StringTemplate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\SQLCE.4.0.8435.1\lib\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
+      <HintPath>..\..\..\packages\SqlServerCompact.4.0.8482.1\lib\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions">
@@ -131,7 +130,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\Rod.Commons.NHibernate\Rod.Commons.NHibernate.csproj">
@@ -178,10 +179,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-copy "$(PackagesPath)\SQLCE.4.0.8435.1\NativeBinaries\x86\*.dll" "$(TargetDir)x86"
-if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-copy "$(PackagesPath)\SQLCE.4.0.8435.1\NativeBinaries\amd64\*.dll" "$(TargetDir)amd64</PostBuildEvent>
+      if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+      xcopy /s /y "$(PackagesPath)\SqlServerCompact.4.0.8482.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+      if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+      xcopy /s /y "$(PackagesPath)\SqlServerCompact.4.0.8482.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
