@@ -22,7 +22,7 @@ namespace Rod.Commons.System.Diagnostics
             string result = null;
             using (Benchmark.InMiliseconds().ToDelegate(x => result = x.ToString()))
             {
-                Thread.Sleep(100);
+                Thread.Sleep(105);
             }
         
             StringAssert.StartsWith("10", result);

@@ -53,7 +53,7 @@
         <TestOutputFile>$(TestResultsPath)\nunit-output.txt</TestOutputFile>
         <TestSummaryFile>$(TestResultsPath)\nunit-summary.txt</TestSummaryFile>
         <TestCommandParameters>/xml=$(TestResultXmlFile) /output=$(TestOutputFile) /nologo</TestCommandParameters>
-        <NUnitPath>$(PackagesPath)\NUnit.2.5.7.10213</NUnitPath>
+        <NUnitPath>$(PackagesPath)\NUnit.2.5.10.11092</NUnitPath>
         <NUnitConsole>$(NUnitPath)\Tools\nunit-console-x86.exe</NUnitConsole>
     </PropertyGroup>
 
