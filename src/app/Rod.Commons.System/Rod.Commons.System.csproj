@@ -76,6 +76,10 @@
     <Compile Include="EnumExtendedInfoAttribute.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Runtime.cs" />
+    <Compile Include="Validators\DowodOsobistyNumberValidator.cs" />
+    <Compile Include="Validators\NipNumberValidator.cs" />
+    <Compile Include="Validators\PeselNumberValidator.cs" />
+    <Compile Include="Validators\RegonNumberValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -61,7 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DowodOsobistyNumberValidatorAttributeTests.cs" />
     <Compile Include="NipNumberValidatorAttributeTests.cs" />
+    <Compile Include="PeselNumberValidatorAttributeTests.cs" />
+    <Compile Include="RegonNumberValidatorAttributeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

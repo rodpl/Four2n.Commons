@@ -51,10 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DowodOsobistyNumberValidatorAttribute.cs" />
     <Compile Include="NipNumberValidatorAttribute.cs" />
+    <Compile Include="PeselNumberValidatorAttribute.cs" />
+    <Compile Include="RegonNumberValidatorAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+      <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
+      <Name>Rod.Commons.System</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

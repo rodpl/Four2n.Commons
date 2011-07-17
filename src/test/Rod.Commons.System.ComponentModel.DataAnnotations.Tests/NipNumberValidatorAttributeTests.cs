@@ -36,5 +36,13 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
             var sut = new NipNumberValidatorAttribute();
             Assert.IsFalse(sut.IsValid(value));
         }
+
+        [Test]
+        public void IsValidCalledTwice_ForValidValues_ReturnsTrue()
+        {
+            var sut = new NipNumberValidatorAttribute();
+            Assert.IsFalse(sut.IsValid("7680002462"));
+            Assert.IsTrue(sut.IsValid("7680002466"));
+        }
     }
 }

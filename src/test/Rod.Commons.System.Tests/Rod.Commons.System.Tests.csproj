@@ -74,6 +74,10 @@
     <Compile Include="Diagnostics\HiPerfTimerTests.cs" />
     <Compile Include="EnumExtendedInfoAttributeTests.cs" />
     <Compile Include="Reflection\ReflectionHelperTests.cs" />
+    <Compile Include="Validators\DowodOsobistyNumberValidatorTests.cs" />
+    <Compile Include="Validators\NipNumberValidatorTests.cs" />
+    <Compile Include="Validators\PeselNumberValidatorTests.cs" />
+    <Compile Include="Validators\RegonNumberValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">

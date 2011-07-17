@@ -9,6 +9,8 @@
 
 namespace Rod.Commons.System.ComponentModel.DataAnnotations
 {
+    using Validators;
+
     using global::System;
     using global::System.Collections.Generic;
     using global::System.ComponentModel;
@@ -21,9 +23,6 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
     /// </summary>
     public class NipNumberValidatorAttribute : ValidationAttribute
     {
-        private readonly int[] validNums = { 6, 5, 7, 2, 3, 4, 5, 6, 7 };
-
-        private int sum;
 
         /// <summary>
         /// Determines whether the specified value is valid.
@@ -46,18 +45,7 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
                 return true;
             }
 
-            if (!Regex.IsMatch(nip, @"^[\d]{10}$"))
-            {
-                return false;
-            }
-
-            this.sum = 0;
-            for (int t = 8; t >= 0; t--)
-            {
-                this.sum += this.validNums[t] * Convert.ToInt32(nip.Substring(t, 1));
-            }
-
-            return (this.sum % 11) == 10 ? false : ((this.sum % 11) == Convert.ToInt32(nip.Substring(9, 1)));
+            return new NipNumberValidator(nip).IsValid();
         }
     }
 }
