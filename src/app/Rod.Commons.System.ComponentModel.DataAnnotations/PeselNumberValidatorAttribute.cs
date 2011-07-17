@@ -34,11 +34,6 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
                 return true;
             }
 
-            if (!Regex.IsMatch(number, @"^[\d]{10}$"))
-            {
-                return false;
-            }
-
             return new PeselNumberValidator(number).IsValid();
         }
     }

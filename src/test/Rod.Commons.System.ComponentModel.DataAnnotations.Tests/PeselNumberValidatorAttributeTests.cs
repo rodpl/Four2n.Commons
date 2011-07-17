@@ -8,7 +8,7 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("7680002466")]
+        [TestCase("02070803628")]
         public void IsValid_ForValidValues_ReturnsTrue(object value)
         {
             var sut = new PeselNumberValidatorAttribute();
@@ -16,6 +16,12 @@ namespace Rod.Commons.System.ComponentModel.DataAnnotations
         }
 
         [Test]
+        [TestCase("asdad")]
+        [TestCase("1234567890 ")]
+        [TestCase("1234567890")]
+        [TestCase("02070803628 ")]
+        [TestCase(" 02070803628")]
+        [TestCase("7680002466")]
         [TestCase("asdad")]
         [TestCase("1234567890 ")]
         public void IsValid_ForValidValues_ReturnsFalse(object value)
