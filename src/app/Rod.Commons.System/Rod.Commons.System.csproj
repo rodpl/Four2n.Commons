@@ -80,6 +80,7 @@
     <Compile Include="Validators\NipNumberValidator.cs" />
     <Compile Include="Validators\PeselNumberValidator.cs" />
     <Compile Include="Validators\RegonNumberValidator.cs" />
+    <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

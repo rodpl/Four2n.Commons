@@ -78,6 +78,7 @@
     <Compile Include="Validators\NipNumberValidatorTests.cs" />
     <Compile Include="Validators\PeselNumberValidatorTests.cs" />
     <Compile Include="Validators\RegonNumberValidatorTests.cs" />
+    <Compile Include="XmlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
