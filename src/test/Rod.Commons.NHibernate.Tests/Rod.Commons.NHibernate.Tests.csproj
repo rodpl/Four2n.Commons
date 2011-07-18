@@ -118,10 +118,12 @@
     <Compile Include="Domain\ExtendedTestEnum.cs" />
     <Compile Include="Domain\ExtendedTestFlagEnum.cs" />
     <Compile Include="Domain\FlagEnumExtendedModel.cs" />
+    <Compile Include="Domain\XmlTypeModel.cs" />
     <Compile Include="NHibernateTestCase.cs" />
     <Compile Include="UserTypes\DateRangeUserTypeTests.cs" />
     <Compile Include="UserTypes\EnumWithExtendedInfoUserTypeTests.cs" />
     <Compile Include="UserTypes\FlagEnumWithExtendedInfoUserTypeTests.cs" />
+    <Compile Include="UserTypes\XmlUserTypeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -150,6 +152,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Domain\EnumExtendedModel.hbm.xml" />
     <EmbeddedResource Include="Domain\FlagEnumExtendedModel.hbm.xml" />
+    <EmbeddedResource Include="Domain\XmlTypeModel.hbm.xml" />
     <Content Include="Test.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -71,7 +71,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", "2000-1-31 13:01:05", "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), null, "2000-1-31 13:01:05", "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", null, "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
-        public void SaveOdupdateCopyModelTest(Type type, string beginsString, string endsString, string beginsTwoString, string endsTwoString)
+        public void SaveOrUpdateCopyModelTest(Type type, string beginsString, string endsString, string beginsTwoString, string endsTwoString)
         {
             var model = new DateRangeModel();
             DateTime? begins = beginsString == null ? (DateTime?)null : DateTime.Parse(beginsString);

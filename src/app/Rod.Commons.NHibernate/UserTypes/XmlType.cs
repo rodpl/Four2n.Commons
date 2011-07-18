@@ -15,6 +15,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::NHibernate.UserTypes;
 
     using global::System;
+    using global::System.Collections.Generic;
     using global::System.Data;
     using global::System.Data.Common;
     using global::System.Xml;
@@ -26,8 +27,10 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// Based on example from here http://ayende.com/Blog/archive/2006/05/30/NHibernateAndXMLColumnTypes.aspx.
     /// With some modifications by Tobin Harris
     /// </summary>
-    public class XmlType : IUserType
+    public class XmlType : IUserType, IParameterizedType
     {
+        private bool useXmlAsStringColumn;
+
         /// <summary>
         /// Gets a value indicating whether this instance is mutable.
         /// </summary>
@@ -49,7 +52,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// </summary>
         public SqlType[] SqlTypes
         {
-            get { return new SqlType[] { new SqlXmlType() }; }
+            get { return new[] { useXmlAsStringColumn ? (SqlType)new SqlXmlStringType() : new SqlXmlType() }; }
         }
 
         /// <summary>
@@ -203,7 +206,21 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <returns>the value to be merged</returns>
         public object Replace(object original, object target, object owner)
         {
-            throw new NotImplementedException();
+            return original;
+        }
+
+        public void SetParameterValues(IDictionary<string, string> parameters)
+        {
+            if (parameters == null)
+            {
+                return;
+            }
+
+            var xmlAsString = parameters["useXmlAsStringColum"] as string;
+            bool useXmlAsString = false;
+            bool.TryParse(xmlAsString, out useXmlAsString);
+
+            this.useXmlAsStringColumn = useXmlAsString;
         }
     }
 }
