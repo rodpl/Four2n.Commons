@@ -8,6 +8,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using global::System;
     using global::System.Collections;
+    using global::System.Xml;
 
     [TestFixture]
     public class XmlUserTypeTests : NHibernateTestCase
@@ -20,6 +21,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
         [Test]
         public void SaveModelTest()
         {
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
             var test = new XmlTypeModel.Test();
             test.Name = "John Doe";
             test.Birth = new DateTime(1950, 1, 1);
@@ -29,6 +31,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
             this.Session.Save(model);
             this.Session.Flush();
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
             this.Session.Clear();
 
             var modelFromDb = this.Session.Get<XmlTypeModel>(model.Id);
@@ -38,6 +41,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
             Assert.AreEqual(testFromDocument.Name, test.Name);
             Assert.AreEqual(testFromDocument.Birth, test.Birth);
+            this.Session.Flush();
         }
 
         [Test]
@@ -79,6 +83,42 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
             Assert.AreEqual(testFromDocumentTwo.Name, test.Name);
             Assert.AreEqual(testFromDocumentTwo.Birth, test.Birth);
+        }
+
+        [Test]
+        public void SaveNullModelTest()
+        {
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
+            var model = new XmlTypeModel();
+            Assert.IsNull(model.TestXml);
+            this.Session.Save(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<XmlTypeModel>(model.Id);
+            Assert.That(modelFromDb.Id, Is.GreaterThan(0));
+            ////modelFromDb.TestXml = new XmlDocument();
+
+            this.Session.Flush();
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
+        }
+
+        [Test]
+        public void SaveEmptyXmlDocumentModelTest()
+        {
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
+            var model = new XmlTypeModel();
+            model.TestXml = new XmlDocument();
+
+            this.Session.Save(model);
+            this.Session.Flush();
+            this.Session.Clear();
+
+            var modelFromDb = this.Session.Get<XmlTypeModel>(model.Id);
+            Assert.That(modelFromDb.Id, Is.GreaterThan(0));
+
+            this.Session.Flush();
+            Assert.AreEqual(0, this.SessionFactoryImplementor.Statistics.EntityUpdateCount);
         }
     }
 }

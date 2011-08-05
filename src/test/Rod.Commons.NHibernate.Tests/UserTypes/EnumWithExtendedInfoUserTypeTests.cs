@@ -40,6 +40,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
             this.Session.Flush();
             this.Session.Clear();
 
+
             var modelFromDb = this.Session.Get<EnumExtendedModel>(model.Id);
             Assert.That(modelFromDb.SampleEnum, Is.EqualTo(enumField));
 

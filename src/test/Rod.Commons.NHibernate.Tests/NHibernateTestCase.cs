@@ -10,10 +10,13 @@
 namespace Rod.Commons.NHibernate.Tests
 {
     using global::NHibernate;
+    using global::NHibernate.Engine;
     using global::NHibernate.Test;
 
     public abstract class NHibernateTestCase : TestCase
     {
+        protected ISessionFactoryImplementor SessionFactoryImplementor { get { return this.Sfi; } }
+
         protected ISession Session { get; set; }
 
         protected ITransaction Trasaction { get; set; }
@@ -27,12 +30,14 @@ namespace Rod.Commons.NHibernate.Tests
         {
             this.Session = this.OpenSession();
             this.Trasaction = this.Session.BeginTransaction();
+            this.SessionFactoryImplementor.Statistics.Clear();
         }
 
         protected override void OnTearDown()
         {
+
             this.Trasaction.Rollback();
-            this.Session.Flush();
+//            this.Session.Flush();
             this.Session.Clear();
             this.Session.Close();
         }

@@ -92,7 +92,7 @@ namespace Rod.Commons.NHibernate.UserTypes
             }
 
             var copy = new XmlDocument();
-            copy.LoadXml(toCopy.OuterXml);
+            copy = (XmlDocument)toCopy.Clone();
             return copy;
         }
 
@@ -120,6 +120,11 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// </returns>
         public new bool Equals(object x, object y)
         {
+            if (x == y)
+            {
+                return true;
+            }
+            
             if (x == null || y == null)
             {
                 return false;
@@ -163,6 +168,11 @@ namespace Rod.Commons.NHibernate.UserTypes
 
             if (val != null)
             {
+                if (val.Trim() == string.Empty)
+                {
+                    return document;
+                }
+
                 document.LoadXml(val);
                 return document;
             }
