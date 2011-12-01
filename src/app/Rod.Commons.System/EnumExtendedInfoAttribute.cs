@@ -45,6 +45,21 @@ namespace Rod.Commons.System
 
         private string name;
 
+        public EnumExtendedInfoAttribute()
+        {
+        }
+
+        public EnumExtendedInfoAttribute(string name)
+        {
+            this.Name = name;
+        }
+
+        public EnumExtendedInfoAttribute(string name, object customValue)
+        {
+            this.Name = name;
+            this.CustomValue = customValue;
+        }
+
         /// <summary>
         /// Gets or sets custom value definition of enum value.
         /// </summary>
