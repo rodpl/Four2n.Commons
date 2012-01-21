@@ -27,6 +27,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// Based on example from here http://ayende.com/Blog/archive/2006/05/30/NHibernateAndXMLColumnTypes.aspx.
     /// With some modifications by Tobin Harris
     /// </summary>
+    [Serializable]
     public class XmlType : IUserType, IParameterizedType
     {
         private bool useXmlAsStringColumn;
