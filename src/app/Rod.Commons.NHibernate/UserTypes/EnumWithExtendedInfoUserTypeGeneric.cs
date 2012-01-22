@@ -17,15 +17,20 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::System;
     using global::System.Collections.Generic;
     using global::System.Data;
+    using global::System.Xml.Serialization;
 
     /// <summary>
     /// Database representation of enum decorated with <see cref="EnumExtendedInfoAttribute"/>.
     /// CustomValue property is database representation for enum field value.
     /// </summary>
     /// <typeparam name="TEnum">Enum type decorated with <see cref="EnumExtendedInfoAttribute"/>.</typeparam>
+    [Serializable]
     public class EnumWithExtendedInfoUserType<TEnum> : IUserType, IParameterizedType
     {
+        [NonSerialized]
         private static readonly Type returnedType = typeof(TEnum);
+
+        [NonSerialized]
         private static readonly SqlType[] sqlTypes = new SqlType[] { SqlTypeFactory.GetString(50) };
 
         /// <summary>
@@ -34,6 +39,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <value>
         /// <c>true</c> if this instance is mutable; otherwise, <c>false</c>.
         /// </value>
+        [XmlIgnore]
         public bool IsMutable
         {
             get { return true; }
@@ -43,6 +49,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// Gets the type of the returned.
         /// </summary>
         /// <value>The type of the returned.</value>
+        [XmlIgnore]
         public virtual Type ReturnedType
         {
             get { return returnedType; }
@@ -52,6 +59,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// Gets the SQL types.
         /// </summary>
         /// <value>The SQL types.</value>
+        [XmlIgnore]
         public virtual SqlType[] SqlTypes
         {
             get { return sqlTypes; }

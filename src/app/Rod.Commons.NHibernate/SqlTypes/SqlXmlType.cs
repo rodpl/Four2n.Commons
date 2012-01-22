@@ -11,11 +11,13 @@ namespace Rod.Commons.NHibernate.SqlTypes
 {
     using global::NHibernate.SqlTypes;
 
+    using global::System;
     using global::System.Data;
 
     /// <summary>
     /// Native xml db type.
     /// </summary>
+    [Serializable]
     public class SqlXmlType : SqlType
     {
         /// <summary>

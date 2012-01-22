@@ -4,6 +4,8 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using Domain;
 
+    using NHibernate.UserTypes;
+
     using NUnit.Framework;
 
     using global::System;
@@ -11,11 +13,17 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
     using global::System.Xml;
 
     [TestFixture]
-    public class XmlUserTypeTests : NHibernateTestCase
+    public class XmlUserTypeTests : UserTypeTests<XmlType>
     {
         protected override IList Mappings
         {
             get {  return new[] { "Domain.XmlTypeModel.hbm.xml" }; }
+        }
+
+        protected override void OnSetUp()
+        {
+            base.OnSetUp();
+            Sut = new XmlType();
         }
 
         [Test]

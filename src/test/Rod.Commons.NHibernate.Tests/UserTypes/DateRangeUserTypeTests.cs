@@ -20,15 +20,25 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using NUnit.Framework;
 
-    using Rod.Commons.NHibernate.Tests;
     using Rod.Commons.System;
 
     [TestFixture]
-    public class DateRangeUserTypeTests : NHibernateTestCase
+    public class DateRangeUserTypeTests : UserTypeTests<DateRangeUserType>
     {
-        protected override IList Mappings
+        [Test]
+        [Explicit]
+        public void PerformanceTest()
         {
-            get { return new[] { "Domain.DateRangeModel.hbm.xml" }; }
+            using (Benchmark.InMiliseconds().ToConsole("Performance: {0}"))
+            {
+                for (int i = 0; i < 10000000; i++)
+                {
+                    var userType = new DateTimeRangeUserType();
+                    var names = userType.PropertyNames;
+                    var types = userType.PropertyTypes;
+                    var @class = userType.ReturnedClass;
+                }
+            }
         }
 
         [Test]
@@ -139,20 +149,15 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
             Assert.That(modelFromDb.DateTimePeriod.Equals(model.DateTimePeriod), Is.True);
         }
 
-        [Test]
-        [Explicit]
-        public void PerformanceTest()
+        protected override IList Mappings
         {
-            using (Benchmark.InMiliseconds().ToConsole("Performance: {0}"))
-            {
-                for (int i = 0; i < 10000000; i++)
-                {
-                    var userType = new DateTimeRangeUserType();
-                    var names = userType.PropertyNames;
-                    var types = userType.PropertyTypes;
-                    var @class = userType.ReturnedClass;
-                }
-            }
+            get { return new[] { "Domain.DateRangeModel.hbm.xml" }; }
+        }
+
+        protected override void OnSetUp()
+        {
+            base.OnSetUp();
+            Sut = new DateRangeUserType();
         }
     }
 }

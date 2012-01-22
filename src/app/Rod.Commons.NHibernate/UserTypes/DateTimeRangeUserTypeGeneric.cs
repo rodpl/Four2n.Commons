@@ -19,6 +19,7 @@ namespace Rod.Commons.NHibernate.UserTypes
 
     using global::System;
     using global::System.Data;
+    using global::System.Xml.Serialization;
 
     /// <summary>
     /// NHibernate database representation of generic type <see cref="IDateTimeRange"/>
@@ -26,17 +27,22 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// <typeparam name="T">
     /// Class of <see cref="IDateTimeRange"/>
     /// </typeparam>
+    [Serializable]
     public abstract class DateTimeRangeUserType<T> : ICompositeUserType where T : IDateTimeRange
     {
+        [NonSerialized]
         private static readonly string[] propertyNames = new[] { "Begins", "Ends" };
 
+        [NonSerialized]
         private static readonly IType[] propertyTypes = new IType[] { NHibernateUtil.DateTime, NHibernateUtil.DateTime };
 
+        [NonSerialized]
         private static readonly Type returnedClass = typeof(T);
 
         /// <summary>
         /// Gets a value indicating whether objects of this type are mutable.
         /// </summary>
+        [XmlIgnore]
         public bool IsMutable
         {
             get { return false; }
@@ -45,6 +51,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <summary>
         /// Gets the "property names" that may be used in a query. 
         /// </summary>
+        [XmlIgnore]
         public string[] PropertyNames
         {
             get { return propertyNames; }
@@ -53,6 +60,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <summary>
         /// Gets the corresponding "property types"
         /// </summary>
+        [XmlIgnore]
         public IType[] PropertyTypes
         {
             get { return propertyTypes; }
@@ -61,6 +69,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <summary>
         /// Gets type of the class returned by NullSafeGet().
         /// </summary>
+        [XmlIgnore]
         public Type ReturnedClass
         {
             get { return returnedClass; }

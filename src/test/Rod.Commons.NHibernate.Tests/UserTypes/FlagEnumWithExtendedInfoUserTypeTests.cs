@@ -13,16 +13,24 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using Domain;
 
+    using NHibernate.UserTypes;
+
     using global::System.Collections;
 
     using NUnit.Framework;
 
     [TestFixture]
-    public class FlagEnumWithExtendedInfoUserTypeTests : NHibernateTestCase
+    public class FlagEnumWithExtendedInfoUserTypeTests : UserTypeTests<FlagEnumWithExtendedInfoUserType<string>>
     {
         protected override IList Mappings
         {
             get { return new[] { "Domain.FlagEnumExtendedModel.hbm.xml" }; }
+        }
+
+        protected override void OnSetUp()
+        {
+            base.OnSetUp();
+            Sut = new FlagEnumWithExtendedInfoUserType<string>();
         }
 
         [Test]

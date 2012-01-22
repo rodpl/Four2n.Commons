@@ -13,17 +13,25 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using Domain;
 
+    using NHibernate.UserTypes;
+
     using global::System;
     using global::System.Collections;
 
     using NUnit.Framework;
 
     [TestFixture]
-    public class EnumWithExtendedInfoUserTypeTests : NHibernateTestCase
+    public class EnumWithExtendedInfoUserTypeTests : UserTypeTests<EnumWithExtendedInfoUserType<string>>
     {
         protected override IList Mappings
         {
             get { return new[] { "Domain.EnumExtendedModel.hbm.xml" }; }
+        }
+
+        protected override void OnSetUp()
+        {
+            base.OnSetUp();
+            Sut = new EnumWithExtendedInfoUserType<string>();
         }
 
         [Test]

@@ -19,6 +19,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::System.Data;
     using global::System.Data.Common;
     using global::System.Xml;
+    using global::System.Xml.Serialization;
 
     using Rod.Commons.NHibernate.SqlTypes;
 
@@ -28,13 +29,18 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// With some modifications by Tobin Harris
     /// </summary>
     [Serializable]
-    public class XmlType : IUserType, IParameterizedType
+    public class XmlType : IUserType
     {
-        private bool useXmlAsStringColumn;
+        [NonSerialized]
+        private static readonly SqlType[] sqlTypes = new SqlType[1] { new SqlXmlType() };
+
+        [NonSerialized]
+        private static readonly Type returnedType = typeof(XmlDocument);
 
         /// <summary>
         /// Gets a value indicating whether this instance is mutable.
         /// </summary>
+        [XmlIgnore]
         public bool IsMutable
         {
             get { return true; }
@@ -43,17 +49,19 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// <summary>
         /// Gets the type returned by <c>NullSafeGet()</c>
         /// </summary>
+        [XmlIgnore]
         public Type ReturnedType
         {
-            get { return typeof(XmlDocument); }
+            get { return returnedType; }
         }
 
         /// <summary>
         /// Gets the SQL types for the columns mapped by this type.
         /// </summary>
-        public SqlType[] SqlTypes
+        [XmlIgnore]
+        public virtual SqlType[] SqlTypes
         {
-            get { return new[] { useXmlAsStringColumn ? (SqlType)new SqlXmlStringType() : new SqlXmlType() }; }
+            get { return sqlTypes; }
         }
 
         /// <summary>
@@ -218,20 +226,6 @@ namespace Rod.Commons.NHibernate.UserTypes
         public object Replace(object original, object target, object owner)
         {
             return original;
-        }
-
-        public void SetParameterValues(IDictionary<string, string> parameters)
-        {
-            if (parameters == null)
-            {
-                return;
-            }
-
-            var xmlAsString = parameters["useXmlAsStringColum"] as string;
-            bool useXmlAsString = false;
-            bool.TryParse(xmlAsString, out useXmlAsString);
-
-            this.useXmlAsStringColumn = useXmlAsString;
         }
     }
 }

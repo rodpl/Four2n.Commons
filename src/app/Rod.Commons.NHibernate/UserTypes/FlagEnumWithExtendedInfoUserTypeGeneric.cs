@@ -21,6 +21,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::System.Collections.Generic;
     using global::System.Data;
     using global::System.Globalization;
+    using global::System.Xml.Serialization;
 
     /// <summary>
     /// Database representation of enum decorated with <see cref="EnumExtendedInfoAttribute"/> and with <see cref="FlagsAttribute"/>.
@@ -29,12 +30,16 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// Default separator is "|".
     /// </summary>
     /// <typeparam name="TEnum">Enum type decorated with <see cref="EnumExtendedInfoAttribute"/>.</typeparam>
+    [Serializable]
     public class FlagEnumWithExtendedInfoUserType<TEnum> : EnumWithExtendedInfoUserType<TEnum>, IParameterizedType
     {
+        [NonSerialized]
         private const string DefaultSeparator = "|";
 
+        [NonSerialized]
         private const string SeparatorParameterName = "separator";
 
+        [NonSerialized]
         private static readonly SqlType[] sqlTypes = new SqlType[] { SqlTypeFactory.GetString(255) };
 
         private string separator = DefaultSeparator;
@@ -43,6 +48,7 @@ namespace Rod.Commons.NHibernate.UserTypes
         /// Gets the SQL types.
         /// </summary>
         /// <value>The SQL types.</value>
+        [XmlIgnore]
         public override SqlType[] SqlTypes
         {
             get { return sqlTypes; }

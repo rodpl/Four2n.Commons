@@ -13,21 +13,25 @@ namespace Rod.Commons.NHibernate.UserTypes
 
     using global::System;
     using global::System.Data;
+    using global::System.Xml.Serialization;
 
     /// <summary>
     /// Database representation of nullable enum decorated with <see cref="EnumExtendedInfoAttribute"/>.
     /// CustomValue property is database representation for enum field value.
     /// </summary>
     /// <typeparam name="TEnum">Enum type decorated with <see cref="EnumExtendedInfoAttribute"/>.</typeparam>
+    [Serializable]
     public class EnumWithExtendedInfoNullableUserType<TEnum> : EnumWithExtendedInfoUserType<TEnum>
             where TEnum : struct
     {
+        [NonSerialized]
         private static readonly Type returnedType = typeof(TEnum?);
 
         /// <summary>
         /// Gets the type of the returned.
         /// </summary>
         /// <value>The type of the returned.</value>
+        [XmlIgnore]
         public override Type ReturnedType
         {
             get { return returnedType; }

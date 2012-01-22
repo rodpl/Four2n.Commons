@@ -11,13 +11,16 @@ namespace Rod.Commons.NHibernate.SqlTypes
 {
     using global::NHibernate.SqlTypes;
 
+    using global::System;
     using global::System.Data;
 
     /// <summary>
     /// Xml type as string 4000 chars long.
     /// </summary>
+    [Serializable]
     public class SqlXmlStringType : SqlType
     {
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlXmlStringType"/> class.
         /// </summary>

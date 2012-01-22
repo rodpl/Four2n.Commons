@@ -123,6 +123,7 @@
     <Compile Include="UserTypes\DateRangeUserTypeTests.cs" />
     <Compile Include="UserTypes\EnumWithExtendedInfoUserTypeTests.cs" />
     <Compile Include="UserTypes\FlagEnumWithExtendedInfoUserTypeTests.cs" />
+    <Compile Include="UserTypes\UserTypeTests.cs" />
     <Compile Include="UserTypes\XmlUserTypeTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -65,6 +65,7 @@
     <Compile Include="UserTypes\EnumWithExtendedInfoNullableUserType.cs" />
     <Compile Include="UserTypes\EnumWithExtendedInfoUserTypeGeneric.cs" />
     <Compile Include="UserTypes\FlagEnumWithExtendedInfoUserTypeGeneric.cs" />
+    <Compile Include="UserTypes\XmlStringType.cs" />
     <Compile Include="UserTypes\XmlType.cs" />
   </ItemGroup>
   <ItemGroup>
