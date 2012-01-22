@@ -19,6 +19,7 @@
 *.scc
 *.swp
 *.docstates
+*.local.xml
 [Bb]in/
 !/tools/gallio/bin/
 [Db]ebug/
