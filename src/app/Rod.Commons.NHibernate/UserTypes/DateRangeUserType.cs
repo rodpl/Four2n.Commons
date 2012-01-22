@@ -16,6 +16,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     /// <summary>
     /// NHibernate database representation of <see cref="DateRange"/>
     /// </summary>
+    [Serializable]
     public class DateRangeUserType : DateTimeRangeUserType<DateRange>
     {
         /// <summary>
