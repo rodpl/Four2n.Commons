@@ -153,7 +153,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Domain\EnumExtendedModel.hbm.xml" />
     <EmbeddedResource Include="Domain\FlagEnumExtendedModel.hbm.xml" />
-    <EmbeddedResource Include="Domain\XmlTypeModel.hbm.xml" />
+    <EmbeddedResource Include="Domain\XmlTypeModel.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="Test.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

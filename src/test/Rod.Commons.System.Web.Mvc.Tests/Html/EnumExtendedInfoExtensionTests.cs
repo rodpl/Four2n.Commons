@@ -26,7 +26,7 @@ namespace Rod.Commons.System.Web.Mvc.Html
     {
         private ViewDataDictionary viewData = new ViewDataDictionary();
 
-        internal enum TestEnum
+        public enum TestEnum
         {
             [EnumExtendedInfo(Name = "Boos", CustomValue = 1)]
             Boo,
@@ -123,11 +123,32 @@ namespace Rod.Commons.System.Web.Mvc.Html
             Console.Out.WriteLine(html.ToHtmlString());
         }
 
-        internal class SampleModel
+        [Test]
+        public void EnumValueInfoDropdownFor_Nullable_WithParentSampleValue()
         {
-            internal TestEnum SomeOption { get; set; }
+            var model = new SampleModel();
+            model.SomeNullableOption = TestEnum.Foo;
+            var parent = new ParentSampleModel();
+            parent.Child = model;
 
-            internal TestEnum? SomeNullableOption { get; set; }
+            var helper = MvcHelper.GetHtmlHelper(new ViewDataDictionary<ParentSampleModel>(parent));
+
+            var html = helper.DropDownListEnumExtendedInfoFor(x => x.Child.SomeNullableOption);
+
+            Assert.AreEqual(@"<select name='Child.SomeNullableOption'><option value=""""></option><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
+            Console.Out.WriteLine(html.ToHtmlString());
+        }
+
+        public class ParentSampleModel
+        {
+            public SampleModel Child { get; set; }
+        }
+
+        public class SampleModel
+        {
+            public TestEnum SomeOption { get; set; }
+
+            public TestEnum? SomeNullableOption { get; set; }
         }
     }
 }
