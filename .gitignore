@@ -20,6 +20,8 @@
 *.swp
 *.docstates
 *.local.xml
+*.ncrunchsolution
+*.ncrunchproject
 [Bb]in/
 !/tools/gallio/bin/
 [Db]ebug/
