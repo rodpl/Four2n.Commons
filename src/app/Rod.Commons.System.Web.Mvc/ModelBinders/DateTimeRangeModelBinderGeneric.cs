@@ -63,7 +63,13 @@ namespace Rod.Commons.System.Web.Mvc.ModelBinders
         /// <returns>String representation</returns>
         private string GetValue(ModelBindingContext bindingContext, string prefix, string key)
         {
-            ValueProviderResult vpr = bindingContext.ValueProvider.GetValue(string.Concat(prefix, key));
+            string searchedKey = string.Concat(prefix, key);
+            ValueProviderResult vpr = bindingContext.ValueProvider.GetValue(searchedKey);
+            if (vpr != null)
+            {
+                bindingContext.ModelState.SetModelValue(searchedKey, vpr);
+            }
+
             return vpr == null ? null : vpr.AttemptedValue;
         }
     }
