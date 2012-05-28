@@ -13,6 +13,11 @@ namespace Rod.Commons.System
 
     using NUnit.Framework;
 
+    using global::System.IO;
+    using global::System.Text;
+    using global::System.Xml;
+    using global::System.Xml.Serialization;
+
     public abstract class DateTimeRangeGenericTestCase<T> where T : IDateTimeRange
     {
         [Test]
@@ -106,6 +111,33 @@ namespace Rod.Commons.System
             Assert.IsFalse(sut.EarlierEqualThanEnds(DateTime.Now.AddDays(2)));
             Assert.IsTrue(sut.Includes(DateTime.Now));
             Assert.IsFalse(sut.Includes(DateTime.Now.AddDays(5)));
+        }
+
+        [Test]
+        public void Can_serialize_by_xml()
+        {
+            // Arrange
+            var sut = this.CreateSample();
+            var begins = sut.Begins;
+            var ends = sut.Ends;
+
+            // Act
+            var serializer = new XmlSerializer(sut.GetType());
+
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+            serializer.Serialize(writer, sut);
+            var doc = new XmlDocument();
+            doc.LoadXml(sb.ToString());
+
+            // Assert
+            var reader = new XmlNodeReader(doc.DocumentElement);
+            var ser = new XmlSerializer(typeof(T));
+            var obj = ser.Deserialize(reader);
+            var serializedSut = (T)obj;
+
+            Assert.AreEqual(begins, serializedSut.Begins);
+            Assert.AreEqual(ends, serializedSut.Ends);
         }
 
         protected abstract T Create(DateTime? startDate, DateTime? endDate);

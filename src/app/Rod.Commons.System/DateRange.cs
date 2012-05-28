@@ -11,6 +11,9 @@ namespace Rod.Commons.System
 {
     using global::System;
     using global::System.ComponentModel;
+    using global::System.Xml;
+    using global::System.Xml.Schema;
+    using global::System.Xml.Serialization;
 
     /// <summary>
     /// Interface for DateRange structures.
@@ -56,7 +59,7 @@ namespace Rod.Commons.System
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(DateRangeTypeConverter))]
-    public struct DateRange : IDateTimeRange, IEquatable<DateRange>
+    public struct DateRange : IDateTimeRange, IEquatable<DateRange>, IXmlSerializable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DateRange"/> struct. 
@@ -64,6 +67,11 @@ namespace Rod.Commons.System
         /// <param name="startDate"> The start date. </param>
         /// <param name="endDate"> The end date. </param>
         public DateRange(DateTime? startDate, DateTime? endDate) : this()
+        {
+            this.SetValues(startDate, endDate);
+        }
+
+        private void SetValues(DateTime? startDate, DateTime? endDate)
         {
             this.Begins = startDate.HasValue ? startDate.Value.Date : startDate;
             if (endDate == DateTime.MaxValue)
@@ -77,7 +85,9 @@ namespace Rod.Commons.System
 
             if (startDate.HasValue && endDate.HasValue && this.Begins > this.Ends)
             {
-                throw new ArgumentOutOfRangeException("startDate", string.Format("Start date {0} is from day which is greater than end date {1}.", startDate, endDate));
+                throw new ArgumentOutOfRangeException(
+                        "startDate",
+                        string.Format("Start date {0} is from day which is greater than end date {1}.", startDate, endDate));
             }
         }
 
@@ -225,6 +235,44 @@ namespace Rod.Commons.System
         {
             return this.LaterEqualThanBegins(date) && this.EarlierEqualThanEnds(date);
         }
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            var beginsString = reader.GetAttribute("Begins");
+            var endsString = reader.GetAttribute("Ends");
+
+            DateTime? begins = null;
+            DateTime? ends = null;
+            if (beginsString != null)
+            {
+                begins = DateTime.Parse(beginsString);
+            }
+
+            if (endsString != null)
+            {
+                ends = DateTime.Parse(endsString);
+            }
+
+            this.SetValues(begins, ends);
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            if (Begins.HasValue)
+            {
+                writer.WriteAttributeString("Begins", Begins.Value.ToShortDateString());
+            }
+
+            if (Ends.HasValue)
+            {
+                writer.WriteAttributeString("Ends", Ends.Value.ToShortDateString());
+            }
+        }
     }
 
     /// <summary>
@@ -232,7 +280,7 @@ namespace Rod.Commons.System
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(DateTimeRangeTypeConverter))]
-    public struct DateTimeRange : IDateTimeRange
+    public struct DateTimeRange : IDateTimeRange, IXmlSerializable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeRange"/> struct. 
@@ -241,9 +289,15 @@ namespace Rod.Commons.System
         /// <param name="endDate">The end date.</param>
         public DateTimeRange(DateTime? startDate, DateTime? endDate) : this()
         {
+            this.SetValues(startDate, endDate);
+        }
+
+        private void SetValues(DateTime? startDate, DateTime? endDate)
+        {
             if (startDate.HasValue && endDate.HasValue && startDate.Value > endDate.Value)
             {
-                throw new ArgumentOutOfRangeException("startDate", string.Format("Start date {0} is greater than end date {1}.", startDate, endDate));
+                throw new ArgumentOutOfRangeException(
+                        "startDate", string.Format("Start date {0} is greater than end date {1}.", startDate, endDate));
             }
 
             this.Ends = endDate;
@@ -393,6 +447,44 @@ namespace Rod.Commons.System
         public bool Includes(DateTime date)
         {
             return this.LaterEqualThanBegins(date) && this.EarlierEqualThanEnds(date);
+        }
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            var beginsString = reader.GetAttribute("Begins");
+            var endsString = reader.GetAttribute("Ends");
+
+            DateTime? begins = null;
+            DateTime? ends = null;
+            if (beginsString != null)
+            {
+                begins = DateTime.Parse(beginsString);
+            }
+
+            if (endsString != null)
+            {
+                ends = DateTime.Parse(endsString);
+            }
+
+            this.SetValues(begins, ends);
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            if (Begins.HasValue)
+            {
+                writer.WriteAttributeString("Begins", Begins.Value.ToShortDateString());
+            }
+
+            if (Ends.HasValue)
+            {
+                writer.WriteAttributeString("Ends", Ends.Value.ToShortDateString());
+            }
         }
     }
 }
