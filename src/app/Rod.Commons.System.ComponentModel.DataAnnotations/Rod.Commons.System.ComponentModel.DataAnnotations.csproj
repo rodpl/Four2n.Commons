@@ -55,6 +55,8 @@
     <Compile Include="NipNumberValidatorAttribute.cs" />
     <Compile Include="PeselNumberValidatorAttribute.cs" />
     <Compile Include="RegonNumberValidatorAttribute.cs" />
+    <Compile Include="RelationalComparisionValidatorAttribute.cs" />
+    <Compile Include="RelationComparision.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
