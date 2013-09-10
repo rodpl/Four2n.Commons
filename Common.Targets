@@ -11,7 +11,7 @@
 
     <!-- Import 3rd party targets -->
     <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="$(MSBuildCommunityTasksLib) == ''"/>
-    <Import Project="$(MSBuildExtensionsPath)\rod.Commons\rod.Commons.Targets" Condition="$(RodCommonsTargetsIsLoaded) == ''" />
+    <Import Project="$(MSBuildExtensionsPath)\Four2n.Commons\Four2n.Commons.Targets" Condition="$(Four2nCommonsTargetsIsLoaded) == ''" />
     <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NCoverExplorer" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
     <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NCover" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
     <UsingTask TaskName="NCoverExplorer.MSBuildTasks.NUnitProject" AssemblyFile="$(NCoverExplorerTaskAssembly)"/>
