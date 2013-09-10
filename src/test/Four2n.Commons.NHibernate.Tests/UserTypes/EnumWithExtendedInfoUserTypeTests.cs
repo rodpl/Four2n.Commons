@@ -37,7 +37,7 @@ namespace Four2n.Commons.NHibernate.Tests.UserTypes
         [Test]
         public void StringValue_Persistance()
         {
-            var enumField = ExtendedTestEnum.Something;
+            var enumField = ExtendedTestEnum.Pending;
             Assert.That(EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(enumField).CustomValue, Is.TypeOf<string>());
 
             var model = new EnumExtendedModel();
@@ -52,12 +52,12 @@ namespace Four2n.Commons.NHibernate.Tests.UserTypes
             var modelFromDb = this.Session.Get<EnumExtendedModel>(model.Id);
             Assert.That(modelFromDb.SampleEnum, Is.EqualTo(enumField));
 
-            modelFromDb.SampleEnum = ExtendedTestEnum.Pending;
+            modelFromDb.SampleEnum = ExtendedTestEnum.Something;
             this.Session.Flush();
             this.Session.Clear();
 
             var modelFromDbTwo = this.Session.Get<EnumExtendedModel>(model.Id);
-            Assert.That(modelFromDbTwo.SampleEnum, Is.EqualTo(ExtendedTestEnum.Pending));
+            Assert.That(modelFromDbTwo.SampleEnum, Is.EqualTo(ExtendedTestEnum.Something));
         }
 
         [Test]
