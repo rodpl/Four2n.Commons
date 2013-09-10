@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Diagnostics
+namespace Four2n.Commons.System.Diagnostics
 {
     using global::System;
     using global::System.Diagnostics;

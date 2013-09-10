@@ -1,4 +1,4 @@
-namespace Rod.Commons.NHibernate.Tests.Domain
+namespace Four2n.Commons.NHibernate.Tests.Domain
 {
     using global::System;
     using global::System.Xml;

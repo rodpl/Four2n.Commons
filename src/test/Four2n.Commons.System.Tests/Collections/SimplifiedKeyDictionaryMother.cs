@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Collections
+namespace Four2n.Commons.System.Collections
 {
     public class SimplifiedKeyDictionaryMother
     {

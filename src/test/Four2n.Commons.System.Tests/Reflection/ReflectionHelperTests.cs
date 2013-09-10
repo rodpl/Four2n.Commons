@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Reflection
+namespace Four2n.Commons.System.Reflection
 {
     using NUnit.Framework;
 

@@ -35,8 +35,8 @@
     <ProjectGuid>{77989AEA-959E-41E6-B545-A18FE6FE75AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System.Extensions</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Extensions.Tests</AssemblyName>
+    <RootNamespace>Four2n.Commons.System.Extensions</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.Extensions.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -75,17 +75,17 @@
     <Compile Include="Reflection\ReflectionHelperExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\rod.Commons.System.Extensions\Rod.Commons.System.Extensions.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.System.Extensions\Four2n.Commons.System.Extensions.csproj">
       <Project>{843C066F-54E8-41ED-A597-1DFCAC466831}</Project>
-      <Name>Rod.Commons.System.Extensions</Name>
+      <Name>Four2n.Commons.System.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rod.Commons.System.Tests\Rod.Commons.System.Tests.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System.Tests\Four2n.Commons.System.Tests.csproj">
       <Project>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</Project>
-      <Name>Rod.Commons.System.Tests</Name>
+      <Name>Four2n.Commons.System.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

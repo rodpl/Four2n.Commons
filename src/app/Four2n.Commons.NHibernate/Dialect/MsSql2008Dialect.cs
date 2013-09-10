@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Dialect
+namespace Four2n.Commons.NHibernate.Dialect
 {
     using global::System.Data;
 

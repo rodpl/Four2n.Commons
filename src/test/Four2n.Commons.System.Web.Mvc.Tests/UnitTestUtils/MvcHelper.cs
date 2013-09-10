@@ -9,7 +9,7 @@
 
 [assembly: System.Security.SecurityRules(System.Security.SecurityRuleSet.Level1)]
 
-namespace Rod.Commons.System.Web.Mvc.UnitTestUtils
+namespace Four2n.Commons.System.Web.Mvc.UnitTestUtils
 {
     using global::System;
     using global::System.Collections;

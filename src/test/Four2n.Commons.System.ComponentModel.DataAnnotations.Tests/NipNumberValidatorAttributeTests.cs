@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.ComponentModel.DataAnnotations
+namespace Four2n.Commons.System.ComponentModel.DataAnnotations
 {
     using global::System;
     using global::System.Collections.Generic;

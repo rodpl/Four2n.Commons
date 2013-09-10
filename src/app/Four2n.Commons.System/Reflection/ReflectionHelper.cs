@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Reflection
+namespace Four2n.Commons.System.Reflection
 {
     using global::System;
     using global::System.Reflection;

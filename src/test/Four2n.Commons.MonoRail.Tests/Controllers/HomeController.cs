@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.MonoRail.Controllers
+namespace Four2n.Commons.MonoRail.Controllers
 {
     using Castle.MonoRail.Framework;
 

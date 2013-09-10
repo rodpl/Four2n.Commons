@@ -19,8 +19,8 @@
     <ProjectGuid>{DBB008BB-9938-4C73-8E51-1FD5BC68BBF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System.Web.Mvc</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Web.Mvc</AssemblyName>
+    <RootNamespace>Four2n.Commons.System.Web.Mvc</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.Web.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -64,9 +64,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

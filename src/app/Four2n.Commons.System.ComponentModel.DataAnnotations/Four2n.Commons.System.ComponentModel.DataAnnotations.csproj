@@ -19,8 +19,8 @@
     <ProjectGuid>{F112F4D5-6FDF-4B44-9EF5-9921FF1DA381}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System.ComponentModel.DataAnnotations</RootNamespace>
-    <AssemblyName>Rod.Commons.System.ComponentModel.DataAnnotations</AssemblyName>
+    <RootNamespace>Four2n.Commons.System.ComponentModel.DataAnnotations</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.ComponentModel.DataAnnotations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -60,9 +60,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

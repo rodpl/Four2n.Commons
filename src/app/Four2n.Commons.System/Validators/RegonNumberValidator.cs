@@ -1,4 +1,4 @@
-namespace Rod.Commons.System.Validators
+namespace Four2n.Commons.System.Validators
 {
     using global::System;
     using global::System.Text.RegularExpressions;

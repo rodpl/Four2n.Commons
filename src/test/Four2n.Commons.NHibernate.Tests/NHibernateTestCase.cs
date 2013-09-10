@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests
+namespace Four2n.Commons.NHibernate.Tests
 {
     using global::NHibernate;
     using global::NHibernate.Engine;
@@ -23,7 +23,7 @@ namespace Rod.Commons.NHibernate.Tests
 
         protected override string MappingsAssembly
         {
-            get { return "Rod.Commons.NHibernate.Tests"; }
+            get { return "Four2n.Commons.NHibernate.Tests"; }
         }
 
         protected override void OnSetUp()

@@ -20,8 +20,8 @@
     <ProjectGuid>{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.MonoRail</RootNamespace>
-    <AssemblyName>Rod.Commons.MonoRail</AssemblyName>
+    <RootNamespace>Four2n.Commons.MonoRail</RootNamespace>
+    <AssemblyName>Four2n.Commons.MonoRail</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

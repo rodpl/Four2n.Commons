@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.MonoRail.Helpers
+namespace Four2n.Commons.MonoRail.Helpers
 {
     using System;
     using Castle.MonoRail.Framework.Helpers;

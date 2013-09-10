@@ -7,13 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Web.Modules
+namespace Four2n.Commons.System.Web.Modules
 {
     using global::System;
     using global::System.Diagnostics;
     using global::System.Web;
 
-    using Rod.Commons.System.Diagnostics;
+    using Four2n.Commons.System.Diagnostics;
 
     /// <summary>
     /// Http Module for counting how much log time will page process

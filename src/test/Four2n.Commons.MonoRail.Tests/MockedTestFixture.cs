@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.MonoRail
+namespace Four2n.Commons.MonoRail
 {
     using Rhino.Mocks;
 

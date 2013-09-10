@@ -19,8 +19,8 @@
     <ProjectGuid>{008AA833-BCA9-4F5E-AD4E-B585C53655EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Tests</AssemblyName>
+    <RootNamespace>Four2n.Commons.System</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.Tests</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -81,9 +81,9 @@
     <Compile Include="XmlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

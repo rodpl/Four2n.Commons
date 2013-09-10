@@ -19,8 +19,8 @@
     <ProjectGuid>{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.MonoRail</RootNamespace>
-    <AssemblyName>Rod.Commons.MonoRail.Tests</AssemblyName>
+    <RootNamespace>Four2n.Commons.MonoRail</RootNamespace>
+    <AssemblyName>Four2n.Commons.MonoRail.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -106,9 +106,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\rod.Commons.MonoRail\Rod.Commons.MonoRail.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.MonoRail\Four2n.Commons.MonoRail.csproj">
       <Project>{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}</Project>
-      <Name>Rod.Commons.MonoRail</Name>
+      <Name>Four2n.Commons.MonoRail</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

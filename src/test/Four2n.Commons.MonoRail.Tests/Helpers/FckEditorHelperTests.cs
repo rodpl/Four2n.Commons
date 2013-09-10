@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.MonoRail.Helpers
+namespace Four2n.Commons.MonoRail.Helpers
 {
     using System.Threading;
 
@@ -16,7 +16,7 @@ namespace Rod.Commons.MonoRail.Helpers
 
     using NUnit.Framework;
 
-    using Rod.Commons.MonoRail.Controllers;
+    using Four2n.Commons.MonoRail.Controllers;
 
     [TestFixture]
     public class FckEditorHelperTests : MockedTestFixture

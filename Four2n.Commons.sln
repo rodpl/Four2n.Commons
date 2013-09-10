@@ -25,19 +25,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Settings.Targets = Settings.Targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System", "src\app\rod.Commons.System\Four2n.Commons.System.csproj", "{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System", "src\app\Four2n.Commons.System\Four2n.Commons.System.csproj", "{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Tests", "src\test\rod.Commons.System.Tests\Four2n.Commons.System.Tests.csproj", "{008AA833-BCA9-4F5E-AD4E-B585C53655EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Tests", "src\test\Four2n.Commons.System.Tests\Four2n.Commons.System.Tests.csproj", "{008AA833-BCA9-4F5E-AD4E-B585C53655EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions", "src\app\rod.Commons.System.Extensions\Four2n.Commons.System.Extensions.csproj", "{843C066F-54E8-41ED-A597-1DFCAC466831}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions", "src\app\Four2n.Commons.System.Extensions\Four2n.Commons.System.Extensions.csproj", "{843C066F-54E8-41ED-A597-1DFCAC466831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions.Tests", "src\test\rod.Commons.System.Extensions.Tests\Four2n.Commons.System.Extensions.Tests.csproj", "{77989AEA-959E-41E6-B545-A18FE6FE75AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions.Tests", "src\test\Four2n.Commons.System.Extensions.Tests\Four2n.Commons.System.Extensions.Tests.csproj", "{77989AEA-959E-41E6-B545-A18FE6FE75AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail", "src\app\rod.Commons.MonoRail\Four2n.Commons.MonoRail.csproj", "{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail", "src\app\Four2n.Commons.MonoRail\Four2n.Commons.MonoRail.csproj", "{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail.Tests", "src\test\rod.Commons.MonoRail.Tests\Four2n.Commons.MonoRail.Tests.csproj", "{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail.Tests", "src\test\Four2n.Commons.MonoRail.Tests\Four2n.Commons.MonoRail.Tests.csproj", "{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Web", "src\app\rod.Commons.System.Web\Four2n.Commons.System.Web.csproj", "{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Web", "src\app\Four2n.Commons.System.Web\Four2n.Commons.System.Web.csproj", "{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.NHibernate", "src\app\Four2n.Commons.NHibernate\Four2n.Commons.NHibernate.csproj", "{FCD77F3B-BD9E-471B-B0AA-004D2E35997A}"
 EndProject

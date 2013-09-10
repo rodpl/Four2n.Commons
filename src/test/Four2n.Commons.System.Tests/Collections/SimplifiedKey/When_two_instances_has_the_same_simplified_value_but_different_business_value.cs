@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Collections.SimplifiedKey
+namespace Four2n.Commons.System.Collections.SimplifiedKey
 {
     using global::System;
 

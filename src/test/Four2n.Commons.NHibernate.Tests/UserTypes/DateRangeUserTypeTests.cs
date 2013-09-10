@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests.UserTypes
+namespace Four2n.Commons.NHibernate.Tests.UserTypes
 {
     using System.Diagnostics;
 
@@ -20,7 +20,7 @@ namespace Rod.Commons.NHibernate.Tests.UserTypes
 
     using NUnit.Framework;
 
-    using Rod.Commons.System;
+    using Four2n.Commons.System;
 
     [TestFixture]
     public class DateRangeUserTypeTests : UserTypeTests<DateRangeUserType>

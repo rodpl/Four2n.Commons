@@ -1,4 +1,4 @@
-﻿namespace Rod.Commons.System
+﻿namespace Four2n.Commons.System
 {
     using global::System.IO;
     using global::System.Text;

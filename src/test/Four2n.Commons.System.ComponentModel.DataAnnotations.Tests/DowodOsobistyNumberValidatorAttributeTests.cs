@@ -1,4 +1,4 @@
-namespace Rod.Commons.System.ComponentModel.DataAnnotations
+namespace Four2n.Commons.System.ComponentModel.DataAnnotations
 {
     using NUnit.Framework;
 

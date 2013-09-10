@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Web.Mvc.ModelBinders
+namespace Four2n.Commons.System.Web.Mvc.ModelBinders
 {
     using global::System;
     using global::System.Collections.Generic;

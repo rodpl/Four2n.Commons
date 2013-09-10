@@ -20,8 +20,8 @@
     <ProjectGuid>{FCD77F3B-BD9E-471B-B0AA-004D2E35997A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.NHibernate</RootNamespace>
-    <AssemblyName>Rod.Commons.NHibernate</AssemblyName>
+    <RootNamespace>Four2n.Commons.NHibernate</RootNamespace>
+    <AssemblyName>Four2n.Commons.NHibernate</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -72,9 +72,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

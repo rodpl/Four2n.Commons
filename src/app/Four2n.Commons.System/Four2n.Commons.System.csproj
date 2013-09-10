@@ -35,8 +35,8 @@
     <ProjectGuid>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System</RootNamespace>
-    <AssemblyName>Rod.Commons.System</AssemblyName>
+    <RootNamespace>Four2n.Commons.System</RootNamespace>
+    <AssemblyName>Four2n.Commons.System</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Extensions.Collections
+namespace Four2n.Commons.System.Extensions.Collections
 {
     using System.Collections;
 

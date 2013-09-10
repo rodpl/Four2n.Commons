@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System
+namespace Four2n.Commons.System
 {
     using global::System;
     using global::System.Collections.Generic;

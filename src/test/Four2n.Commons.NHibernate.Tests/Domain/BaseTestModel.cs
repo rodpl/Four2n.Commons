@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests.Domain
+namespace Four2n.Commons.NHibernate.Tests.Domain
 {
     public class BaseTestModel
     {

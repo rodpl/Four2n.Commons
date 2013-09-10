@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests.UserTypes
+namespace Four2n.Commons.NHibernate.Tests.UserTypes
 {
     using System;
 

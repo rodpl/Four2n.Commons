@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Extensions.Reflection
+namespace Four2n.Commons.System.Extensions.Reflection
 {
     using System.Reflection;
 

@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests.Domain
+namespace Four2n.Commons.NHibernate.Tests.Domain
 {
-    using Rod.Commons.System;
+    using Four2n.Commons.System;
 
     public class DateRangeModel : BaseTestModel
     {

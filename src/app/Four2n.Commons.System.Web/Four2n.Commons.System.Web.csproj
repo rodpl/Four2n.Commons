@@ -20,8 +20,8 @@
     <ProjectGuid>{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System.Web</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Web</AssemblyName>
+    <RootNamespace>Four2n.Commons.System.Web</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.Web</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -52,9 +52,9 @@
     <Compile Include="Modules\PagePerformanceModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

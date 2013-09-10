@@ -20,8 +20,8 @@
     <ProjectGuid>{843C066F-54E8-41ED-A597-1DFCAC466831}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rod.Commons.System.Extensions</RootNamespace>
-    <AssemblyName>Rod.Commons.System.Extensions</AssemblyName>
+    <RootNamespace>Four2n.Commons.System.Extensions</RootNamespace>
+    <AssemblyName>Four2n.Commons.System.Extensions</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -55,9 +55,9 @@
     <Compile Include="Reflection\ReflectionHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

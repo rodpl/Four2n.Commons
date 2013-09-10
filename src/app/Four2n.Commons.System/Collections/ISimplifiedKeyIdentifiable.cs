@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.System.Collections
+namespace Four2n.Commons.System.Collections
 {
     /// <summary>
     /// Interface for an object which can be identified by SimplifiedKey

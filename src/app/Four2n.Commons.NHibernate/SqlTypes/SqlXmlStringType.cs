@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.SqlTypes
+namespace Four2n.Commons.NHibernate.SqlTypes
 {
     using global::NHibernate.SqlTypes;
 

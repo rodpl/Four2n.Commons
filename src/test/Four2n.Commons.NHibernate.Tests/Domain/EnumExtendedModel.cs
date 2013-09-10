@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.Tests.Domain
+namespace Four2n.Commons.NHibernate.Tests.Domain
 {
     using global::System.Collections.Generic;
     using global::System.Linq;

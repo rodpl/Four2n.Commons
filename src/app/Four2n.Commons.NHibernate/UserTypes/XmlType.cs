@@ -9,7 +9,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Rod.Commons.NHibernate.UserTypes
+namespace Four2n.Commons.NHibernate.UserTypes
 {
     using global::NHibernate.SqlTypes;
     using global::NHibernate.UserTypes;
@@ -21,7 +21,7 @@ namespace Rod.Commons.NHibernate.UserTypes
     using global::System.Xml;
     using global::System.Xml.Serialization;
 
-    using Rod.Commons.NHibernate.SqlTypes;
+    using Four2n.Commons.NHibernate.SqlTypes;
 
     /// <summary>
     /// UserType allowing easy saving of <see cref="NHibernate"/> <see cref="XmlDocument"/> property.
