@@ -147,13 +147,13 @@
     <Content Include="Views\Templates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\Rod.Commons.System.Web.Mvc\Rod.Commons.System.Web.Mvc.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.System.Web.Mvc\Four2n.Commons.System.Web.Mvc.csproj">
       <Project>{DBB008BB-9938-4C73-8E51-1FD5BC68BBF6}</Project>
-      <Name>Rod.Commons.System.Web.Mvc</Name>
+      <Name>Four2n.Commons.System.Web.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\app\rod.Commons.System\Rod.Commons.System.csproj">
+    <ProjectReference Include="..\..\app\Four2n.Commons.System\Four2n.Commons.System.csproj">
       <Project>{24F2D045-7814-4C57-BF9D-BEC4ECF4D881}</Project>
-      <Name>Rod.Commons.System</Name>
+      <Name>Four2n.Commons.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
