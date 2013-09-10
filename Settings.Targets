@@ -34,7 +34,7 @@
         <AcceptanceTestDetectionExpression>([.])(AcceptanceTest[s]{0,1})</AcceptanceTestDetectionExpression>
         <IntegrationTestDetectionExpression>([.])(IntegrationTest[s]{0,1})</IntegrationTestDetectionExpression>
         <UnitTestDetectionExpression>([.])((Unit)?Test[s]{0,1})</UnitTestDetectionExpression>
-        <SolutionPath>$(RootPath)\$(GeneralProjectName).VS2010.sln</SolutionPath>
+        <SolutionPath>$(RootPath)\$(GeneralProjectName).sln</SolutionPath>
         <TestedAssembliesReplaceExpression>((.*\\|^)(?=[^\\]*$))|($(TestDetectionExpression).*$)</TestedAssembliesReplaceExpression>
         <TestedAssembliesDetectionExpression1>(?&lt;=((\\|^)(?=[^\\]*$))).*(?=($(TestDetectionExpression).*$))</TestedAssembliesDetectionExpression1>
     </PropertyGroup>
@@ -99,9 +99,9 @@
         <AssemblyTitle>$(GeneralProjectName) - $(AssemblyTitle)</AssemblyTitle>
         <AssemblyDescription>Utility Libraries.</AssemblyDescription>
         <AssemblyCompany>42n</AssemblyCompany>
-        <AssemblyCopyright>Copyright 2006-2011 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
+        <AssemblyCopyright>Copyright 2006-2013 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
         <AssemblyProduct>$(GeneralProjectName)</AssemblyProduct>
-        <AssemblyVersion>0.1</AssemblyVersion>
+        <AssemblyVersion>1.0</AssemblyVersion>
         <AllowPartiallyTrustedCallers>True</AllowPartiallyTrustedCallers>
     </PropertyGroup>
     
