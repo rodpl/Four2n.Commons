@@ -9,7 +9,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <PropertyGroup>
-        <RodCommonsTargetsIsLoaded>1</RodCommonsTargetsIsLoaded>
+        <Four2nCommonsTargetsIsLoaded>1</Four2nCommonsTargetsIsLoaded>
     </PropertyGroup>
 
     <!-- ASCII Constants -->
