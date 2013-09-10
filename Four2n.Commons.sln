@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{949B153C-AF2F-41AA-965B-1D6739FD73F2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0", "2.0", "{1B1D9A93-4C59-4230-A538-A1492AA1C720}"
@@ -20,8 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Before.Microsoft.Common.User.Targets = Before.Microsoft.Common.User.Targets
 		Common.Targets = Common.Targets
 		Default.proj = Default.proj
-		IterationNumber.txt = IterationNumber.txt
 		tools\msbuild\Four2n.Commons\Four2n.Commons.Targets = tools\msbuild\Four2n.Commons\Four2n.Commons.Targets
+		IterationNumber.txt = IterationNumber.txt
 		Settings.Targets = Settings.Targets
 	EndProjectSection
 EndProject
@@ -32,10 +32,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions", "src\app\Four2n.Commons.System.Extensions\Four2n.Commons.System.Extensions.csproj", "{843C066F-54E8-41ED-A597-1DFCAC466831}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Extensions.Tests", "src\test\Four2n.Commons.System.Extensions.Tests\Four2n.Commons.System.Extensions.Tests.csproj", "{77989AEA-959E-41E6-B545-A18FE6FE75AD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail", "src\app\Four2n.Commons.MonoRail\Four2n.Commons.MonoRail.csproj", "{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.MonoRail.Tests", "src\test\Four2n.Commons.MonoRail.Tests\Four2n.Commons.MonoRail.Tests.csproj", "{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Four2n.Commons.System.Web", "src\app\Four2n.Commons.System.Web\Four2n.Commons.System.Web.csproj", "{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}"
 EndProject
@@ -77,14 +73,6 @@ Global
 		{77989AEA-959E-41E6-B545-A18FE6FE75AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77989AEA-959E-41E6-B545-A18FE6FE75AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77989AEA-959E-41E6-B545-A18FE6FE75AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{432BFE92-2B39-46FD-8BF3-59F79CA7F49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -125,7 +113,6 @@ Global
 		{949B153C-AF2F-41AA-965B-1D6739FD73F2} = {1B1D9A93-4C59-4230-A538-A1492AA1C720}
 		{73C0B76A-0323-4A36-875A-A0F1354AF874} = {1B1D9A93-4C59-4230-A538-A1492AA1C720}
 		{008AA833-BCA9-4F5E-AD4E-B585C53655EF} = {949B153C-AF2F-41AA-965B-1D6739FD73F2}
-		{ED557A32-FEF8-4E2B-BF11-9CD93CF44BB2} = {949B153C-AF2F-41AA-965B-1D6739FD73F2}
 		{FD7BC96E-7E63-4E39-896B-08E469307342} = {949B153C-AF2F-41AA-965B-1D6739FD73F2}
 		{3AAF394B-5C31-4E62-89BC-630C3EDF3C68} = {6B094626-264F-47ED-B31A-028749DDE79C}
 		{92EE7E44-EB19-43A2-AC39-CAB3132FA06A} = {6B094626-264F-47ED-B31A-028749DDE79C}
@@ -134,7 +121,6 @@ Global
 		{77989AEA-959E-41E6-B545-A18FE6FE75AD} = {92EE7E44-EB19-43A2-AC39-CAB3132FA06A}
 		{9DBD8FC6-889A-40C4-8565-7859C1124F47} = {92EE7E44-EB19-43A2-AC39-CAB3132FA06A}
 		{24F2D045-7814-4C57-BF9D-BEC4ECF4D881} = {73C0B76A-0323-4A36-875A-A0F1354AF874}
-		{7F29E808-3DDD-4EE7-B9CE-E6DFD0B563A8} = {73C0B76A-0323-4A36-875A-A0F1354AF874}
 		{432BFE92-2B39-46FD-8BF3-59F79CA7F49A} = {73C0B76A-0323-4A36-875A-A0F1354AF874}
 		{FCD77F3B-BD9E-471B-B0AA-004D2E35997A} = {73C0B76A-0323-4A36-875A-A0F1354AF874}
 		{41D96CDA-E325-45DE-B0D3-E6074374079C} = {DB182D9A-EEA3-4A87-9C7C-59C2A1947ABD}

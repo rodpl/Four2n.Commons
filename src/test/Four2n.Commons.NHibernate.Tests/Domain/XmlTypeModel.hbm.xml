@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-lazy="false">
-    <class name="Rod.Commons.NHibernate.Tests.Domain.XmlTypeModel,Rod.Commons.NHibernate.Tests" table="XmlTypeModel">
+    <class name="Four2n.Commons.NHibernate.Tests.Domain.XmlTypeModel,Four2n.Commons.NHibernate.Tests" table="XmlTypeModel">
         <id name="Id" type="Int32" >
             <generator class="identity" />
         </id>
         <property name="TestXml">
           <column name="TestXml" sql-type="ntext" />
-          <type name="Rod.Commons.NHibernate.UserTypes.XmlStringType,Rod.Commons.NHibernate">
+          <type name="Four2n.Commons.NHibernate.UserTypes.XmlStringType,Four2n.Commons.NHibernate">
           </type>
         </property>
     </class>

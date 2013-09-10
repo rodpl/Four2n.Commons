@@ -9,17 +9,23 @@
 
 namespace Four2n.Commons.NHibernate.UserTypes
 {
-    using System;
+    using global::System;
+
+    using global::System.Data;
+
+    using global::System.Xml.Serialization;
 
     using global::NHibernate;
+
     using global::NHibernate.Engine;
+
     using global::NHibernate.SqlTypes;
+
     using global::NHibernate.Type;
+
     using global::NHibernate.UserTypes;
 
-    using global::System;
-    using global::System.Data;
-    using global::System.Xml.Serialization;
+    using System;
 
     /// <summary>
     /// NHibernate database representation of generic type <see cref="IDateTimeRange"/>
@@ -186,9 +192,10 @@ namespace Four2n.Commons.NHibernate.UserTypes
         /// <param name="cmd">a IDbCommand</param>
         /// <param name="value">the object to write</param>
         /// <param name="index">command parameter index</param>
+        /// <param name="settable">command parameter index</param>
         /// <param name="session">session imlementor</param>
         /// <exception cref="T:NHibernate.HibernateException">HibernateException</exception>
-        public void NullSafeSet(IDbCommand cmd, object value, int index, ISessionImplementor session)
+        public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
         {
             var casted = (T)value;
             if (value == null)
