@@ -71,6 +71,30 @@ namespace Four2n.Commons.System
             this.SetValues(startDate, endDate);
         }
 
+        public DateRange(string text) : this()
+        {
+            var dates = ParseDateTimeRange(text);
+            this.SetValues(dates[0], dates[1]);
+        }
+
+        internal static DateTime?[] ParseDateTimeRange(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new DateTime?[] { null, null };
+            }
+
+            var splits = text.Split(new[] { " - " }, StringSplitOptions.None);
+            if (splits.Length != 2)
+            {
+                throw new ArgumentOutOfRangeException("text", text, "Cannot parse text");
+            }
+
+            var begins = string.IsNullOrEmpty(splits[0]) ? (DateTime?)null : DateTime.Parse(splits[0]);
+            var ends = string.IsNullOrEmpty(splits[1]) ? (DateTime?)null : DateTime.Parse(splits[1]);
+            return new DateTime?[] { begins, ends };
+        }
+
         private void SetValues(DateTime? startDate, DateTime? endDate)
         {
             this.Begins = startDate.HasValue ? startDate.Value.Date : startDate;
@@ -102,6 +126,11 @@ namespace Four2n.Commons.System
         /// Returns null if there is no end date.
         /// </summary>
         public DateTime? Ends { get; private set; }
+
+        public static implicit operator DateRange(string text)
+        {
+            return new DateRange(text);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.
@@ -292,6 +321,12 @@ namespace Four2n.Commons.System
             this.SetValues(startDate, endDate);
         }
 
+        public DateTimeRange(string text) : this()
+        {
+            var dates = DateRange.ParseDateTimeRange(text);
+            this.SetValues(dates[0], dates[1]);
+        }
+
         private void SetValues(DateTime? startDate, DateTime? endDate)
         {
             if (startDate.HasValue && endDate.HasValue && startDate.Value > endDate.Value)
@@ -315,6 +350,11 @@ namespace Four2n.Commons.System
         /// Returns null if there is no end date.
         /// </summary>
         public DateTime? Ends { get; private set; }
+
+        public static implicit operator DateTimeRange(string text)
+        {
+            return new DateTimeRange(text);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.

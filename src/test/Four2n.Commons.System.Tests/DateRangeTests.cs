@@ -33,6 +33,16 @@ namespace Four2n.Commons.System
             this.Equals_TwoObjects_ReturnsExpected(startOne, endOne, startTwo, endTwo, expected);
         }
 
+        [Test]
+        [TestCase("2000-01-01 12:00:00 - 2000-01-02 12:00:00", "2000-01-01 - 2000-01-02")]
+        [TestCase("2000-01-01 12:00:00 - ", "2000-01-01 - ∞")]
+        [TestCase(" - ", "∞ - ∞")]
+        public void Implicit_operators_tests(string castedText, string expectedToString)
+        {
+            var sut = (DateRange)castedText;
+            Assert.AreEqual(expectedToString, sut.ToString());
+        }
+
         protected override DateRange Create(DateTime? startDate, DateTime? endDate)
         {
             return new DateRange(startDate, endDate);
