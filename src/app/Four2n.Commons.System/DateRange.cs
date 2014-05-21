@@ -62,6 +62,11 @@ namespace Four2n.Commons.System
     public struct DateRange : IDateTimeRange, IEquatable<DateRange>, IXmlSerializable
     {
         /// <summary>
+        /// Null object which means that period is infinite.
+        /// </summary>
+        public static DateRange Infinite = new DateRange(null, null);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DateRange"/> struct. 
         /// </summary>
         /// <param name="startDate"> The start date. </param>
@@ -69,6 +74,30 @@ namespace Four2n.Commons.System
         public DateRange(DateTime? startDate, DateTime? endDate) : this()
         {
             this.SetValues(startDate, endDate);
+        }
+
+        public DateRange(string text) : this()
+        {
+            var dates = ParseDateTimeRange(text);
+            this.SetValues(dates[0], dates[1]);
+        }
+
+        internal static DateTime?[] ParseDateTimeRange(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new DateTime?[] { null, null };
+            }
+
+            var splits = text.Split(new[] { " - " }, StringSplitOptions.None);
+            if (splits.Length != 2)
+            {
+                throw new ArgumentOutOfRangeException("text", text, "Cannot parse text");
+            }
+
+            var begins = string.IsNullOrEmpty(splits[0]) ? (DateTime?)null : DateTime.Parse(splits[0]);
+            var ends = string.IsNullOrEmpty(splits[1]) ? (DateTime?)null : DateTime.Parse(splits[1]);
+            return new DateTime?[] { begins, ends };
         }
 
         private void SetValues(DateTime? startDate, DateTime? endDate)
@@ -102,6 +131,11 @@ namespace Four2n.Commons.System
         /// Returns null if there is no end date.
         /// </summary>
         public DateTime? Ends { get; private set; }
+
+        public static implicit operator DateRange(string text)
+        {
+            return new DateRange(text);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.
@@ -283,6 +317,11 @@ namespace Four2n.Commons.System
     public struct DateTimeRange : IDateTimeRange, IXmlSerializable
     {
         /// <summary>
+        /// Null object which means that period is infinite.
+        /// </summary>
+        public static DateTimeRange Infinite = new DateTimeRange(null, null);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeRange"/> struct. 
         /// </summary>
         /// <param name="startDate"> The start date. </param>
@@ -290,6 +329,12 @@ namespace Four2n.Commons.System
         public DateTimeRange(DateTime? startDate, DateTime? endDate) : this()
         {
             this.SetValues(startDate, endDate);
+        }
+
+        public DateTimeRange(string text) : this()
+        {
+            var dates = DateRange.ParseDateTimeRange(text);
+            this.SetValues(dates[0], dates[1]);
         }
 
         private void SetValues(DateTime? startDate, DateTime? endDate)
@@ -315,6 +360,11 @@ namespace Four2n.Commons.System
         /// Returns null if there is no end date.
         /// </summary>
         public DateTime? Ends { get; private set; }
+
+        public static implicit operator DateTimeRange(string text)
+        {
+            return new DateTimeRange(text);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.

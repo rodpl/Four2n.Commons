@@ -9,18 +9,16 @@
 
 namespace Four2n.Commons.NHibernate.Tests.UserTypes
 {
-    using System.Diagnostics;
-
-    using Domain;
-
     using global::System;
+
     using global::System.Collections;
 
-    using NHibernate.UserTypes;
+    using Four2n.Commons.NHibernate.Tests.Domain;
+    using Four2n.Commons.NHibernate.UserTypes;
+    using Four2n.Commons.System;
+    using Four2n.Commons.System.Diagnostics;
 
     using NUnit.Framework;
-
-    using Four2n.Commons.System;
 
     [TestFixture]
     public class DateRangeUserTypeTests : UserTypeTests<DateRangeUserType>
@@ -48,6 +46,8 @@ namespace Four2n.Commons.NHibernate.Tests.UserTypes
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", "2000-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), null, "2000-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", null)]
+        [TestCase(typeof(DateRange), null, null)]
+        [TestCase(typeof(DateTimeRange), null, null)]
         public void SaveModelTest(Type type, string beginsString, string endsString)
         {
             var model = new DateRangeModel();
@@ -64,14 +64,21 @@ namespace Four2n.Commons.NHibernate.Tests.UserTypes
             var modelFromDb = this.Session.Get<DateRangeModel>(model.Id);
             Assert.That(model.Id, Is.GreaterThan(0));
 
-            if (typeof(DateRange).Equals(type))
+            if (typeof(DateRange) == type)
             {
                 Assert.AreEqual(modelFromDb.DatePeriod, model.DatePeriod);
             }
-            else if (typeof(DateTimeRange).Equals(type))
+            else if (typeof(DateTimeRange) == type)
             {
                 Assert.AreEqual(modelFromDb.DateTimePeriod, model.DateTimePeriod);
             }
+
+            // Check if get and flush doesn't update entity
+            var actualVersion = modelFromDb.Version;
+            this.Session.Flush();
+            this.Session.Clear();
+            var modelAfterFlush = this.Session.Get<DateRangeModel>(model.Id);
+            Assert.AreEqual(actualVersion, modelAfterFlush.Version);
         }
 
         [Test]
@@ -81,6 +88,8 @@ namespace Four2n.Commons.NHibernate.Tests.UserTypes
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", "2000-1-31 13:01:05", "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), null, "2000-1-31 13:01:05", "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
         [TestCase(typeof(DateTimeRange), "2000-1-1 12:00:04", null, "2001-1-1 12:00:04", "2001-1-31 13:01:05")]
+        [TestCase(typeof(DateRange), null, null, null, null)]
+        [TestCase(typeof(DateTimeRange), null, null, null, null)]
         public void SaveOrUpdateCopyModelTest(Type type, string beginsString, string endsString, string beginsTwoString, string endsTwoString)
         {
             var model = new DateRangeModel();
