@@ -12,5 +12,7 @@ namespace Four2n.Commons.NHibernate.Tests.Domain
     public class BaseTestModel
     {
         public int Id { get; set; }
+
+        public int Version { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Four2n.Commons.System
 {
     using global::System;
     using global::System.Collections.Generic;
+    using global::System.Reflection;
     using global::System.Text;
 
     using NUnit.Framework;
@@ -41,6 +42,12 @@ namespace Four2n.Commons.System
         {
             var sut = (DateRange)castedText;
             Assert.AreEqual(expectedToString, sut.ToString());
+        }
+
+        [Test]
+        public void Null_is_casted_to_infinite()
+        {
+            Assert.AreEqual(DateRange.Infinite, (DateRange)null);
         }
 
         protected override DateRange Create(DateTime? startDate, DateTime? endDate)

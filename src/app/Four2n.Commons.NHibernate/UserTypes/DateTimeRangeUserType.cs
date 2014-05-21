@@ -29,7 +29,8 @@ namespace Four2n.Commons.NHibernate.UserTypes
         /// </returns>
         public override bool Equals(object x, object y)
         {
-            return DateTimeRange.Equals(x, y);
+            var result = DateTimeRange.Equals(x, y);
+            return result;
         }
 
         /// <summary>
@@ -41,6 +42,11 @@ namespace Four2n.Commons.NHibernate.UserTypes
         protected override DateTimeRange Create(DateTime? startDate, DateTime? endDate)
         {
             return new DateTimeRange(startDate, endDate);
+        }
+
+        protected override DateTimeRange CreateInfinite()
+        {
+            return DateTimeRange.Infinite;
         }
     }
 }

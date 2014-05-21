@@ -62,6 +62,11 @@ namespace Four2n.Commons.System
     public struct DateRange : IDateTimeRange, IEquatable<DateRange>, IXmlSerializable
     {
         /// <summary>
+        /// Null object which means that period is infinite.
+        /// </summary>
+        public static DateRange Infinite = new DateRange(null, null);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DateRange"/> struct. 
         /// </summary>
         /// <param name="startDate"> The start date. </param>
@@ -311,6 +316,11 @@ namespace Four2n.Commons.System
     [TypeConverter(typeof(DateTimeRangeTypeConverter))]
     public struct DateTimeRange : IDateTimeRange, IXmlSerializable
     {
+        /// <summary>
+        /// Null object which means that period is infinite.
+        /// </summary>
+        public static DateTimeRange Infinite = new DateTimeRange(null, null);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeRange"/> struct. 
         /// </summary>

@@ -178,7 +178,7 @@ namespace Four2n.Commons.NHibernate.UserTypes
             var end = (DateTime?)NHibernateUtil.DateTime.NullSafeGet(dr, names[1], session, owner);
             if (start == null && end == null)
             {
-                return null;
+                return this.CreateInfinite();
             }
 
             return this.Create(start, end);
@@ -256,5 +256,11 @@ namespace Four2n.Commons.NHibernate.UserTypes
         /// <param name="endDate">The end date.</param>
         /// <returns>Instance of date range object.</returns>
         protected abstract T Create(DateTime? startDate, DateTime? endDate);
+
+        /// <summary>
+        /// Creates infinite instance
+        /// </summary>
+        /// <returns>Null object which is represented as infinite period.</returns>
+        protected abstract T CreateInfinite();
     }
 }
