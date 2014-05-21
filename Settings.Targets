@@ -101,7 +101,7 @@
         <AssemblyCompany>42n</AssemblyCompany>
         <AssemblyCopyright>Copyright 2006-2013 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
         <AssemblyProduct>$(GeneralProjectName)</AssemblyProduct>
-        <AssemblyVersion>1.1</AssemblyVersion>
+        <AssemblyVersion>1.2</AssemblyVersion>
         <AllowPartiallyTrustedCallers>True</AllowPartiallyTrustedCallers>
     </PropertyGroup>
     
