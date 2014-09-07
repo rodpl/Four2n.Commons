@@ -32,14 +32,16 @@ namespace Four2n.Commons.System.Web.Mvc.Html
         public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(
             this HtmlHelper html,
             string expression,
-            TValue value) where TValue : struct
+            TValue value,
+            object htmlAttributes = null) where TValue : struct
         {
             return DropDownListEnumExtendedInfoInternal(
                 html,
                 expression,
                 value,
                 false,
-                Enum.GetValues(typeof(TValue)));
+                Enum.GetValues(typeof(TValue)),
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
@@ -55,7 +57,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
             this HtmlHelper html,
             string expression,
             TValue value,
-            IEnumerable<TValue> choices)
+            IEnumerable<TValue> choices,
+            object htmlAttributes = null)
                 where TValue : struct
         {
             return DropDownListEnumExtendedInfoInternal(
@@ -63,7 +66,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
                 expression,
                 value,
                 false,
-                choices);
+                choices,
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
@@ -77,15 +81,16 @@ namespace Four2n.Commons.System.Web.Mvc.Html
         public static MvcHtmlString DropDownListEnumExtendedInfo<TValue>(
             this HtmlHelper html,
             string expression,
-            TValue? value)
-                where TValue : struct
+            TValue? value,
+            object htmlAttributes = null) where TValue : struct
         {
             return DropDownListEnumExtendedInfoInternal(
                 html,
                 expression,
                 value,
                 true,
-                Enum.GetValues(typeof(TValue)));
+                Enum.GetValues(typeof(TValue)),
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
@@ -101,15 +106,16 @@ namespace Four2n.Commons.System.Web.Mvc.Html
             this HtmlHelper html,
             string expression,
             TValue? value,
-            IEnumerable<TValue> choices)
-            where TValue : struct
+            IEnumerable<TValue> choices,
+            object htmlAttributes = null) where TValue : struct
         {
             return DropDownListEnumExtendedInfoInternal(
                 html,
                 expression,
                 value,
                 true,
-                choices);
+                choices,
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
@@ -122,8 +128,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
         /// <returns> Mvc string </returns>
         public static MvcHtmlString DropDownListEnumExtendedInfoFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> expression)
-                where TValue : struct
+            Expression<Func<TModel, TValue>> expression,
+            object htmlAttributes = null) where TValue : struct
         {
             var data = expression.Compile()(html.ViewData.Model);
             return DropDownListEnumExtendedInfoInternal(
@@ -131,7 +137,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
                 ExpressionHelper.GetExpressionText(expression),
                 data,
                 false,
-                Enum.GetValues(expression.Body.Type));
+                Enum.GetValues(expression.Body.Type),
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
@@ -144,8 +151,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
         /// <returns> Mvc string </returns>
         public static MvcHtmlString DropDownListEnumExtendedInfoFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue?>> expression)
-                where TValue : struct
+            Expression<Func<TModel, TValue?>> expression,
+            object htmlAttributes = null) where TValue : struct
         {
             var data = expression.Compile()(html.ViewData.Model);
             return DropDownListEnumExtendedInfoInternal(
@@ -153,29 +160,54 @@ namespace Four2n.Commons.System.Web.Mvc.Html
                 ExpressionHelper.GetExpressionText(expression),
                 data,
                 true,
-                Enum.GetValues(Nullable.GetUnderlyingType(expression.Body.Type)));
+                Enum.GetValues(Nullable.GetUnderlyingType(expression.Body.Type)),
+                HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
         /// Enums the value info dropdown internal.
         /// </summary>
-        /// <param name="html">The html. </param>
-        /// <param name="expression"> The expression. </param>
+        /// <param name="htmlHelper">The html. </param>
+        /// <param name="name"> The name. </param>
         /// <param name="value"> The value. </param>
         /// <param name="isNullable"> The is Nullable. </param>
         /// <param name="choices"> The choices. </param>
+        /// <param name="htmlAttributes">Html attributes.</param>
         /// <returns>
         /// Mvc string
         /// </returns>
         internal static MvcHtmlString DropDownListEnumExtendedInfoInternal(
+            HtmlHelper htmlHelper,
+            string name,
+            object value,
+            bool isNullable,
+            IEnumerable choices,
+            IDictionary<string, object> htmlAttributes = null)
+        {
+            var fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+            if (string.IsNullOrEmpty(fullName))
+            {
+                throw new ArgumentException("Null or empty name", "name");
+            }
+
+            var listItemBuilder = BuildItems(htmlHelper, value, isNullable, choices);
+            var tagBuilder = new TagBuilder("select")
+            {
+                InnerHtml = listItemBuilder.ToString()
+            };
+
+            tagBuilder.MergeAttributes(htmlAttributes);
+            tagBuilder.MergeAttribute("name", fullName, true);
+            return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
+        }
+
+        private static StringBuilder BuildItems(
             HtmlHelper html,
-            string expression,
             object value,
             bool isNullable,
             IEnumerable choices)
         {
             StringBuilder build = new StringBuilder();
-            build.AppendFormat("<select name='{0}'>", html.Encode(html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expression)));
             if (choices != null)
             {
                 if (isNullable)
@@ -186,14 +218,13 @@ namespace Four2n.Commons.System.Web.Mvc.Html
                 foreach (var choice in choices)
                 {
                     build.AppendOption(
-                            Convert.ToInt32(choice),
-                            html.Encode(EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(choice).Name),
-                            object.Equals(value, choice));
+                        Convert.ToInt32(choice),
+                        html.Encode(EnumExtendedInfoAttribute.GetExtendedInfoByEnumValue(choice).Name),
+                        object.Equals(value, choice));
                 }
             }
 
-            build.Append("</select>");
-            return MvcHtmlString.Create(build.ToString());
+            return build;
         }
 
         /// <summary>

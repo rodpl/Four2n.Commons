@@ -58,8 +58,8 @@ namespace Four2n.Commons.System.Web.Mvc.Html
         {
             var helper = MvcHelper.GetHtmlHelper(this.viewData);
 
-            var html = helper.DropDownListEnumExtendedInfo("MyName", TestEnum.Boo, new[] { TestEnum.Foo });
-            Assert.AreEqual(@"<select name='MyName'><option value=""1"">Foo</option></select>", html.ToHtmlString());
+            var html = helper.DropDownListEnumExtendedInfo("MyName", TestEnum.Boo, new[] { TestEnum.Foo }, new { @class = "fancy" });
+            Assert.AreEqual(@"<select class=""fancy"" name=""MyName""><option value=""1"">Foo</option></select>", html.ToHtmlString());
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
             var helper = MvcHelper.GetHtmlHelper(this.viewData);
 
             var html = helper.DropDownListEnumExtendedInfo("MyName", TestEnum.Foo, new[] { TestEnum.Foo });
-            Assert.AreEqual(@"<select name='MyName'><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""MyName""><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
             var helper = MvcHelper.GetHtmlHelper(this.viewData);
 
             var html = helper.DropDownListEnumExtendedInfo("MyName", TestEnum.Boo);
-            Assert.AreEqual(@"<select name='MyName'><option value=""0"" selected='selected'>Boos</option><option value=""1"">Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""MyName""><option value=""0"" selected='selected'>Boos</option><option value=""1"">Foo</option></select>", html.ToHtmlString());
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
                 html = helper.DropDownListEnumExtendedInfo("MyName", (TestEnum?)null, this.GetAll);
             }
 
-            Assert.AreEqual(@"<select name='MyName'><option value="""" selected='selected'></option><option value=""0"">Boos</option><option value=""1"">Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""MyName""><option value="""" selected='selected'></option><option value=""0"">Boos</option><option value=""1"">Foo</option></select>", html.ToHtmlString());
             Console.Out.WriteLine(html.ToHtmlString());
         }
 
@@ -105,7 +105,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
 
             var html = helper.DropDownListEnumExtendedInfoFor(x => x.SomeOption);
 
-            Assert.AreEqual(@"<select name='SomeOption'><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""SomeOption""><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
             Console.Out.WriteLine(html.ToHtmlString());
         }
 
@@ -119,7 +119,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
 
             var html = helper.DropDownListEnumExtendedInfoFor(x => x.SomeNullableOption);
 
-            Assert.AreEqual(@"<select name='SomeNullableOption'><option value=""""></option><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""SomeNullableOption""><option value=""""></option><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
             Console.Out.WriteLine(html.ToHtmlString());
         }
 
@@ -135,7 +135,7 @@ namespace Four2n.Commons.System.Web.Mvc.Html
 
             var html = helper.DropDownListEnumExtendedInfoFor(x => x.Child.SomeNullableOption);
 
-            Assert.AreEqual(@"<select name='Child.SomeNullableOption'><option value=""""></option><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
+            Assert.AreEqual(@"<select name=""Child.SomeNullableOption""><option value=""""></option><option value=""0"">Boos</option><option value=""1"" selected='selected'>Foo</option></select>", html.ToHtmlString());
             Console.Out.WriteLine(html.ToHtmlString());
         }
 
