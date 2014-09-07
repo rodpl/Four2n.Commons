@@ -102,6 +102,7 @@
         <AssemblyCopyright>Copyright 2006-2013 rod - Daniel Dabrowski - 42n</AssemblyCopyright>
         <AssemblyProduct>$(GeneralProjectName)</AssemblyProduct>
         <AssemblyVersion>1.2</AssemblyVersion>
+        <SvnRevision>$([System.Convert]::ToInt32($([MSBuild]::Multiply($([System.DateTime]::Now.TimeOfDay.TotalSeconds), $([MSBuild]::Divide($([MSBuild]::Subtract($([System.UInt16]::MaxValue), 1)), 86400))))))</SvnRevision>
         <AllowPartiallyTrustedCallers>True</AllowPartiallyTrustedCallers>
     </PropertyGroup>
     
